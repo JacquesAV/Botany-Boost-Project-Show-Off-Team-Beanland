@@ -44,7 +44,7 @@ public class DebugManager : MonoBehaviour
             else
             { 
                 EventManager.currentManager.Subscribe(EventType.RECREIVEDEBUG, OnDebugStart);
-                EventManager.currentManager.AddEvent(new SendDebugLog("Debugger Enabled"));
+                DebugLog("Debugger Enabled");
             }
             debugStarted = !debugStarted;
         }
@@ -55,9 +55,13 @@ public class DebugManager : MonoBehaviour
         //Sends a ping whenever key is pressed.
         if (Input.GetKeyDown(KeyCode.F8))
         {
-            EventManager.currentManager.AddEvent(new SendDebugLog("Ping"));
+            DebugLog("Ping");
         }
     }
 
+    public static void DebugLog(string log)
+    {
+        EventManager.currentManager.AddEvent(new SendDebugLog(log));
+    }
 
 }
