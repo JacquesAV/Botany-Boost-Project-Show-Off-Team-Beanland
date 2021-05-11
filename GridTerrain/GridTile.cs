@@ -10,7 +10,6 @@ public class GridTile : MonoBehaviour
     private Mesh tileMesh = null;
 
     //Arrays are used as they are fixed and should not change
-
     //Tracks the vertices of the quad grid tile
     private Vector3[] vertices = new Vector3[4]
     {
@@ -43,7 +42,7 @@ public class GridTile : MonoBehaviour
         UpdateMeshGrid();
     }
 
-    private void UpdateMeshGrid()
+    public void UpdateMeshGrid()
     {
         //Cleans the mesh
         tileMesh.Clear();
@@ -54,6 +53,30 @@ public class GridTile : MonoBehaviour
 
         //Recalculates normals
         tileMesh.RecalculateNormals();
+    }
+     
+    //Updates the vertices with a given array of vertices
+    public void UpdateVertices(Vector3[] NewVertices)
+    {
+        vertices = NewVertices;
+    }
+    //Updates the triangles with a given array of ints
+    public void UpdateTriangles(int[] newTriangles)
+    {
+        triangles = newTriangles;
+    }
+
+    //Updates the triangles with a given array of ints
+    public void UpdateVerticeHeight(ref Terrain terrain)
+    {
+        //Draw the vertice for viewing/testing purposes
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            vertices[i].y = terrain.SampleHeight(this.transform.position + vertices[i]);
+        }
+
+        //Update the mesh grid to match the height
+        UpdateMeshGrid();
     }
 
     private void OnDrawGizmos()
@@ -68,16 +91,4 @@ public class GridTile : MonoBehaviour
             Gizmos.DrawCube(this.transform.position + tileMesh.vertices[i], new Vector3(0.1f, 0.1f, 0.1f));
         }
     }
-     
-    //Updates the vertices with a given array of vertices
-    public void UpdateVertices(Vector3[] NewVertices)
-    {
-        vertices = NewVertices;
-    }
-    //Updates the triangles with a given array of ints
-    public void UpdateTriangles(int[] newTriangles)
-    {
-        triangles = newTriangles;
-    }
- 
 }

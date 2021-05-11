@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class GridPlaneGenerator : MonoBehaviour
 {
-    //Decides the number of tiles across the x and z axis
-    public int xSize = 10;
-    public int zSize = 10;
-
     //Prefab of the grid tile
-    public GameObject gridTile=null;
+    public GameObject gridTile = null;
+
+    //Decides the number of tiles across the x and z axis
+    public int xSize = 0, zSize = 0;
 
     //List of each grid tile that gets created
-    private List<GameObject> gridTiles = new List<GameObject>();
+    protected private List<GameObject> gridTiles = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -22,8 +21,20 @@ public class GridPlaneGenerator : MonoBehaviour
     }
 
     //Instantiate separate tile objects
-    private void InstantiateGridTiles()
+    protected private void InstantiateGridTiles()
     {
+        //Ensures non null prefab was supplied
+        if (gridTile == null)
+        {
+            throw new System.ArgumentNullException();
+        }
+
+        //Ensures no invalid sizes are give
+        if (xSize <=0 || zSize <= 0)
+        {
+            throw new System.Exception(new System.ArgumentOutOfRangeException().ToString());
+        }
+
         //Loops over each axis in order to get the correct position shift of each tile based on their expected position
         //Loop over z axis 
         for (int tile = 0, z = 0; z < zSize; z++)
@@ -52,6 +63,6 @@ public class GridPlaneGenerator : MonoBehaviour
         }
 
         //Debug log the number of generated tiles
-        DebugManager.DebugLog("Generated " + gridTiles.Count +" grid tiles.");
+        DebugManager.DebugLog("Generated " + gridTiles.Count + " grid tiles.");
     }
 }
