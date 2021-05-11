@@ -50,5 +50,8 @@ public class GridPlaneGenerator : MonoBehaviour
                 tile++;
             }
         }
+
+        //Debug log the number of generated tiles
+        DebugManager.DebugLog("Generated " + gridTiles.Count +" grid tiles.");
     }
 }
