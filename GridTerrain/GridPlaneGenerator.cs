@@ -17,21 +17,8 @@ public class GridPlaneGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Construct tile data list
-        ConstructTileDataList();
-
         //Instantiate separate tile objects
         InstantiateGridTiles();
-    }
-
-    //Construct tile data list
-    private void ConstructTileDataList()
-    {
-        //Populate list of grid tiles using the prefab based on dimensions of grid
-        for (int tiles = 0; tiles < zSize * xSize; tiles++)
-        {
-            gridTiles.Add(gridTile);
-        }
     }
 
     //Instantiate separate tile objects
@@ -45,17 +32,23 @@ public class GridPlaneGenerator : MonoBehaviour
             for (int x = 0; x < xSize; x++)
             {
                 //Construct position shift vector
-                Vector3 shift = new Vector3(x,0,z);
+                Vector3 shift = new Vector3(x, 0, z);
 
                 //Instantiate grid tile
-                Instantiate(gridTiles[tile], this.gameObject.transform.position + shift, Quaternion.identity, this.gameObject.transform);
-                
+                GameObject gridTileObject = Instantiate(gridTile, this.gameObject.transform.position + shift, Quaternion.identity, this.gameObject.transform);
+               
                 //Command the tile to instantiate itself correctly
-                gridTiles[tile].GetComponent<GridTile>().InstantiateTile();
-            }
+                gridTileObject.GetComponent<GridTile>().InstantiateTile();
 
-            //Move onto the next tile
-            tile++;
+                //Rename the tile for ease of reading and use
+                gridTileObject.name = "GridTile " + (tile + 1) + " (Row " + (z + 1) + ", Column " + (x + 1) + ")";
+
+                //Add the object to a list for easy access and modification
+                gridTiles.Add(gridTileObject);
+
+                //Move onto the next tile
+                tile++;
+            }
         }
     }
 }
