@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Event that informs subscribers of something
-public class DebuggerStartEvent : EventData
+public class SendDebugLog : EventData
 {
-    public readonly bool debuggerStarted;
+    public readonly string debuglog;
 
-    public DebuggerStartEvent(bool givenBool) : base(EventType.DEBUGGERSTARTEVENT)
+    public SendDebugLog(string givenLog) : base(EventType.RECREIVEDEBUG)
     {
-        debuggerStarted = givenBool;
+        debuglog = givenLog;
     }
 }
