@@ -6,6 +6,7 @@ public class PlaceableData : MonoBehaviour
     [SerializeField] private GameObject prefab;
     [SerializeField] private Sprite displayImage = null;
     [Header("Data")]
+    [SerializeField] private string placeableName = "";
     [SerializeField] private PlaceableType placeableType;
     private PlaceableOrientation placeableOrientation;
     [SerializeField] private Vector2 placeableDimensions = Vector2.zero;
@@ -55,6 +56,11 @@ public class PlaceableData : MonoBehaviour
     public string GetOrientation()
     {
         return placeableOrientation.ToString();
+    }
+
+    public string GetName()
+    {
+        return placeableName;
     }
     #endregion
 
