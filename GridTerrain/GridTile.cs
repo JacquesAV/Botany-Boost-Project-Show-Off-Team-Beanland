@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Prevent script from working if essential component is missing
+//Automatically add component if essential component is missing
 [RequireComponent(typeof(MeshFilter))]
 public class GridTile : MonoBehaviour
 {
     //Active mesh of the grid tile
     private Mesh tileMesh = null;
+    private MeshCollider tileCollider = null;
 
     //Arrays are used as they are fixed and should not change
     //Tracks the vertices of the quad grid tile
@@ -27,7 +28,7 @@ public class GridTile : MonoBehaviour
     };
 
     //Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         InstantiateTile();
     }
@@ -37,6 +38,9 @@ public class GridTile : MonoBehaviour
         //Create a new mesh filter to construct the tile with
         tileMesh = new Mesh();
         GetComponent<MeshFilter>().mesh = tileMesh;
+
+        //Get the mesh collider
+        tileCollider = this.GetComponent<MeshCollider>();
 
         //Update the mesh with the correct information
         UpdateMeshGrid();
@@ -53,6 +57,9 @@ public class GridTile : MonoBehaviour
 
         //Recalculates normals
         tileMesh.RecalculateNormals();
+
+        //Update the mesh collider
+        tileCollider.sharedMesh = tileMesh;
     }
      
     //Updates the vertices with a given array of vertices
@@ -79,6 +86,22 @@ public class GridTile : MonoBehaviour
         UpdateMeshGrid();
     }
 
+    //Gets the average height of the tile from its original position
+    public float GetAverageHeight()
+    {
+        //Declare temporary variable
+        float averageHeight = 0;
+
+        //Add each vertice to the temporary variable
+        foreach(Vector3 vertice in vertices)
+        {
+            averageHeight += vertice.y;
+        }
+
+        //Then return the average
+        return averageHeight/vertices.Length;
+    }
+
     private void OnDrawGizmos()
     {
         //Do not continue if vertices are not set yet
@@ -87,7 +110,7 @@ public class GridTile : MonoBehaviour
         //Draw the vertice for viewing/testing purposes
         for (int i = 0; i < vertices.Length; i++)
         {
-            Gizmos.color = Color.green;
+            Gizmos.color = Color.red;
             Gizmos.DrawCube(this.transform.position + tileMesh.vertices[i], new Vector3(0.1f, 0.1f, 0.1f));
         }
     }
