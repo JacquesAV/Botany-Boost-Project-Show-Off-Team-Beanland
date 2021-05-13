@@ -18,7 +18,7 @@ public class PlaceableData : MonoBehaviour
         Bush,
         Tree,
         Flooring,
-        Ornaments
+        Ornament
     }  
 
     private struct PlaceableStats
