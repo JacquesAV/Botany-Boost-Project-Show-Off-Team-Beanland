@@ -5,12 +5,13 @@ public class PlaceableData : MonoBehaviour
     [Header("Visuals")]
     [SerializeField] private GameObject prefab;
     [SerializeField] private Sprite displayImage = null;
+
     [Header("Data")]
-    [SerializeField] private string placeableName = "";
     [SerializeField] private PlaceableType placeableType;
-    private PlaceableOrientation placeableOrientation;
+    private PlaceableOrientation placeableOrientation = PlaceableOrientation.Forward; //Default rotation
     [SerializeField] private Vector2 placeableDimensions = Vector2.zero;
     [SerializeField] private int cost = 0;
+    [SerializeField] private string placeableName;
 
     //The different kinds of placeables that are present in the game
     private enum PlaceableType
@@ -53,9 +54,9 @@ public class PlaceableData : MonoBehaviour
         return placeableDimensions;
     }
 
-    public string GetOrientation()
+    public PlaceableOrientation GetOrientation()
     {
-        return placeableOrientation.ToString();
+        return placeableOrientation;
     }
 
     public string GetName()
@@ -64,7 +65,13 @@ public class PlaceableData : MonoBehaviour
     }
     #endregion
 
+    public void SetOrientation(PlaceableOrientation newOrientation)
+    {
+        //Update the stores orientation
+        placeableOrientation = newOrientation;
+    }
 }
+
 //Orientation of the placeables
 public enum PlaceableOrientation
 {
