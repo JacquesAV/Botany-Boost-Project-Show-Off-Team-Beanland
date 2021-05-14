@@ -31,7 +31,6 @@ public class TileBuildingModel : MonoBehaviour
         if(BuildingManager.currentManager.managerState == BuildingState.building)
         {
             OnBuildClick();
-            ApplyOrientation();
         }
         else if (BuildingManager.currentManager.managerState == BuildingState.destroying)
         {
@@ -42,7 +41,7 @@ public class TileBuildingModel : MonoBehaviour
     private void OnBuildClick()
     {
         //Checks if the tile is already occupied
-        if (objectView != null)
+        if (savedPlaceableData != null)
         {
             //Debug that building location is invalid
             DebugManager.DebugLog("Invalid location for placement");
@@ -59,6 +58,9 @@ public class TileBuildingModel : MonoBehaviour
         //Rename the object for the editor
         objectView.name = savedPlaceableData.GetName() + " View";
 
+        //Apply the orientation to the view
+        ApplyOrientation();
+
         //Debug
         DebugManager.DebugLog(savedPlaceableData.GetName()+" has been placed!");
     }
@@ -67,7 +69,7 @@ public class TileBuildingModel : MonoBehaviour
     private void OnSellClick()
     {
         //Checks if the tile is already occupied
-        if (objectView == null)
+        if (savedPlaceableData == null)
         {
             //Debug that building location is invalid
             DebugManager.DebugLog("Nothing to remove!");

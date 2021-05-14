@@ -47,6 +47,13 @@ public class BuildingManager : MonoBehaviour
 
     public void EnableBuildingMode()
     {
+        //Checks if already in build mode or if preview is active
+        //If yes, then remove the old preview to
+        if(managerState == BuildingState.building || selectedObjectPreview!=null)
+        {
+            DisableBuildPreview();
+        }
+
         //Enables the build mode
         managerState = BuildingState.building;
         DebugManager.DebugLog("Building manager set to build mode!");
@@ -82,6 +89,9 @@ public class BuildingManager : MonoBehaviour
 
         //Rename the object for the unity editor
         selectedObjectPreview.name = selectedObjectPrefab.GetName() + " Preview Object";
+
+        //Update the orientation of the preview
+        UpdatePreviewOrientation();
     }
 
     private void DisableBuildPreview()
