@@ -68,8 +68,8 @@ public class PlaceableData : MonoBehaviour
 //Orientation of the placeables
 public enum PlaceableOrientation
 {
-    Left,
-    Right,
     Forward,
-    Back
+    Right,
+    Back,
+    Left
 }
