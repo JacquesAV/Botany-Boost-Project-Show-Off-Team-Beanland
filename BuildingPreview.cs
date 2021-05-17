@@ -6,10 +6,7 @@ public class BuildingPreview : MonoBehaviour
 {
     public Material validMaterial; //Valid placement
     public Material invalidMaterial; //Invalid placement
-
     private GameObject hoveredTiled = null; //Tile that is being hovered over
-
-    private Vector3 gridOffset = new Vector3(0.5f, 0, 0.5f); //Offset of the item to be centered in the grid
 
     private void Update()
     {
@@ -23,7 +20,7 @@ public class BuildingPreview : MonoBehaviour
             //If colliding with a gridTile
             if (hit.transform.tag == "GridTile")
             {
-                //If not already the selected tile, update
+                //If not already the selected tile, update the relevant information
                 if(hit.transform.gameObject != hoveredTiled)
                 {
                     //Set the new tile
@@ -38,8 +35,8 @@ public class BuildingPreview : MonoBehaviour
 
     private void UpdateDisplayLocation()
     {
-        //Update the location based on the hovered tile
-        this.transform.position = hoveredTiled.transform.position + hoveredTiled.GetComponent<TileBuildingModel>().GetGridOffset();
+        //Update the location based on the position intended offset for the tile
+        this.transform.position = hoveredTiled.transform.position + hoveredTiled.GetComponent<TileBuildingModel>().RecalculateGridOffset();
     }
 
     public void UpdateRotation(PlaceableOrientation newOrientation)

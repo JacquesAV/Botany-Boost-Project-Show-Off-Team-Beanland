@@ -13,15 +13,12 @@ public class TileBuildingModel : MonoBehaviour
     public Color unhighlightedColor;
     private Color currentColor;
 
-    private Vector3 gridOffset = new Vector3(0.5f, 0, 0.5f); //Offset of the item to be centered in the grid
+    private Vector3 gridOffset = new Vector3(0.5f, 0, 0.5f); //Offset of the item to be centered in the grid, default to 1x1
 
     private void Start()
     {
         //Get the grid tile script attached to the object
         gridTile = this.gameObject.GetComponent<GridTile>();
-
-        //Update the height offset of the grid
-        gridOffset.y += gridTile.GetAverageHeight();
     }
 
     //When the user presses down on a tile
@@ -53,7 +50,9 @@ public class TileBuildingModel : MonoBehaviour
 
         //Place the object view
         objectView = Instantiate(savedPlaceableData.GetPrefab(), this.transform);
-        objectView.transform.position += gridOffset;
+
+        //Update the position based on the intended offset of the object
+        objectView.transform.position += RecalculateGridOffset();
 
         //Rename the object for the editor
         objectView.name = savedPlaceableData.GetName() + " View";
@@ -64,7 +63,6 @@ public class TileBuildingModel : MonoBehaviour
         //Debug
         DebugManager.DebugLog(savedPlaceableData.GetName()+" has been placed!");
     }
-
 
     private void OnSellClick()
     {
@@ -106,10 +104,19 @@ public class TileBuildingModel : MonoBehaviour
         this.GetComponent<Renderer>().material.color = currentColor;
     }
 
-    public Vector3 GetGridOffset()
+    //Should only be called once when placing an object
+    public Vector3 RecalculateGridOffset()
     {
+        //Update the base offset without height considered based on the current selected building object
+        gridOffset = BuildingManager.currentManager.getFlatObjectOffset();
+
+        //Update the height offset of the grid
+        gridOffset.y += gridTile.GetAverageHeight();
+
+        //Return
         return gridOffset;
-    } 
+    }
+
 
     private void ApplyOrientation()
     {

@@ -35,6 +35,7 @@ public class BuildingManager : MonoBehaviour
     public PlaceableData selectedObjectPrefab; //Prefab of the selected object
 
     private GameObject selectedObjectPreview; //Active preview of the selected object
+    private Vector3 flatObjectOffset = new Vector3(0.5f, 0, 0.5f); //Offset for the preview and placed object without considering the grid height
 
     public BuildingState managerState = BuildingState.inactive; //State of the manager (for swapping users interactive capabilities)
     private PlaceableOrientation currentOrientation = PlaceableOrientation.Forward; //Current rotation/orientation of the structure being placed
@@ -43,7 +44,6 @@ public class BuildingManager : MonoBehaviour
     {
         if (managerState == BuildingState.building) {BuildModeRotate(); } //Looks out for key commands to rotate objects
     }
-        
 
     public void EnableBuildingMode()
     {
@@ -56,8 +56,14 @@ public class BuildingManager : MonoBehaviour
 
         //Enables the build mode
         managerState = BuildingState.building;
+
+        //Debug that building mode is activated
         DebugManager.DebugLog("Building manager set to build mode!");
 
+        //Update the flat offset that will be applied to the preview and placed object
+        UpdateFlatOffset();
+
+        //Enable the build preview of the object
         EnableBuildPreview();
     }
 
@@ -65,6 +71,8 @@ public class BuildingManager : MonoBehaviour
     {
         //Enables the sell mode
         managerState = BuildingState.destroying;
+
+        //Debug that destroying mode is activated
         DebugManager.DebugLog("Building manager set to destroy mode!");
 
         DisableBuildPreview();
@@ -73,8 +81,11 @@ public class BuildingManager : MonoBehaviour
     {
         //Enables the inactive mode
         managerState = BuildingState.inactive;
+
+        //Debug that inactive mode is activated
         DebugManager.DebugLog("Building manager set to inactive mode!");
 
+        //Disable the build preview of the object
         DisableBuildPreview();
     }
 
@@ -145,7 +156,7 @@ public class BuildingManager : MonoBehaviour
     //Updates the orientation of the preview and object that would be rotated
     private void UpdatePreviewOrientation()
     {
-        //Debug change
+        //Debug the change in rotation
         DebugManager.DebugLog("Rotation changed to " + Enum.GetName(typeof(PlaceableOrientation), currentOrientation) + " orientation!");
 
         //Rotate based on the current orientation
@@ -153,5 +164,21 @@ public class BuildingManager : MonoBehaviour
 
         //Set the correct rotation to the built object
         selectedObjectPrefab.SetOrientation(currentOrientation);
+    }
+
+    //Updates the offset based on the objects dimensions
+    private void UpdateFlatOffset()
+    {
+        //Example offset for 1x1 object (0.5f, x, 0.5f)
+        //Example offset for 1x2 object (0.5f, x, 1f)
+        Vector3 dimensions = selectedObjectPrefab.GetDimensions();
+
+        //Update the intended flat offset for the preview and built object
+        flatObjectOffset = new Vector3(dimensions.x/2, 0, dimensions.y/2);
+    }
+
+    public Vector3 getFlatObjectOffset()
+    {
+        return flatObjectOffset;
     }
 }
