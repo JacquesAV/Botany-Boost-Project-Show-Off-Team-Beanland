@@ -4,7 +4,23 @@ using UnityEngine;
 
 public class DebugManager : MonoBehaviour
 {
+    //Singleton
+    //Getter and setter for the current debugger, static so that there is only one manager at any given time
+    public static DebugManager currentDebugger { get; set; } = null;
     private bool debugStarted = true;
+
+    //Awake function ensures that only one copy exists in the scene at a given time
+    private void Awake()
+    {
+        if (currentDebugger == null)
+        {
+            currentDebugger = this; //Sets the active manager to this instance of it
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -14,7 +30,7 @@ public class DebugManager : MonoBehaviour
 
     private void Update()
     {
-        AlternateDebugging();
+        ToggleDebugging();
         CheckIfActive();
     }
 
@@ -31,9 +47,9 @@ public class DebugManager : MonoBehaviour
         }
     }
 
-    private void AlternateDebugging()
+    private void ToggleDebugging()
     {
-        //alternates the script between sending logs and not
+        //Toggles the script between sending logs and not
         if (Input.GetKeyDown(KeyCode.F7))
         {
             if (debugStarted)
@@ -44,7 +60,7 @@ public class DebugManager : MonoBehaviour
             else
             { 
                 EventManager.currentManager.Subscribe(EventType.RECREIVEDEBUG, OnDebugStart);
-                EventManager.currentManager.AddEvent(new SendDebugLog("Debugger Enabled"));
+                DebugLog("Debugger Enabled");
             }
             debugStarted = !debugStarted;
         }
@@ -55,9 +71,14 @@ public class DebugManager : MonoBehaviour
         //Sends a ping whenever key is pressed.
         if (Input.GetKeyDown(KeyCode.F8))
         {
-            EventManager.currentManager.AddEvent(new SendDebugLog("Ping"));
+            DebugLog("Ping");
         }
     }
 
+    public static void DebugLog(string log)
+    {
+        //Send the log to the event manager for debugging
+        EventManager.currentManager.AddEvent(new SendDebugLog(log));
+    }
 
 }
