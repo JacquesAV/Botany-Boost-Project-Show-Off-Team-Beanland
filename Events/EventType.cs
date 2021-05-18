@@ -6,4 +6,5 @@ using UnityEngine;
 public enum EventType 
 {
     RECREIVEDEBUG=0,
+    CLICKEDPLACEABLEGUI
 }
