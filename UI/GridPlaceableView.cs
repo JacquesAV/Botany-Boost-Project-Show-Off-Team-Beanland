@@ -15,7 +15,7 @@ public class GridPlaceableView : MonoBehaviour
     private ViewConfig viewConfig; //To set up the grid view, we need to know how many columns the grid view has, in the current setup,
                                    //this information can be found in a ViewConfig scriptable object, which serves as a configuration file for
                                    //view
-
+    private Controller controller;
     private enum SelectedPlaceableType
     {
         None,
@@ -34,6 +34,7 @@ public class GridPlaceableView : MonoBehaviour
         Debug.Assert(viewConfig != null);
         SetupPlaceableIconView();
         PopulatePlaceableIconView();
+        controller = gameObject.AddComponent<Controller>();
     }
     #region PlaceablePopulation
     //------------------------------------------------------------------------------------------------------------------------
