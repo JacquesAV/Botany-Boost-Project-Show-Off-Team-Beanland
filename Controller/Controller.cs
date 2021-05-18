@@ -25,6 +25,10 @@ public class Controller : MonoBehaviour, IPointerClickHandler
             //placeableToSelect = placeableContainer.Placeable;//Use IPlaceableContainer's getter to get the item in the container, assign it to placeableToSelect,
                                                              //now it will be selected the next time HandleInput is called
             EventManager.currentManager.AddEvent(new PlaceableSelectedOnGUI(placeableContainer.Placeable));
+            //DebugManager.DebugLog("Clicked placeable");
+        }
+        {
+            //DebugManager.DebugLog("Clicked not placeable");
         }
     }
 }
