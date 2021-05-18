@@ -13,6 +13,19 @@ public class PlaceableData : MonoBehaviour
     [SerializeField] private int cost = 0;
     [SerializeField] private string placeableName;
 
+    public PlaceableData Initialize(PlaceableData baseData)
+    {
+        //Set information based on pre-created placeable data script
+        prefab = baseData.prefab;
+        displayImage = baseData.displayImage;
+        placeableType = baseData.placeableType;
+        placeableOrientation = baseData.placeableOrientation;
+        placeableDimensions = baseData.placeableDimensions;
+        cost = baseData.cost;
+        placeableName= baseData.placeableName;
+        return this;
+    }
+
     //The different kinds of placeables that are present in the game
     private enum PlaceableType
     {
