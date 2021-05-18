@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class TileBuildingModel : MonoBehaviour
 {
     public PlaceableData savedPlaceableData = null; //The data of the selected object
     public GameObject objectView = null; //Prefab of the selected object
     private GridTile gridTile = null; //The gridTile connected to the object
-    
+
+    private List<TileBuildingModel> connectedTiles = new List<TileBuildingModel>(); //The gridTile connected to the object
+
     //Colors for when moving over a tile
     public Color highlightedColor;
     public Color unhighlightedColor;
@@ -27,29 +30,51 @@ public class TileBuildingModel : MonoBehaviour
         //Check for the correct state
         if(BuildingManager.currentManager.managerState == BuildingState.building)
         {
+            if (!IsTilesVerified()) { return; }
             OnBuildClick();
+            LinkNeighbours();
         }
         else if (BuildingManager.currentManager.managerState == BuildingState.destroying)
         {
             OnSellClick();
+            UnlinkNeighbours();
         }
     }
 
-    private void OnBuildClick()
+    private bool IsTilesVerified()
     {
         //Checks if the tile is already occupied
         if (savedPlaceableData != null)
         {
             //Debug that building location is invalid
             DebugManager.DebugLog("Invalid location for placement");
-            return;
+            return false;
         }
 
+        //Checks if neighbouring tiles are already occupied
+        foreach (TileBuildingModel tile in BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(this.gameObject, BuildingManager.currentManager.selectedObjectPrefab.GetDimensions()).ToList())
+        {
+            //If occupied, return
+            if (tile.savedPlaceableData != null)
+            {
+                return false;
+            }
+        }
+
+        //Return as valid
+        return true;
+    }
+
+    private void OnBuildClick()
+    {
         //Update the saved data on the tile
         savedPlaceableData = BuildingManager.currentManager.selectedObjectPrefab;
 
         //Place the object view
         objectView = Instantiate(savedPlaceableData.GetPrefab(), this.transform);
+
+        //Add the data script to the object view
+        objectView.AddComponent<PlaceableData>().Initialize(savedPlaceableData);
 
         //Update the position based on the intended offset of the object
         objectView.transform.position += RecalculateGridOffset();
@@ -64,6 +89,31 @@ public class TileBuildingModel : MonoBehaviour
         DebugManager.DebugLog(savedPlaceableData.GetName()+" has been placed!");
     }
 
+    private void LinkNeighbours()
+    {
+        //Clear the connected tiles of any old neighbours
+        connectedTiles.Clear();
+
+        //Get neighbours from the grid generator using the current dimensions of the tile
+        connectedTiles = BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(this.gameObject,savedPlaceableData.GetDimensions());
+
+        //Add source tile to list so it gets cleared when another tile is clicked
+        connectedTiles.Add(this);
+
+        //Update neighbour information
+        foreach (TileBuildingModel tile in connectedTiles.ToList())
+        {
+            //Set the object view to the source view
+            tile.objectView = this.objectView;
+
+            //Set the placeable data
+            tile.savedPlaceableData = this.savedPlaceableData;
+
+            //Update the references connected tiles on each other tile
+            tile.connectedTiles = connectedTiles;
+        }
+    }
+
     private void OnSellClick()
     {
         //Checks if the tile is already occupied
@@ -76,9 +126,27 @@ public class TileBuildingModel : MonoBehaviour
 
         //Debug
         DebugManager.DebugLog(savedPlaceableData.GetName() + " has been removed!");
+    }
 
+    private void UnlinkNeighbours()
+    {
+        //Clear neighbour data
+        foreach (TileBuildingModel tile in connectedTiles.ToList())
+        {
+            //Clearing method
+            tile.ClearDataView();
+        }
+
+        //Clear the connected tiles list of former neighbours
+        connectedTiles.Clear();
+    }
+
+    private void ClearDataView()
+    {
         //Remove the object
         Destroy(objectView);
+
+        //Clear stored information
         objectView = null;
         savedPlaceableData = null;
     }

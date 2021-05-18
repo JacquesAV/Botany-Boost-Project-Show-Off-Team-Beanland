@@ -32,6 +32,7 @@ public class BuildingManager : MonoBehaviour
     }
 
     public GridPlaneGenerator activeGridGenerator = null; //Reference to the active grid that the building manager will interact with
+
     public PlaceableData selectedObjectPrefab; //Prefab of the selected object
 
     private GameObject selectedObjectPreview; //Active preview of the selected object
