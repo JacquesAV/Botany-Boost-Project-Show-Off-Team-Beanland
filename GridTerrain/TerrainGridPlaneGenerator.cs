@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Prevent script from working if essential component is missing
+//Automatically add component if essential component is missing
 [RequireComponent(typeof(Terrain))]
 
 //Wraps a grid mesh to a terrain based on the height maps of it

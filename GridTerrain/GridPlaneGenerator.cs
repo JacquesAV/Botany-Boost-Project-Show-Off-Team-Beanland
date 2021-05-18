@@ -20,6 +20,54 @@ public class GridPlaneGenerator : MonoBehaviour
         InstantiateGridTiles();
     }
 
+    //Returns a reference of the grid tiles, allowing for dynamic changes from other classes
+    public ref List<GameObject> GetGridTilesReference()
+    {
+        return ref gridTiles;
+    }
+
+    //Returns a list of neighbouring tiles based on a source tile and dimensions of a placed object
+    public List<TileBuildingModel> GetGridTileNeighbours(GameObject sourceTile, Vector2 dimensions)
+    {
+        //Temporary list
+        List<TileBuildingModel> tileBuildingNeighbours = new List<TileBuildingModel>();
+
+        //Source tile index
+        int sourceIndex = gridTiles.IndexOf(sourceTile);
+
+        //Get tiles based on the source tile and dimensions
+        for(int x=1; x <= dimensions.x; x++)
+        { 
+            for (int z = 1; z <= dimensions.y; z++)
+            {
+                //Source index + size
+                int neighbourIndex = sourceIndex + (x - 1) + ((z-1)*zSize);
+
+                //Add the relevant index tile
+                tileBuildingNeighbours.Add(gridTiles[neighbourIndex].GetComponent<TileBuildingModel>());
+
+                //Color the tile for debugging purposes
+                gridTiles[neighbourIndex].GetComponent<Renderer>().material.color = Color.red;
+
+                //Example of a 6x5 grid with a 2x2 object sourcing at index 7
+                //24,25,26,27,28,29
+                //18,19,20,21,22,23
+                //12,C, C, 15,16,17
+                //6, S, C, 9, 10,11
+                //0, 1, 2, 3, 4, 5
+
+                //S = 7 [2,2] = Source
+                //C = 8, 13, 14 = Neighbour
+                //C8 [3,2] = sourceIndex + (2-1) + (2-1)
+            }
+        }
+
+       //tileBuildingNeighbours.Add();
+
+        //Return temporary list of neighbours
+        return tileBuildingNeighbours;
+    }
+
     //Instantiate separate tile objects
     protected private void InstantiateGridTiles()
     {
