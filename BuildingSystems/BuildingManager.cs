@@ -31,6 +31,16 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        EventManager.currentManager.Subscribe(EventType.CLICKEDPLACEABLEGUI, OnPlaceableUISelect);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.currentManager.Unsubscribe(EventType.CLICKEDPLACEABLEGUI, OnPlaceableUISelect);
+    }
+
     public GridPlaneGenerator activeGridGenerator = null; //Reference to the active grid that the building manager will interact with
 
     public PlaceableData selectedObjectPrefab; //Prefab of the selected object
@@ -181,5 +191,29 @@ public class BuildingManager : MonoBehaviour
     public Vector3 getFlatObjectOffset()
     {
         return flatObjectOffset;
+    }
+
+    private void OnPlaceableUISelect(EventData eventData)
+    {
+        if (eventData is PlaceableSelectedOnGUI)
+        {
+            //Adds the event data received to a class for use
+            PlaceableSelectedOnGUI placeableGUISelect = (PlaceableSelectedOnGUI)eventData;
+            //subtracts money from player
+            if (placeableGUISelect.placeable != null)
+            {
+                selectedObjectPrefab = placeableGUISelect.placeable;
+                EnableBuildingMode();
+            }
+            else
+            {
+                throw new System.NullReferenceException("placeable data was null");
+            }
+            
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.PURCHASEBEGIN was received but is not of class PurchaseBeginEventData.");
+        }
     }
 }
