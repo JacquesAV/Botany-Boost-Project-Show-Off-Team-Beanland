@@ -12,6 +12,11 @@ public class PlaceableData : MonoBehaviour
     [SerializeField] private Vector2 placeableDimensions = Vector2.zero;
     [SerializeField] private int cost = 0;
     [SerializeField] private string placeableName;
+    [SerializeField] private int biodiversity;
+    [SerializeField] private int carbonIntake;
+    [SerializeField] private int attractiveScore; 
+    [SerializeField] private InsectType insectType;
+    [SerializeField] private int insectAttractiveness;
 
     public PlaceableData Initialize(PlaceableData baseData)
     {
@@ -36,9 +41,17 @@ public class PlaceableData : MonoBehaviour
         Ornament
     }  
 
+    private enum InsectType
+    {
+        Bee,
+        Butterfly,
+        Beetle
+    }
+
     private struct PlaceableStats
     {
         //Stats need to be added with designers help
+
     }
 
     #region Getters
