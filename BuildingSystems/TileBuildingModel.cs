@@ -81,6 +81,16 @@ public class TileBuildingModel : MonoBehaviour
         //Add the data script to the object view
         objectView.AddComponent<PlaceableData>().Initialize(savedPlaceableData);
 
+        //Add PlantEffect script to placeables that are plants
+        string placeableType = savedPlaceableData.GetPlaceableType();
+        if (placeableType != "Flooring" && placeableType != "Ornament")
+        {
+            objectView.AddComponent<PlantEffects>();
+            objectView.tag = "Plant";
+            SphereCollider sphere = objectView.AddComponent<SphereCollider>();
+            sphere.isTrigger = true;
+        }
+
         //Update the position based on the intended offset of the object
         objectView.transform.position += RecalculateGridOffset();
 
