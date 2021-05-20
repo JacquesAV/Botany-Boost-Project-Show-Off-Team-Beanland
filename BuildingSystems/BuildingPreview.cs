@@ -7,6 +7,7 @@ public class BuildingPreview : MonoBehaviour
     public Material validMaterial; //Valid placement
     public Material invalidMaterial; //Invalid placement
     private GameObject hoveredTiled = null; //Tile that is being hovered over
+    private List<TileBuildingModel> connectedTiles = new List<TileBuildingModel>(); //List of tiles that connect to the source tile
 
     private void Update()
     {
@@ -18,7 +19,7 @@ public class BuildingPreview : MonoBehaviour
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         {
             //If colliding with a gridTile
-            if (hit.transform.tag == "GridTile")
+            if (hit.transform.tag is "GridTile")
             {
                 //If not already the selected tile, update the relevant information
                 if(hit.transform.gameObject != hoveredTiled)
@@ -26,8 +27,14 @@ public class BuildingPreview : MonoBehaviour
                     //Set the new tile
                     hoveredTiled = hit.transform.gameObject;
 
+                    //Do not proceed if no hovered tile exists
+                    if (hoveredTiled == null) { throw new MissingReferenceException(); }
+
                     //Update the location
                     UpdateDisplayLocation();
+
+                    //Updates colors
+                    HighlightCycle();
                 }
             }
         }
@@ -36,7 +43,7 @@ public class BuildingPreview : MonoBehaviour
     private void UpdateDisplayLocation()
     {
         //Update the location based on the position intended offset for the tile
-        this.transform.position = hoveredTiled.transform.position + hoveredTiled.GetComponent<TileBuildingModel>().RecalculateGridOffset();
+        transform.position = hoveredTiled.transform.position + hoveredTiled.GetComponent<TileBuildingModel>().RecalculateGridOffset();
     }
 
     public void UpdateRotation(PlaceableOrientation newOrientation)
@@ -44,7 +51,43 @@ public class BuildingPreview : MonoBehaviour
         //Temporary rotation
         Quaternion newRotation = Quaternion.Euler(0, 90 * (int)newOrientation, 0);
 
-        //Rotate based on the current orientation
-        this.transform.rotation = newRotation;
+        //Set the rotation
+        transform.rotation = newRotation;
+
+        //Update the correct display
+        UpdateDisplayLocation();
+
+        HighlightCycle();
+    }
+
+    private void HighlightCycle()
+    {
+        //Change tile colors for viewing
+        UnhighlightTiles();
+
+        //Find new connected tiles
+        connectedTiles = BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(hoveredTiled, BuildingManager.currentManager.selectedObjectPrefab.GetOrientatedDimensions());
+
+        //Change tile colors for viewing
+        HighlightTileColors();
+    }
+
+    //Highlight functionality
+    private void HighlightTileColors()
+    {
+        //Checks for neighbouring tiles and update color
+        foreach (TileBuildingModel tile in connectedTiles)
+        {
+            tile.ChangeMaterialColor(Color.yellow);
+        }
+    }
+
+    public void UnhighlightTiles()
+    {
+        //Unhighlight old tiles
+        foreach (TileBuildingModel tile in connectedTiles)
+        {
+            tile.UpdateMaterialColor();
+        }
     }
 }

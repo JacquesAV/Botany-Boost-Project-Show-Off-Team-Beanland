@@ -12,8 +12,9 @@ public class TileBuildingModel : MonoBehaviour
     private List<TileBuildingModel> connectedTiles = new List<TileBuildingModel>(); //The gridTile connected to the object
 
     //Colors for when moving over a tile
-    public Color highlightedColor;
-    public Color unhighlightedColor;
+    public Color hoveredColor;
+    public Color occupiedColor;
+    private Color unoccupiedColor;
     private Color currentColor;
 
     private Vector3 gridOffset = new Vector3(0.5f, 0, 0.5f); //Offset of the item to be centered in the grid, default to 1x1
@@ -22,6 +23,10 @@ public class TileBuildingModel : MonoBehaviour
     {
         //Get the grid tile script attached to the object
         gridTile = this.gameObject.GetComponent<GridTile>();
+
+        //Default colors are the material colors placed on the grid
+        unoccupiedColor = this.GetComponent<Renderer>().material.color;
+        currentColor = unoccupiedColor;
     }
 
     //When the user presses down on a tile
@@ -52,7 +57,7 @@ public class TileBuildingModel : MonoBehaviour
         }
 
         //Checks if neighbouring tiles are already occupied
-        foreach (TileBuildingModel tile in BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(this.gameObject, BuildingManager.currentManager.selectedObjectPrefab.GetDimensions()).ToList())
+        foreach (TileBuildingModel tile in BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(this.gameObject, BuildingManager.currentManager.selectedObjectPrefab.GetOrientatedDimensions()).ToList())
         {
             //If occupied, return
             if (tile.savedPlaceableData != null)
@@ -95,7 +100,7 @@ public class TileBuildingModel : MonoBehaviour
         connectedTiles.Clear();
 
         //Get neighbours from the grid generator using the current dimensions of the tile
-        connectedTiles = BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(this.gameObject,savedPlaceableData.GetDimensions());
+        connectedTiles = BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(this.gameObject,savedPlaceableData.GetOrientatedDimensions());
 
         //Add source tile to list so it gets cleared when another tile is clicked
         connectedTiles.Add(this);
@@ -111,6 +116,9 @@ public class TileBuildingModel : MonoBehaviour
 
             //Update the references connected tiles on each other tile
             tile.connectedTiles = connectedTiles;
+
+            //Color the tile for debugging purposes
+            tile.ChangeCurrentMaterialColor(occupiedColor);
         }
     }
 
@@ -149,27 +157,38 @@ public class TileBuildingModel : MonoBehaviour
         //Clear stored information
         objectView = null;
         savedPlaceableData = null;
+
+        //Update the colors
+        ChangeCurrentMaterialColor(unoccupiedColor);
     }
 
     //Change color when mouse enters
     public void OnMouseEnter()
     {
-        ChangeHighlight(highlightedColor);
+        ChangeMaterialColor(hoveredColor);
     }
 
     //Change color when mouse leaves
     public void OnMouseExit()
     {
-        ChangeHighlight(unhighlightedColor);
+        ChangeMaterialColor(currentColor);
     }
 
-    public void ChangeHighlight(Color givenColor)
+    public void ChangeMaterialColor(Color givenColor)
     {
-        //Set the color
-        currentColor = givenColor;
-
         //Set the color on the MeshRenderer
-        this.GetComponent<Renderer>().material.color = currentColor;
+        this.GetComponent<Renderer>().material.color = givenColor;
+    }
+
+    public void ChangeCurrentMaterialColor(Color givenColor)
+    {
+        currentColor = givenColor;
+        ChangeMaterialColor(currentColor);
+    }
+
+    public void UpdateMaterialColor()
+    {
+        ChangeMaterialColor(currentColor);
     }
 
     //Should only be called once when placing an object
@@ -184,7 +203,6 @@ public class TileBuildingModel : MonoBehaviour
         //Return
         return gridOffset;
     }
-
 
     private void ApplyOrientation()
     {

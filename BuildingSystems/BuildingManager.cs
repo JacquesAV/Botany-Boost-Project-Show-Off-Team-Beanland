@@ -31,18 +31,7 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        EventManager.currentManager.Subscribe(EventType.CLICKEDPLACEABLEGUI, OnPlaceableUISelect);
-    }
-
-    private void OnDisable()
-    {
-        EventManager.currentManager.Unsubscribe(EventType.CLICKEDPLACEABLEGUI, OnPlaceableUISelect);
-    }
-
     public GridPlaneGenerator activeGridGenerator = null; //Reference to the active grid that the building manager will interact with
-
     public PlaceableData selectedObjectPrefab; //Prefab of the selected object
 
     private GameObject selectedObjectPreview; //Active preview of the selected object
@@ -72,7 +61,7 @@ public class BuildingManager : MonoBehaviour
         DebugManager.DebugLog("Building manager set to build mode!");
 
         //Update the flat offset that will be applied to the preview and placed object
-        UpdateFlatOffset();
+        UpdateOffsetAndDimensions();
 
         //Enable the build preview of the object
         EnableBuildPreview();
@@ -118,6 +107,9 @@ public class BuildingManager : MonoBehaviour
 
     private void DisableBuildPreview()
     {
+        //Unhighlight cells on the preview
+        selectedObjectPreview.GetComponent<BuildingPreview>().UnhighlightTiles();
+
         //Destroy the build preview object
         Destroy(selectedObjectPreview);
 
@@ -134,7 +126,7 @@ public class BuildingManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             //Loop around
-            if(currentOrientation == PlaceableOrientation.Left)
+            if (currentOrientation == PlaceableOrientation.Left)
             {
                 currentOrientation = PlaceableOrientation.Forward;
             }
@@ -142,6 +134,9 @@ public class BuildingManager : MonoBehaviour
             {
                 currentOrientation++;
             }
+
+            //Update the offset
+            UpdateOffsetAndDimensions();
 
             //Update orientations
             UpdatePreviewOrientation();
@@ -158,6 +153,9 @@ public class BuildingManager : MonoBehaviour
             {
                 currentOrientation--;
             }
+
+            //Update the offset
+            UpdateOffsetAndDimensions();
 
             //Update orientations
             UpdatePreviewOrientation();
@@ -178,42 +176,50 @@ public class BuildingManager : MonoBehaviour
     }
 
     //Updates the offset based on the objects dimensions
-    private void UpdateFlatOffset()
+    private void UpdateOffsetAndDimensions()
     {
         //Example offset for 1x1 object (0.5f, x, 0.5f)
         //Example offset for 1x2 object (0.5f, x, 1f)
-        Vector3 dimensions = selectedObjectPrefab.GetDimensions();
+        Vector2 offsetOrientated = selectedObjectPrefab.GetDimensions();
+
+        //Example orientation for 2x3 object rotated right()
+        Vector2 dimensionOrientated = offsetOrientated;
+
+        //Rotate the dimensions based on the current orientation
+        switch (currentOrientation)
+        {
+            case PlaceableOrientation.Forward:
+                //No changes to dimensions as default orientation is forward
+                break;
+
+            case PlaceableOrientation.Right:
+                //Rotate the dimensions/offset rightwards
+                offsetOrientated = new Vector2(offsetOrientated.y, -offsetOrientated.x + 2);
+                dimensionOrientated = new Vector2(dimensionOrientated.y, -dimensionOrientated.x);
+                break;
+
+            case PlaceableOrientation.Back:
+                //Rotate the dimensions/offset backwards
+                offsetOrientated = new Vector2(-offsetOrientated.x + 2, -offsetOrientated.y + 2);
+                dimensionOrientated = new Vector2(-dimensionOrientated.x, -dimensionOrientated.y);
+                break;
+
+            case PlaceableOrientation.Left:
+                //Rotate the dimensions/offset leftwards
+                offsetOrientated = new Vector2(-offsetOrientated.y + 2, offsetOrientated.x);
+                dimensionOrientated = new Vector2(-dimensionOrientated.y, dimensionOrientated.x);
+                break;
+        }
 
         //Update the intended flat offset for the preview and built object
-        flatObjectOffset = new Vector3(dimensions.x/2, 0, dimensions.y/2);
+        flatObjectOffset = new Vector3(offsetOrientated.x/2, 0, offsetOrientated.y/2);
+
+        //Update the intended orientation for the built object
+        selectedObjectPrefab.SetOrientatedDimensions(dimensionOrientated);
     }
 
     public Vector3 getFlatObjectOffset()
     {
         return flatObjectOffset;
-    }
-
-    private void OnPlaceableUISelect(EventData eventData)
-    {
-        if (eventData is PlaceableSelectedOnGUI)
-        {
-            //Adds the event data received to a class for use
-            PlaceableSelectedOnGUI placeableGUISelect = (PlaceableSelectedOnGUI)eventData;
-            //subtracts money from player
-            if (placeableGUISelect.placeable != null)
-            {
-                selectedObjectPrefab = placeableGUISelect.placeable;
-                EnableBuildingMode();
-            }
-            else
-            {
-                throw new System.NullReferenceException("placeable data was null");
-            }
-            
-        }
-        else
-        {
-            throw new System.Exception("Error: EventData class with EventType.PURCHASEBEGIN was received but is not of class PurchaseBeginEventData.");
-        }
     }
 }
