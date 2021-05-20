@@ -8,6 +8,7 @@ public class DebugManager : MonoBehaviour
     //Getter and setter for the current debugger, static so that there is only one manager at any given time
     public static DebugManager currentDebugger { get; set; } = null;
     private bool debugStarted = true;
+    [SerializeField] private Transform debugUI=null;
 
     //Awake function ensures that only one copy exists in the scene at a given time
     private void Awake()
@@ -26,12 +27,19 @@ public class DebugManager : MonoBehaviour
     {
         //Subscribes script to check for any debugs
         EventManager.currentManager.Subscribe(EventType.RECREIVEDEBUG, OnDebugStart);
+
+        if (debugUI == null)
+        {
+            debugUI = GameObject.Find("Canvas").transform.Find("DebugPannel");
+        }
     }
 
     private void Update()
     {
         ToggleDebugging();
         CheckIfActive();
+        SkipCurrentDay();
+        SkipCurrentWeek();
     }
 
     public void OnDebugStart(EventData eventData)
@@ -55,11 +63,13 @@ public class DebugManager : MonoBehaviour
             if (debugStarted)
             {
                 Debug.Log("Debugger Disabled");
-                EventManager.currentManager.Unsubscribe(EventType.RECREIVEDEBUG, OnDebugStart); 
+                debugUI.transform.gameObject.SetActive(false);
+                EventManager.currentManager.Unsubscribe(EventType.RECREIVEDEBUG, OnDebugStart);
             }
             else
-            { 
+            {
                 EventManager.currentManager.Subscribe(EventType.RECREIVEDEBUG, OnDebugStart);
+                debugUI.transform.gameObject.SetActive(true);
                 DebugLog("Debugger Enabled");
             }
             debugStarted = !debugStarted;
@@ -81,4 +91,25 @@ public class DebugManager : MonoBehaviour
         EventManager.currentManager.AddEvent(new SendDebugLog(log));
     }
 
+    //----------------------------------------------------------------
+    //                              Cheats                   
+    //----------------------------------------------------------------
+
+    //Skip to the next day
+    private void SkipCurrentDay()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            EventManager.currentManager.AddEvent(new DayHasPassed());
+        }
+    }
+
+    //Skips to next week
+    private void SkipCurrentWeek()
+    {
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            EventManager.currentManager.AddEvent(new WeekHasPassed());
+        }
+    }
 }
