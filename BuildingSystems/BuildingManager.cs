@@ -102,7 +102,10 @@ public class BuildingManager : MonoBehaviour
     private void EnableBuildPreview()
     {
         //Error handling
-        if (selectedObjectPrefab == null){ throw new MissingReferenceException();}
+        if (selectedObjectPrefab == null)
+        { 
+            throw new MissingReferenceException();
+        }
 
         //Create a build preview object
         selectedObjectPreview = Instantiate(selectedObjectPrefab.GetPrefab());
@@ -243,17 +246,23 @@ public class BuildingManager : MonoBehaviour
             if (placeableGUISelect.placeable != null)
             {
                 selectedObjectPrefab = placeableGUISelect.placeable;
-                EnableBuildingMode();
+                //EnableBuildingMode();
+                StartCoroutine(EnableBuildingModeCoroutine());
             }
             else
             {
                 throw new System.NullReferenceException("placeable data was null");
-            }
-
+            }            
         }
         else
         {
-            throw new System.Exception("Error: EventData class with EventType.PURCHASEBEGIN was received but is not of class PurchaseBeginEventData.");
+            throw new System.Exception("Error: EventData class with EventType.CLICKEDPLACEABLEGUI was received but is not of class PlaceableSelectedOnGUI.");
         }
+    }
+    IEnumerator EnableBuildingModeCoroutine()
+    {
+        yield return new WaitForEndOfFrame();
+
+        EnableBuildingMode();
     }
 }
