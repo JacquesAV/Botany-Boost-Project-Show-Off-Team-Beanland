@@ -23,3 +23,19 @@ public class PlaceableSelectedOnGUI : EventData
         placeable = givenPlaceable;
     }
 }
+
+//Event that informs subscribers of a week passing in game
+public class WeekHasPassed : EventData
+{
+    public WeekHasPassed() : base(EventType.WEEKPASSED)
+    {
+    }
+}
+
+//Event that informs subscribers of a day passing in game
+public class DayHasPassed : EventData
+{
+    public DayHasPassed() : base(EventType.DAYPASSED)
+    {
+    }
+}
