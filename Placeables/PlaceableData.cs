@@ -8,8 +8,9 @@ public class PlaceableData : MonoBehaviour
 
     [Header("Data")]
     [SerializeField] private PlaceableType placeableType;
-    private PlaceableOrientation placeableOrientation = PlaceableOrientation.Forward; //Default rotation
-    [SerializeField] private Vector2 placeableDimensions = Vector2.zero;
+    private PlaceableOrientation placeableOrientation = PlaceableOrientation.Forward; //Default rotation/orientation for an object
+    private Vector2 orientatedPlaceableDimensions = Vector2.one; //Current dimensions based on the orientation
+    [SerializeField] private Vector2 placeableDimensions = Vector2.one;
     [SerializeField] private int cost = 0;
     [SerializeField] private string placeableName;
     [SerializeField] private int biodiversity;
@@ -80,6 +81,11 @@ public class PlaceableData : MonoBehaviour
         return placeableDimensions;
     }
 
+    public Vector2 GetOrientatedDimensions()
+    {
+        return orientatedPlaceableDimensions;
+    }
+
     public PlaceableOrientation GetOrientation()
     {
         return placeableOrientation;
@@ -93,8 +99,13 @@ public class PlaceableData : MonoBehaviour
 
     public void SetOrientation(PlaceableOrientation newOrientation)
     {
-        //Update the stores orientation
+        //Update the orientation
         placeableOrientation = newOrientation;
+    }
+    public void SetOrientatedDimensions(Vector2 givenOrientatedDimension)
+    {
+        //Update the rotated orientation
+        orientatedPlaceableDimensions = givenOrientatedDimension;
     }
 }
 
