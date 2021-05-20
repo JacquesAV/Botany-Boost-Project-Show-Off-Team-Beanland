@@ -9,6 +9,7 @@ public class GridTile : MonoBehaviour
     //Active mesh of the grid tile
     private Mesh tileMesh = null;
     private MeshCollider tileCollider = null;
+    private int[] coordinates;
 
     //Arrays are used as they are fixed and should not change
     //Tracks the vertices of the quad grid tile
@@ -30,6 +31,14 @@ public class GridTile : MonoBehaviour
     //Start is called before the first frame update
     private void Start()
     {
+        InstantiateTile();
+    }
+    public void InstantiateTile(int[] givenCoordinates)
+    {
+        //Update the coordinates
+        coordinates = givenCoordinates;
+
+        //Instantiate normally
         InstantiateTile();
     }
 
@@ -100,6 +109,10 @@ public class GridTile : MonoBehaviour
 
         //Then return the average
         return averageHeight/vertices.Length;
+    }
+    public int[] GetCoordinates()
+    {
+        return coordinates;
     }
 
     private void OnDrawGizmos()
