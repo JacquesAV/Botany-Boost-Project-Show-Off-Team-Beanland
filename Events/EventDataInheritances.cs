@@ -73,3 +73,66 @@ public class PlantGassed : EventData
 
     }
 }
+
+//Event that informs subscribers of changes in the score manager, the ideal is to be used by a display view
+public class TotalScoresUpdated : EventData
+{
+    public readonly int money;
+    public readonly int biodiversity;
+    public readonly int carbonIntake;
+    public readonly int attractiveScore;
+    public readonly int invasiveness;
+    public readonly int disease;
+
+    public TotalScoresUpdated(int givenMoney, int givenBiodiversity, int givenCarbonIntake, int givenAttractiveScore, int givenInvasiveness, int givenDisease) : base(EventType.TOTALSCORESUPDATED)
+    {
+        money = givenMoney;
+        biodiversity = givenBiodiversity;
+        carbonIntake = givenCarbonIntake;
+        attractiveScore = givenAttractiveScore;
+        invasiveness = givenInvasiveness;
+        disease = givenDisease;
+    }
+}
+
+//Event that informs subscribers of changes in the score manager, the ideal is to be used by a display view
+public class ObjectPlacedScores : EventData
+{
+    public readonly int cost;
+    public readonly int biodiversity;
+    public readonly int carbonIntake;
+    public readonly int attractiveScore;
+    public readonly InsectType insectType;
+    public readonly int insectAttractiveness;
+
+    public ObjectPlacedScores(int givenCost, int givenBiodiversity, int givenCarbonIntake, int givenAttractiveScore, InsectType givenInsectType, int givenInsectAttractiveness) : base(EventType.OBJECTPLACEDSCORES)
+    {
+        cost = givenCost;
+        biodiversity = givenBiodiversity;
+        carbonIntake = givenCarbonIntake;
+        attractiveScore = givenAttractiveScore;
+        insectType = givenInsectType;
+        insectAttractiveness = givenInsectAttractiveness;
+    }
+}
+
+//Event that informs subscribers of changes in the score manager, the ideal is to be used by a display view
+public class ObjectRemovedScores : EventData
+{
+    public readonly int refund;
+    public readonly int biodiversity;
+    public readonly int carbonIntake;
+    public readonly int attractiveScore;
+    public readonly InsectType insectType;
+    public readonly int insectAttractiveness;
+
+    public ObjectRemovedScores(int givenCost, int givenBiodiversity, int givenCarbonIntake, int givenAttractiveScore, InsectType givenInsectType, int givenInsectAttractiveness) : base(EventType.OBJECTREMOVEDSCORES)
+    {
+        refund = givenCost;
+        biodiversity = givenBiodiversity;
+        carbonIntake = givenCarbonIntake;
+        attractiveScore = givenAttractiveScore;
+        insectType = givenInsectType;
+        insectAttractiveness = givenInsectAttractiveness;
+    }
+}
