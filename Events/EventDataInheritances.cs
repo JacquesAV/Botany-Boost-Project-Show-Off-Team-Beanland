@@ -39,3 +39,37 @@ public class DayHasPassed : EventData
     {
     }
 }
+
+//Event that informs subscribers of plant being infected
+public class PlantInfected: EventData
+{
+    public PlantInfected() : base(EventType.GOTSICK)
+    {
+        
+    }
+}
+
+//Event that informs subscribers of plant being cured
+public class PlantCured: EventData
+{
+    public PlantCured() : base(EventType.GOTCURED)
+    {
+
+    }
+}
+//Event that informs subscribers of plant being invaded
+public class PlantInvaded : EventData
+{
+    public PlantInvaded() : base(EventType.GOTINVADED)
+    {
+
+    }
+}
+//Event that informs subscribers of plant invasive species being removed
+public class PlantGassed : EventData
+{
+    public PlantGassed() : base(EventType.GOTGASSED)
+    {
+
+    }
+}
