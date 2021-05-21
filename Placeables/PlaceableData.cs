@@ -15,20 +15,37 @@ public class PlaceableData : MonoBehaviour
     [SerializeField] private string placeableName;
     [SerializeField] private int biodiversity;
     [SerializeField] private int carbonIntake;
-    [SerializeField] private int attractiveScore; 
+    [SerializeField] private int attractiveScore;
     [SerializeField] private InsectType insectType;
     [SerializeField] private int insectAttractiveness;
+
+    [Header("Spread Effects")]
+    [Range(0.05f,0.25f)][SerializeField] private float invaderSpawnChance = 0.25f;
+
+    [Range(0.1f, 0.75f)] [SerializeField] private float baseDiseaseChance = 0.25f;//The base chance of being infected
+    [Range(0.01f,0.5f)][SerializeField] private float diseaseSpreadModifier = 0.1f;//The modifier chance of spread increasing based on plant count
+
 
     public PlaceableData Initialize(PlaceableData baseData)
     {
         //Set information based on pre-created placeable data script
         prefab = baseData.prefab;
         displayImage = baseData.displayImage;
+
         placeableType = baseData.placeableType;
         placeableOrientation = baseData.placeableOrientation;
         placeableDimensions = baseData.placeableDimensions;
         cost = baseData.cost;
         placeableName= baseData.placeableName;
+        biodiversity = baseData.biodiversity;
+        carbonIntake = baseData.carbonIntake;
+        attractiveScore = baseData.attractiveScore;
+        insectType = baseData.insectType;
+        insectAttractiveness = baseData.insectAttractiveness;
+
+        invaderSpawnChance = baseData.invaderSpawnChance;
+        baseDiseaseChance = baseData.baseDiseaseChance;
+        diseaseSpreadModifier = baseData.diseaseSpreadModifier;
         return this;
     }
 
@@ -44,6 +61,7 @@ public class PlaceableData : MonoBehaviour
 
     private enum InsectType
     {
+        None,
         Bee,
         Butterfly,
         Beetle
@@ -56,9 +74,13 @@ public class PlaceableData : MonoBehaviour
     }
 
     #region Getters
-    public int GetCost()
+    public GameObject GetPrefab()
     {
-        return cost;
+        return prefab;
+    }
+    public Sprite GetDisplayImage()
+    {
+        return displayImage;
     }
 
     public string GetPlaceableType()
@@ -66,19 +88,9 @@ public class PlaceableData : MonoBehaviour
         return placeableType.ToString();
     }
 
-    public GameObject GetPrefab()
+    public PlaceableOrientation GetOrientation()
     {
-        return prefab;
-    }
-
-    public Sprite GetDisplayImage()
-    {
-        return displayImage;
-    }
-
-    public Vector2 GetDimensions()
-    {
-        return placeableDimensions;
+        return placeableOrientation;
     }
 
     public Vector2 GetOrientatedDimensions()
@@ -86,17 +98,63 @@ public class PlaceableData : MonoBehaviour
         return orientatedPlaceableDimensions;
     }
 
-    public PlaceableOrientation GetOrientation()
+    public Vector2 GetDimensions()
     {
-        return placeableOrientation;
+        return placeableDimensions;
+    }
+
+    public int GetCost()
+    {
+        return cost;
     }
 
     public string GetName()
     {
         return placeableName;
     }
-    #endregion
 
+    public int GetBiodiversity()
+    {
+        return biodiversity;
+    }
+
+    public int GetCarbonIntake()
+    {
+        return carbonIntake;
+    }
+
+    public int GetAttractiveScore()
+    {
+        return attractiveScore;
+    }
+
+    public string GetInsectType()
+    {
+        return insectType.ToString();
+    }
+
+    public int GetInsectAttractiveness()
+    {
+        return insectAttractiveness;
+    }
+
+    public float GetInvaderSpreadChance()
+    {
+        return invaderSpawnChance;
+    }
+
+    public float GetBaseDiseaseChance()
+    {
+        return baseDiseaseChance;
+    }
+
+    public float GetDiseaseSpreadModifier()
+    {
+        return diseaseSpreadModifier;
+    }
+
+    #endregion
+    #region Setters
     public void SetOrientation(PlaceableOrientation newOrientation)
     {
         //Update the orientation
@@ -107,6 +165,7 @@ public class PlaceableData : MonoBehaviour
         //Update the rotated orientation
         orientatedPlaceableDimensions = givenOrientatedDimension;
     }
+    #endregion
 }
 
 //Orientation of the placeables
