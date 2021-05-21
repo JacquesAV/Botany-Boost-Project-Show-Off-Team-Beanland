@@ -39,15 +39,9 @@ public class TileBuildingModel : MonoBehaviour
             if (!IsTilesVerified()) { return; }
             OnBuildClick();
             LinkNeighbours();
-
-            //Inform subscribers of addition
-            EventManager.currentManager.AddEvent(new ObjectPlacedScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
         }
         else if (BuildingManager.currentManager.managerState == BuildingState.destroying)
         {
-            //Inform subscribers of removal
-            EventManager.currentManager.AddEvent(new ObjectRemovedScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
-            
             //Destroying Functionalities
             OnSellClick();
             UnlinkNeighbours();
@@ -110,6 +104,9 @@ public class TileBuildingModel : MonoBehaviour
 
         //Debug
         DebugManager.DebugLog(savedPlaceableData.GetName()+" has been placed!");
+
+        //Fire off event with created information
+        EventManager.currentManager.AddEvent(new ObjectPlacedScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
     }
 
     private void LinkNeighbours()
@@ -150,6 +147,9 @@ public class TileBuildingModel : MonoBehaviour
             return;
         }
 
+        //Fire off event with sold information
+        EventManager.currentManager.AddEvent(new ObjectRemovedScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
+        
         //Debug
         DebugManager.DebugLog(savedPlaceableData.GetName() + " has been removed!");
     }
