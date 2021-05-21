@@ -81,7 +81,26 @@ public class DebugManager : MonoBehaviour
         //Sends a ping whenever key is pressed.
         if (Input.GetKeyDown(KeyCode.F8))
         {
-            DebugLog("Ping");
+            int uwuValue = Random.Range(1, 5);
+            switch (uwuValue)
+            {
+                case 1:
+                    DebugLog("Rawr X3 *nuzzles* How are you?");
+                    break;
+                case 2:
+                    DebugLog("*pounces on you* you're so warm o3o *notices you have a bulge* someone's happy!");
+                    break;
+                        case 3:
+                    DebugLog("UwU what’s this ?!");
+                    break;
+                case 4:
+                    DebugLog("*nuzzles your necky wecky* ~murr~ hehe ;) *rubbies your bulgy wolgy* you're so big! ");
+                    break;
+                case 5:
+                    DebugLog("I have a little itch o3o *wags tails* can you please get my itch?");
+                    break;
+            }
+            
         }
     }
 
