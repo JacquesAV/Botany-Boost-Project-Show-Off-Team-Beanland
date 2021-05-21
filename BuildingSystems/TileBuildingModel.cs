@@ -35,12 +35,20 @@ public class TileBuildingModel : MonoBehaviour
         //Check for the correct state
         if(BuildingManager.currentManager.managerState == BuildingState.building)
         {
+            //Building Functionalities
             if (!IsTilesVerified()) { return; }
             OnBuildClick();
             LinkNeighbours();
+
+            //Inform subscribers of addition
+            EventManager.currentManager.AddEvent(new ObjectPlacedScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
         }
         else if (BuildingManager.currentManager.managerState == BuildingState.destroying)
         {
+            //Inform subscribers of removal
+            EventManager.currentManager.AddEvent(new ObjectRemovedScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
+            
+            //Destroying Functionalities
             OnSellClick();
             UnlinkNeighbours();
         }
