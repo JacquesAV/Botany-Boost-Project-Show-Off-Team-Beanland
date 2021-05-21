@@ -104,9 +104,9 @@ public class PlaceableData : MonoBehaviour
         return attractiveScore;
     }
 
-    public string GetInsectType()
+    public InsectType GetInsectType()
     {
-        return insectType.ToString();
+        return insectType;
     }
 
     public int GetInsectAttractiveness()
