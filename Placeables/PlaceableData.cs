@@ -49,30 +49,6 @@ public class PlaceableData : MonoBehaviour
         return this;
     }
 
-    //The different kinds of placeables that are present in the game
-    private enum PlaceableType
-    {
-        Flower,
-        Bush,
-        Tree,
-        Flooring,
-        Ornament
-    }  
-
-    private enum InsectType
-    {
-        None,
-        Bee,
-        Butterfly,
-        Beetle
-    }
-
-    private struct PlaceableStats
-    {
-        //Stats need to be added with designers help
-
-    }
-
     #region Getters
     public GameObject GetPrefab()
     {
@@ -175,4 +151,23 @@ public enum PlaceableOrientation
     Right,
     Back,
     Left
+}
+
+//The different kinds of placeables that are present in the game
+public enum PlaceableType
+{
+    Flower,
+    Bush,
+    Tree,
+    Flooring,
+    Ornament
+}
+
+//Different types of insects that are present
+public enum InsectType
+{
+    None,
+    Bee,
+    Butterfly,
+    Beetle
 }
