@@ -136,7 +136,7 @@ public class BuildingManager : MonoBehaviour
     private void BuildModeRotate()
     {
         //Rotate right
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Period))
         {
             //Loop around
             if (currentOrientation == PlaceableOrientation.Left)
@@ -155,7 +155,7 @@ public class BuildingManager : MonoBehaviour
             UpdatePreviewOrientation();
         }
         //Rotate left
-        else if (Input.GetKeyDown(KeyCode.Q))
+        else if (Input.GetKeyDown(KeyCode.Comma))
         {
             //Loop around
             if (currentOrientation == PlaceableOrientation.Forward)
