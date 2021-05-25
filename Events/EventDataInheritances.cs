@@ -43,7 +43,7 @@ public class DayHasPassed : EventData
 //Event that informs subscribers of plant being infected
 public class PlantInfected: EventData
 {
-    public PlantInfected() : base(EventType.GOTSICK)
+    public PlantInfected() : base(EventType.PLANTINFECTED)
     {
         
     }
@@ -52,7 +52,7 @@ public class PlantInfected: EventData
 //Event that informs subscribers of plant being cured
 public class PlantCured: EventData
 {
-    public PlantCured() : base(EventType.GOTCURED)
+    public PlantCured() : base(EventType.PLANTCURED)
     {
 
     }
@@ -60,7 +60,7 @@ public class PlantCured: EventData
 //Event that informs subscribers of plant being invaded
 public class PlantInvaded : EventData
 {
-    public PlantInvaded() : base(EventType.GOTINVADED)
+    public PlantInvaded() : base(EventType.PLANTINVADED)
     {
 
     }
@@ -68,7 +68,7 @@ public class PlantInvaded : EventData
 //Event that informs subscribers of plant invasive species being removed
 public class PlantGassed : EventData
 {
-    public PlantGassed() : base(EventType.GOTGASSED)
+    public PlantGassed() : base(EventType.PLANTGASSED)
     {
 
     }
