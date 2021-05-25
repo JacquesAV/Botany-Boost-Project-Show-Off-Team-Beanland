@@ -118,6 +118,7 @@ public class TileBuildingModel : MonoBehaviour
             objectView.tag = "Plant";
             SphereCollider sphere = objectView.AddComponent<SphereCollider>();
             sphere.isTrigger = true;
+            objectView.layer = 2; //Set to ignore raycast layer
         }
 
         //Update the position based on the intended offset of the object
