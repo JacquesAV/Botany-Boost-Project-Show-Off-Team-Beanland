@@ -17,6 +17,7 @@ public class PlantEffects : MonoBehaviour
 
     private void Start()
     {
+        //set variables to the ones of the prefab
         placeableData=gameObject.GetComponent<PlaceableData>();
         lifespanInDays = placeableData.GetLifespan();
         baseDiseaseChance = placeableData.GetBaseDiseaseChance();
@@ -35,6 +36,7 @@ public class PlantEffects : MonoBehaviour
 
     public void OnDayPassed(EventData eventData)
     {
+        //when day passes
         if (eventData is DayHasPassed)
         {
             CalculateDiseaseChance();
@@ -63,7 +65,7 @@ public class PlantEffects : MonoBehaviour
             }
 
             //Debug
-            Debug.Log("plant has dieded");
+            //DebugManager.DebugLog("plant has dieded");
 
             //Remove the plant benefits from the score manager (with 0 refunded money)
             EventManager.currentManager.AddEvent(new ObjectSoldScores(0, placeableData.GetBiodiversity(), placeableData.GetCarbonIntake(), placeableData.GetAttractiveScore(), placeableData.GetInsectType(), placeableData.GetInsectAttractiveness()));
@@ -101,21 +103,22 @@ public class PlantEffects : MonoBehaviour
                     }
                 }
             }
-            //checks if the plant got infected
+            //checks if the plant got infected with percentile chance
             float diseaseChance = baseDiseaseChance + (samePlantCount * diseaseSpreadModifier) * 100;
             if (Random.Range(1, 100) <= diseaseChance)
             {
-                DebugManager.DebugLog("You just got diseased");
+                //DebugManager.DebugLog("You just got diseased");
                 isSick = true;
                 EventManager.currentManager.AddEvent(new PlantInfected());
             }
             else
             {
-                DebugManager.DebugLog("You are helfy");
+                //DebugManager.DebugLog("You are helfy");
             }
         }
         else
         {
+            //if it is sick then the plant will have 1 less day to live
             lifespanInDays--;
         }
     }
@@ -154,6 +157,7 @@ public class PlantEffects : MonoBehaviour
         }
         else
         {
+            //if it is sick then the plant will have 1 less day to live
             lifespanInDays--;
         }
     }
@@ -164,11 +168,13 @@ public class PlantEffects : MonoBehaviour
 
     public void PlantCured()
     {
+        //set plant to not being sick and send out event that it was cured
         isSick = false;
         EventManager.currentManager.AddEvent(new PlantCured());
     }
     public void PlantGassed()
     {
+        //set plant to not being invaded and send out event that it was gasses
         hasInvaders = false;
         EventManager.currentManager.AddEvent(new PlantGassed());
     }
