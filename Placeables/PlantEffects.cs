@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class PlantEffects : MonoBehaviour
 {
-    private PlaceableData placeableData;
-    private readonly int radius=2;
-    private float baseDiseaseChance = 0.25f;
-    private float diseaseSpreadModifier=0.1f;
-    private bool isSick=false;
+    private PlaceableData placeableData;//the data of the object that it is attached to
+    private readonly int radius=2;//the radius of the spread
+    private float baseDiseaseChance = 0.25f;//the base chance of getting disease
+    private float diseaseSpreadModifier=0.1f;//the modifier to obtaining a disease
+    private bool isSick=false;//if the plant got a disease
 
-    private float baseInvaderSpawnChance = 0.25f;
-    private bool hasInvaders = false;
+    private float baseInvaderSpawnChance = 0.25f;//base chance of an invasive species spawning on the plant
+    private bool hasInvaders = false;//if the plant has an invaded
 
-    private int lifespanInDays;
+    private int lifespanInDays;//the time that the plant lives
 
     private void Start()
     {
