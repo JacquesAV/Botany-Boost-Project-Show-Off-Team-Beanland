@@ -12,7 +12,7 @@ public class CamController : MonoBehaviour
     [Range(0f,1f)][SerializeField] private float botNLeftBarrier=0.03f;
 
     [SerializeField] private GameObject cameraHolder;
-
+    [SerializeField] private bool movementLocked = false;
 
     //Zooming
     private KeyCode zoomIn = KeyCode.Equals;
@@ -30,26 +30,28 @@ public class CamController : MonoBehaviour
     }
     private void CameraMovement()
     {
-        //Move up
-        if (Input.mousePosition.y >= Screen.height * topNRightBarrier || Input.GetKey(KeyCode.W))
+        if (!movementLocked)
         {
-            cameraHolder.transform.Translate(Vector3.up * Time.deltaTime * scrollSpeed, Space.World);
-        }
-        //Move down
-        if (Input.mousePosition.y <= Screen.height * botNLeftBarrier || Input.GetKey(KeyCode.S))
-        {
-            cameraHolder.transform.Translate(Vector3.down * Time.deltaTime * scrollSpeed, Space.World);
-        }
-        //Move left
-        if (Input.mousePosition.x <= Screen.width * botNLeftBarrier || Input.GetKey(KeyCode.A))
-        {
-            cameraHolder.transform.Translate(-Camera.main.transform.right * Time.deltaTime * scrollSpeed, Space.World);
-        }
-        //Move right
-        if (Input.mousePosition.x >= Screen.width * topNRightBarrier || Input.GetKey(KeyCode.D))
-        {
-            cameraHolder.transform.Translate(Camera.main.transform.right * Time.deltaTime * scrollSpeed, Space.World);
-        }
+            //Move up
+            if (Input.mousePosition.y >= Screen.height * topNRightBarrier || Input.GetKey(KeyCode.W))
+            {
+                cameraHolder.transform.Translate(Vector3.up * Time.deltaTime * scrollSpeed, Space.World);
+            }
+            //Move down
+            if (Input.mousePosition.y <= Screen.height * botNLeftBarrier || Input.GetKey(KeyCode.S))
+            {
+                cameraHolder.transform.Translate(Vector3.down * Time.deltaTime * scrollSpeed, Space.World);
+            }
+            //Move left
+            if (Input.mousePosition.x <= Screen.width * botNLeftBarrier || Input.GetKey(KeyCode.A))
+            {
+                cameraHolder.transform.Translate(-Camera.main.transform.right * Time.deltaTime * scrollSpeed, Space.World);
+            }
+            //Move right
+            if (Input.mousePosition.x >= Screen.width * topNRightBarrier || Input.GetKey(KeyCode.D))
+            {
+                cameraHolder.transform.Translate(Camera.main.transform.right * Time.deltaTime * scrollSpeed, Space.World);
+            } }
     }
 
     private void CameraZoom()
