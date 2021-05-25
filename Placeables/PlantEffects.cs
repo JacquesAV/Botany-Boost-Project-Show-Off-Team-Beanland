@@ -49,12 +49,29 @@ public class PlantEffects : MonoBehaviour
 
     private void CheckIfPlantDied()
     {
+        //If the lifespan is considered dead
         if (lifespanInDays < 1)
         {
+            //If infected or invaded, reduce the counter amount
+            if(hasInvaders)
+            {
+                EventManager.currentManager.AddEvent(new PlantGassed());
+            }
+            if (isSick)
+            {
+                EventManager.currentManager.AddEvent(new PlantCured());
+            }
+
+            //Debug
             Debug.Log("plant has dieded");
+
+            //Remove the plant benefits from the score manager (with 0 refunded money)
             EventManager.currentManager.AddEvent(new ObjectSoldScores(0, placeableData.GetBiodiversity(), placeableData.GetCarbonIntake(), placeableData.GetAttractiveScore(), placeableData.GetInsectType(), placeableData.GetInsectAttractiveness()));
+            
+            //Unlink the grid from the plant to free it up for other objects
             gameObject.GetComponentInParent<TileBuildingModel>().UnlinkNeighbours();
         }
+        //If completely healthy, reset its lifespan count
         if (!isSick && !hasInvaders)
         {
             lifespanInDays = placeableData.GetLifespan();
@@ -148,9 +165,11 @@ public class PlantEffects : MonoBehaviour
     public void PlantCured()
     {
         isSick = false;
+        EventManager.currentManager.AddEvent(new PlantCured());
     }
-    public void PlantDepested()
+    public void PlantGassed()
     {
         hasInvaders = false;
+        EventManager.currentManager.AddEvent(new PlantGassed());
     }
 }
