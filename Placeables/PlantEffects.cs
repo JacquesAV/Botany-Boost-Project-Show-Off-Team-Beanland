@@ -13,9 +13,12 @@ public class PlantEffects : MonoBehaviour
     private float baseInvaderSpawnChance = 0.25f;
     private bool hasInvaders = false;
 
+    private int lifespanInDays;
+
     private void Start()
     {
         placeableData=gameObject.GetComponent<PlaceableData>();
+        lifespanInDays = placeableData.GetLifespan();
         baseDiseaseChance = placeableData.GetBaseDiseaseChance();
         diseaseSpreadModifier = placeableData.GetDiseaseSpreadModifier();
     }
@@ -30,6 +33,33 @@ public class PlantEffects : MonoBehaviour
         EventManager.currentManager.Unsubscribe(EventType.DAYPASSED, OnDayPassed);
     }
 
+    public void OnDayPassed(EventData eventData)
+    {
+        if (eventData is DayHasPassed)
+        {
+            CalculateDiseaseChance();
+            CalculateInvasiveSpeciesSpawnChance();
+            CheckIfPlantDied();
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.PURCHASEBEGIN was received but is not of class DayHasPassed.");
+        } 
+    }
+
+    private void CheckIfPlantDied()
+    {
+        if (lifespanInDays < 1)
+        {
+            Debug.Log("plant has dieded");
+            EventManager.currentManager.AddEvent(new ObjectSoldScores(0, placeableData.GetBiodiversity(), placeableData.GetCarbonIntake(), placeableData.GetAttractiveScore(), placeableData.GetInsectType(), placeableData.GetInsectAttractiveness()));
+            gameObject.GetComponentInParent<TileBuildingModel>().UnlinkNeighbours();
+        }
+        if (!isSick && !hasInvaders)
+        {
+            lifespanInDays = placeableData.GetLifespan();
+        }
+    }
     //Check if a plant will get sick
     private void CalculateDiseaseChance()
     {
@@ -67,6 +97,10 @@ public class PlantEffects : MonoBehaviour
                 DebugManager.DebugLog("You are helfy");
             }
         }
+        else
+        {
+            lifespanInDays--;
+        }
     }
     //Check if a plant will get invasive species
     private void CalculateInvasiveSpeciesSpawnChance()
@@ -88,37 +122,35 @@ public class PlantEffects : MonoBehaviour
                     }
                 }
             }
-            Debug.Log(combinedPlantSpawnChances);
             //checks if the plant got an invasive species
             float invadorChance = baseInvaderSpawnChance + (combinedPlantSpawnChances * baseInvaderSpawnChance) * 100;
             if (Random.Range(1, 100) <= invadorChance)
             {
-                DebugManager.DebugLog("There is an imposter among us");
+                //DebugManager.DebugLog("There is an imposter among us");
                 hasInvaders = true;
                 EventManager.currentManager.AddEvent(new PlantInvaded());
             }
             else
             {
-                DebugManager.DebugLog("I am ino");
+                //DebugManager.DebugLog("I am ino");
             }
+        }
+        else
+        {
+            lifespanInDays--;
         }
     }
     public void SetPlaceableData(PlaceableData data)
     {
-        placeableData=data;
+        placeableData = data;
     }
 
-    public void OnDayPassed(EventData eventData)
+    public void PlantCured()
     {
-        if (eventData is DayHasPassed)
-        {
-            CalculateDiseaseChance();
-            CalculateInvasiveSpeciesSpawnChance();
-        }
-        else
-        {
-            throw new System.Exception("Error: EventData class with EventType.PURCHASEBEGIN was received but is not of class DayHasPassed.");
-        } 
+        isSick = false;
     }
-
+    public void PlantDepested()
+    {
+        hasInvaders = false;
+    }
 }
