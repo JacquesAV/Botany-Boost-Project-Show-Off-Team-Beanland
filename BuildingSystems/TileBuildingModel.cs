@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class TileBuildingModel : MonoBehaviour
 {
@@ -22,28 +23,31 @@ public class TileBuildingModel : MonoBehaviour
     private void Start()
     {
         //Get the grid tile script attached to the object
-        gridTile = this.gameObject.GetComponent<GridTile>();
+        gridTile = gameObject.GetComponent<GridTile>();
 
         //Default colors are the material colors placed on the grid
-        unoccupiedColor = this.GetComponent<Renderer>().material.color;
+        unoccupiedColor = GetComponent<Renderer>().material.color;
         currentColor = unoccupiedColor;
     }
 
     //When the user presses down on a tile
     public void OnMouseDown()
-    {
-        //Check for the correct state
-        if(BuildingManager.currentManager.managerState == BuildingState.building)
+    {        //Check if pointer is over a ui element
+        if (!EventSystem.current.IsPointerOverGameObject(-1))
         {
-            //Building Functionalities
-            if (!IsTilesVerified()) { return; }
-            OnBuildClick();
-        }
-        else if (BuildingManager.currentManager.managerState == BuildingState.destroying)
-        {
-            //Destroying Functionalities
-            OnSellClick();
-            UnlinkNeighbours();
+            //Check for the correct state
+            if (BuildingManager.currentManager.managerState == BuildingState.building)
+            {
+                //Building Functionalities
+                if (!IsTilesVerified()) { return; }
+                OnBuildClick();
+            }
+            else if (BuildingManager.currentManager.managerState == BuildingState.destroying)
+            {
+                //Destroying Functionalities
+                OnSellClick();
+                UnlinkNeighbours();
+            }
         }
     }
 
@@ -58,7 +62,7 @@ public class TileBuildingModel : MonoBehaviour
         }
 
         //Checks if neighbouring tiles are already occupied
-        foreach (TileBuildingModel tile in BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(this.gameObject, BuildingManager.currentManager.selectedObjectPrefab.GetOrientatedDimensions()).ToList())
+        foreach (TileBuildingModel tile in BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(gameObject, BuildingManager.currentManager.selectedObjectPrefab.GetOrientatedDimensions()).ToList())
         {
             //If occupied, return
             if (tile.savedPlaceableData != null)
@@ -105,7 +109,7 @@ public class TileBuildingModel : MonoBehaviour
         savedPlaceableData = objectResult.requestedObject;
 
         //Place the object view
-        objectView = Instantiate(savedPlaceableData.GetPrefab(), this.transform);
+        objectView = Instantiate(savedPlaceableData.GetPrefab(), transform);
 
         //Add the data script to the object view
         objectView.AddComponent<PlaceableData>().Initialize(savedPlaceableData);
@@ -146,7 +150,7 @@ public class TileBuildingModel : MonoBehaviour
         connectedTiles.Clear();
 
         //Get neighbours from the grid generator using the current dimensions of the tile
-        connectedTiles = BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(this.gameObject,savedPlaceableData.GetOrientatedDimensions());
+        connectedTiles = BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(gameObject,savedPlaceableData.GetOrientatedDimensions());
 
         //Add source tile to list so it gets cleared when another tile is clicked
         connectedTiles.Add(this);
@@ -155,10 +159,10 @@ public class TileBuildingModel : MonoBehaviour
         foreach (TileBuildingModel tile in connectedTiles.ToList())
         {
             //Set the object view to the source view
-            tile.objectView = this.objectView;
+            tile.objectView = objectView;
 
             //Set the placeable data
-            tile.savedPlaceableData = this.savedPlaceableData;
+            tile.savedPlaceableData = savedPlaceableData;
 
             //Update the references connected tiles on each other tile
             tile.connectedTiles = connectedTiles;
@@ -213,8 +217,11 @@ public class TileBuildingModel : MonoBehaviour
 
     //Change color when mouse enters
     public void OnMouseEnter()
-    {
-        ChangeMaterialColor(hoveredColor);
+    {        //Check if pointer is over a ui element
+        if (!EventSystem.current.IsPointerOverGameObject(-1))
+        {
+            ChangeMaterialColor(hoveredColor);
+        }
     }
 
     //Change color when mouse leaves
@@ -226,7 +233,7 @@ public class TileBuildingModel : MonoBehaviour
     public void ChangeMaterialColor(Color givenColor)
     {
         //Set the color on the MeshRenderer
-        this.GetComponent<Renderer>().material.color = givenColor;
+        GetComponent<Renderer>().material.color = givenColor;
     }
 
     public void ChangeCurrentMaterialColor(Color givenColor)

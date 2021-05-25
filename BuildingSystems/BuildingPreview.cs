@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuildingPreview : MonoBehaviour
 {
@@ -15,28 +16,33 @@ public class BuildingPreview : MonoBehaviour
     }
     private void CheckForHoveredTile()
     {
-        //Raycast to see where the mouse currently is (if a tile, then display and update location)
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+        //Check if pointer is over a ui element
+        if (!EventSystem.current.IsPointerOverGameObject(-1))
         {
-            //If colliding with a gridTile
-            if (hit.transform.tag is "GridTile")
+            //Raycast to see where the mouse currently is (if a tile, then display and update location)
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
             {
-                //If not already the selected tile, update the relevant information
-                if(hit.transform.gameObject != hoveredTiled)
+                //If colliding with a gridTile
+                if (hit.transform.tag is "GridTile")
                 {
-                    //Set the new tile
-                    hoveredTiled = hit.transform.gameObject;
+                    //If not already the selected tile, update the relevant information
+                    if (hit.transform.gameObject != hoveredTiled)
+                    {
+                        //Set the new tile
+                        hoveredTiled = hit.transform.gameObject;
 
-                    //Do not proceed if no hovered tile exists
-                    if (hoveredTiled == null) { throw new MissingReferenceException(); }
+                        //Do not proceed if no hovered tile exists
+                        if (hoveredTiled == null) { throw new MissingReferenceException(); }
 
-                    //Update the location
-                    UpdateDisplayLocation();
+                        //Update the location
+                        UpdateDisplayLocation();
 
-                    //Updates colors
-                    HighlightCycle();
+                        //Updates colors
+                        HighlightCycle();
+                    }
                 }
             }
+            return;
         }
     }
 
