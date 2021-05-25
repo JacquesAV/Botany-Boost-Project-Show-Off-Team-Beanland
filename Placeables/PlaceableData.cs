@@ -20,6 +20,8 @@ public class PlaceableData : MonoBehaviour
     [SerializeField] private int insectAttractiveness;
 
     [Header("Spread Effects")]
+    [SerializeField] private int lifespanInDays = 5;
+
     [Range(0.05f,0.25f)][SerializeField] private float invaderSpawnChance = 0.25f;
 
     [Range(0.1f, 0.75f)] [SerializeField] private float baseDiseaseChance = 0.25f;//The base chance of being infected
@@ -43,6 +45,7 @@ public class PlaceableData : MonoBehaviour
         insectType = baseData.insectType;
         insectAttractiveness = baseData.insectAttractiveness;
 
+        lifespanInDays = baseData.lifespanInDays;
         invaderSpawnChance = baseData.invaderSpawnChance;
         baseDiseaseChance = baseData.baseDiseaseChance;
         diseaseSpreadModifier = baseData.diseaseSpreadModifier;
@@ -104,14 +107,19 @@ public class PlaceableData : MonoBehaviour
         return attractiveScore;
     }
 
-    public InsectType GetInsectType()
-    {
-        return insectType;
-    }
+    public InsectType GetInsectType() 
+    { 
+        return insectType; 
+    } 
 
     public int GetInsectAttractiveness()
     {
         return insectAttractiveness;
+    }
+
+    public int GetLifespan()
+    {
+        return lifespanInDays;
     }
 
     public float GetInvaderSpreadChance()
@@ -153,6 +161,14 @@ public enum PlaceableOrientation
     Left
 }
 
+public enum InsectType
+{
+    None,
+    Bee,
+    Butterfly,
+    Beetle
+}
+
 //The different kinds of placeables that are present in the game
 public enum PlaceableType
 {
@@ -161,13 +177,4 @@ public enum PlaceableType
     Tree,
     Flooring,
     Ornament
-}
-
-//Different types of insects that are present
-public enum InsectType
-{
-    None,
-    Bee,
-    Butterfly,
-    Beetle
 }
