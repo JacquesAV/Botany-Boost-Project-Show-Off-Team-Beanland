@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class CamController : MonoBehaviour
 {
-    [Range(5,30)][SerializeField] private int scrollSpeed=10;
-    [Range(0f,1f)][SerializeField] private float zoomSpeed=0.05f;
-    [Range(5, 30)] [SerializeField] private int rotationSpeed = 5;
+    [Range(5,30)][SerializeField] private int scrollSpeed=10;//speed at which you move the camera
+    [Range(0f,1f)][SerializeField] private float zoomSpeed=0.05f;//Speed at which you can zoom
+    [Range(5, 30)] [SerializeField] private int rotationSpeed = 5;//speed at which you can rotate
 
+    //The barriers of the screen used for determining when the mouse it at an edge
     [Range(0f,1f)][SerializeField] private float topNRightBarrier=0.97f;
     [Range(0f,1f)][SerializeField] private float botNLeftBarrier=0.03f;
 
+    //The holder of the camera
     [SerializeField] private GameObject cameraHolder;
+    //Lock camera movement so that it does not annoy testing
     [SerializeField] private bool movementLocked = false;
 
+    //Keys used for keybinding (RIGHT NOW NOT IN USE)
     //Zooming
     private KeyCode zoomIn = KeyCode.Equals;
     private KeyCode zoomOut = KeyCode.Minus;
