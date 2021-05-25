@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreManager : MonoBehaviour
+public class PlayerScoreManager : MonoBehaviour
 {
-    [SerializeField]
     //Variables that are tracked in order to calculate score
-    private int totalMoney = 0; //Total money the user has to spend
+    [SerializeField]
+    private int totalMoney = 50; //Total money the user has to spend
+    [SerializeField]
+    private int beeThreshold=50, butterflyThreshold = 50, beetleThreshold = 50; //Thresholds for bees/butterflies/beetles to appear at
     private int totalBiodiversity = 0; //Total biodiversity, based on plants and insect attractiveness
     private int objectBiodiversity = 0; //Biodiversity, based on objects
     private int beeScore = 0; //Insect attractiveness (insect biodiversity)
@@ -18,51 +20,70 @@ public class ScoreManager : MonoBehaviour
     private int totalDisease = 0; //Level of disease, calculated from the number of negatively affected plants
     private int totalScore = 0; //Total combination of all scores
 
+    #region Event Handling
     private void OnEnable()
     {
         //Subscribes the method and event type to the current manager
-        EventManager.currentManager.Subscribe(EventType.OBJECTPLACEDSCORES, OnObjectPlacedScores);
-        EventManager.currentManager.Subscribe(EventType.OBJECTREMOVEDSCORES, OnObjectRemovedScores);
+        EventManager.currentManager.Subscribe(EventType.OBJECTBOUGHTSCORES, OnObjectBoughtScores);
+        EventManager.currentManager.Subscribe(EventType.OBJECTSOLDSCORES, OnObjectSoldScores);
+        EventManager.currentManager.Subscribe(EventType.OBJECTBUYREQUEST, OnObjectBuyRequest);
     }
     private void OnDisable()
     {
         //Unsubscribes the method and event type from the current manager
-        EventManager.currentManager.Unsubscribe(EventType.OBJECTPLACEDSCORES, OnObjectPlacedScores);
-        EventManager.currentManager.Unsubscribe(EventType.OBJECTREMOVEDSCORES, OnObjectRemovedScores);
+        EventManager.currentManager.Unsubscribe(EventType.OBJECTBOUGHTSCORES, OnObjectBoughtScores);
+        EventManager.currentManager.Unsubscribe(EventType.OBJECTSOLDSCORES, OnObjectSoldScores);
+        EventManager.currentManager.Unsubscribe(EventType.OBJECTBUYREQUEST, OnObjectBuyRequest);
     }
 
-    private void OnObjectPlacedScores(EventData eventData)
+    private void OnObjectBoughtScores(EventData eventData)
     {
-        if (eventData is ObjectPlacedScores)
+        if (eventData is ObjectBoughtScores)
         {
             //Cast the event so it can be used
-            ObjectPlacedScores objectScores = (ObjectPlacedScores)eventData;
+            ObjectBoughtScores objectScores = (ObjectBoughtScores)eventData;
 
             //Handle the incoming data
-            HandleIncomingPlacedScores(objectScores);
+            HandleIncomingBoughtScores(objectScores);
         }
         else
         {
-            throw new System.Exception("Error: EventData class with EventType.OBJECTPLACEDSCORES was received but is not of class ObjectPlacedScores.");
+            throw new System.Exception("Error: EventData class with EventType.OBJECTBOUGHTSCORES was received but is not of class ObjectBoughtScores.");
         }
     }
-    private void OnObjectRemovedScores(EventData eventData)
+    private void OnObjectSoldScores(EventData eventData)
     {
-        if (eventData is ObjectRemovedScores)
+        if (eventData is ObjectSoldScores)
         {
             //Cast the event so it can be used
-            ObjectRemovedScores objectScores = (ObjectRemovedScores)eventData;
+            ObjectSoldScores objectScores = (ObjectSoldScores)eventData;
 
             //Handle the incoming data
-            HandleIncomingRemovedScores(objectScores);
+            HandleIncomingSoldScores(objectScores);
         }
         else
         {
-            throw new System.Exception("Error: EventData class with EventType.OBJECTREMOVEDSCORES was received but is not of class ObjectRemovedScores.");
+            throw new System.Exception("Error: EventData class with EventType.OBJECTSOLDSCORES was received but is not of class ObjectSoldScores.");
         }
     }
-    //Handles the events related to scores being added or removed
-    private void HandleIncomingPlacedScores(ObjectPlacedScores objectScores)
+    private void OnObjectBuyRequest(EventData eventData)
+    {
+        if (eventData is ObjectBuyRequest)
+        {
+            //Cast the event so it can be used
+            ObjectBuyRequest objectRequest = (ObjectBuyRequest)eventData;
+
+            //Handle the incoming data
+            HandleIncomingObjectBuyRequest(objectRequest);
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.OBJECTBUYREQUEST was received but is not of class ObjectBuyRequest.");
+        }
+    }
+
+    //Handles the events related to a purchase being requested
+    private void HandleIncomingBoughtScores(ObjectBoughtScores objectScores)
     {
         //Apply all recieved scores
         RemoveMoney(objectScores.cost);
@@ -73,7 +94,26 @@ public class ScoreManager : MonoBehaviour
         //Update final scores and fire event
         UpdateTotalScores();
     }
-    private void HandleIncomingRemovedScores(ObjectRemovedScores objectScores)
+
+    //Handles the events related to scores being added or removed
+    private void HandleIncomingObjectBuyRequest(ObjectBuyRequest objectRequest)
+    {
+        //Check if purchase is possible (Is there enough money?)
+        if(IsAffordable(objectRequest.requestedObject.GetCost()))
+        {
+            //Fire off confirming that it is possible
+            EventManager.currentManager.AddEvent(new ObjectBuyRequestResult(objectRequest.requestedObject, true));
+            DebugManager.DebugLog("Approved purchase for "+ objectRequest.requestedObject.GetName() +"!");
+        }
+        else
+        {
+            //Fire off an event confirming that it is not possible
+            EventManager.currentManager.AddEvent(new ObjectBuyRequestResult(null, false));
+            DebugManager.DebugLog("Denied purchase for " + objectRequest.requestedObject.GetName() + "!");
+        }
+    }
+
+    private void HandleIncomingSoldScores(ObjectSoldScores objectScores)
     {
         //Apply all recieved scores
         AddMoney(objectScores.refund);
@@ -84,6 +124,8 @@ public class ScoreManager : MonoBehaviour
         //Update final scores and fire event
         UpdateTotalScores();
     }
+    #endregion
+
     private void UpdateTotalScores()
     {
         //Update the total score
@@ -91,6 +133,17 @@ public class ScoreManager : MonoBehaviour
 
         //Fire off event with information
         EventManager.currentManager.AddEvent(new TotalScoresUpdated(totalMoney, totalBiodiversity, totalCarbonIntake, totalAttractiveness, totalInvasiveness, totalDisease));
+    }
+    private bool IsAffordable(int givenCost)
+    {
+        //Check that money would not go negative
+        if(totalMoney - givenCost < 0)
+        {
+            //Purchase not possible
+            return false;
+        }
+        //Else the purchase is possible
+        return true;
     }
 
     #region Score Changing Related Methods
