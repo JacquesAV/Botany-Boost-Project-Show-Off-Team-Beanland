@@ -96,7 +96,7 @@ public class TotalScoresUpdated : EventData
 }
 
 //Event that informs subscribers of changes in the score manager, the ideal is to be used by a display view
-public class ObjectPlacedScores : EventData
+public class ObjectBoughtScores : EventData
 {
     public readonly int cost;
     public readonly int biodiversity;
@@ -105,7 +105,7 @@ public class ObjectPlacedScores : EventData
     public readonly InsectType insectType;
     public readonly int insectAttractiveness;
 
-    public ObjectPlacedScores(int givenCost, int givenBiodiversity, int givenCarbonIntake, int givenAttractiveScore, InsectType givenInsectType, int givenInsectAttractiveness) : base(EventType.OBJECTPLACEDSCORES)
+    public ObjectBoughtScores(int givenCost, int givenBiodiversity, int givenCarbonIntake, int givenAttractiveScore, InsectType givenInsectType, int givenInsectAttractiveness) : base(EventType.OBJECTBOUGHTSCORES)
     {
         cost = givenCost;
         biodiversity = givenBiodiversity;
@@ -117,7 +117,7 @@ public class ObjectPlacedScores : EventData
 }
 
 //Event that informs subscribers of changes in the score manager, the ideal is to be used by a display view
-public class ObjectRemovedScores : EventData
+public class ObjectSoldScores : EventData
 {
     public readonly int refund;
     public readonly int biodiversity;
@@ -126,13 +126,37 @@ public class ObjectRemovedScores : EventData
     public readonly InsectType insectType;
     public readonly int insectAttractiveness;
 
-    public ObjectRemovedScores(int givenCost, int givenBiodiversity, int givenCarbonIntake, int givenAttractiveScore, InsectType givenInsectType, int givenInsectAttractiveness) : base(EventType.OBJECTREMOVEDSCORES)
+    public ObjectSoldScores(int givenRefund, int givenBiodiversity, int givenCarbonIntake, int givenAttractiveScore, InsectType givenInsectType, int givenInsectAttractiveness) : base(EventType.OBJECTSOLDSCORES)
     {
-        refund = givenCost;
+        refund = givenRefund;
         biodiversity = givenBiodiversity;
         carbonIntake = givenCarbonIntake;
         attractiveScore = givenAttractiveScore;
         insectType = givenInsectType;
         insectAttractiveness = givenInsectAttractiveness;
+    }
+}
+
+//Event that informs subscribers that a buy request is being made
+public class ObjectBuyRequest : EventData
+{
+    public readonly PlaceableData requestedObject;
+
+    public ObjectBuyRequest(PlaceableData givenRequestedObject) : base(EventType.OBJECTBUYREQUEST)
+    {
+        requestedObject = givenRequestedObject;
+    }
+}
+
+//Event that informs subscribers that a buy request was denied or allowed
+public class ObjectBuyRequestResult : EventData
+{
+    public readonly PlaceableData requestedObject;
+    public readonly bool wasAllowed;
+
+    public ObjectBuyRequestResult(PlaceableData givenRequestedObject, bool givenWasAllowed) : base(EventType.OBJECTBUYREQUESTRESULT)
+    {
+        requestedObject = givenRequestedObject;
+        wasAllowed = givenWasAllowed;
     }
 }
