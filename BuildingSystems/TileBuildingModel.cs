@@ -38,7 +38,6 @@ public class TileBuildingModel : MonoBehaviour
             //Building Functionalities
             if (!IsTilesVerified()) { return; }
             OnBuildClick();
-            LinkNeighbours();
         }
         else if (BuildingManager.currentManager.managerState == BuildingState.destroying)
         {
@@ -74,8 +73,36 @@ public class TileBuildingModel : MonoBehaviour
 
     private void OnBuildClick()
     {
+        //Fire off event to check if building price is possible and subscribe to an event so that it may recieve the result with ease
+        EventManager.currentManager.Subscribe(EventType.OBJECTBUYREQUESTRESULT, OnObjectBuyRequestResult);
+        EventManager.currentManager.AddEvent(new ObjectBuyRequest(BuildingManager.currentManager.selectedObjectPrefab));
+    }
+
+    private void OnObjectBuyRequestResult(EventData eventData)
+    {
+        if (eventData is ObjectBuyRequestResult)
+        {
+            //Cast the event so it can be used
+            ObjectBuyRequestResult objectResult = (ObjectBuyRequestResult)eventData;
+
+            //Unsubscribe from waiting for a request
+            EventManager.currentManager.Unsubscribe(EventType.OBJECTBUYREQUESTRESULT, OnObjectBuyRequestResult);
+
+            //Handle the incoming data if result was allowed
+            if(objectResult.wasAllowed)
+            {
+                HandleIncomingObjectBuyResult(objectResult);
+            }
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.OBJECTBUYREQUESTRESULT was received but is not of class ObjectBuyRequestResult.");
+        }
+    }
+    private void HandleIncomingObjectBuyResult(ObjectBuyRequestResult objectResult)
+    {
         //Update the saved data on the tile
-        savedPlaceableData = BuildingManager.currentManager.selectedObjectPrefab;
+        savedPlaceableData = objectResult.requestedObject;
 
         //Place the object view
         objectView = Instantiate(savedPlaceableData.GetPrefab(), this.transform);
@@ -96,17 +123,20 @@ public class TileBuildingModel : MonoBehaviour
         //Update the position based on the intended offset of the object
         objectView.transform.position += RecalculateGridOffset();
 
-        //Rename the object for the editor
+        //Rename the object for the unity editor
         objectView.name = savedPlaceableData.GetName() + " View";
 
         //Apply the orientation to the view
         ApplyOrientation();
 
         //Debug
-        DebugManager.DebugLog(savedPlaceableData.GetName()+" has been placed!");
+        DebugManager.DebugLog(savedPlaceableData.GetName() + " has been placed!");
 
         //Fire off event with created information
-        EventManager.currentManager.AddEvent(new ObjectPlacedScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
+        EventManager.currentManager.AddEvent(new ObjectBoughtScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
+
+        //Then link neighbours
+        LinkNeighbours();
     }
 
     private void LinkNeighbours()
@@ -148,7 +178,7 @@ public class TileBuildingModel : MonoBehaviour
         }
 
         //Fire off event with sold information
-        EventManager.currentManager.AddEvent(new ObjectRemovedScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
+        EventManager.currentManager.AddEvent(new ObjectSoldScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
         
         //Debug
         DebugManager.DebugLog(savedPlaceableData.GetName() + " has been removed!");
