@@ -17,16 +17,19 @@ public class PlayerScoreManager : MonoBehaviour
     private int totalCarbonIntake = 0; //Total carbon intake score, is not influenced by others
     private int totalAttractiveness = 0; //Total attractiveness of the objects in general, more of a "human" likeability score
     private int totalInvasiveness = 0; //Level of invasiveness, calculated from the number of negatively affected plants
-    private int totalDisease = 0; //Level of disease, calculated from the number of negatively affected plants
+    private int totalInfections = 0; //Level of disease, calculated from the number of negatively affected plants
     private int totalScore = 0; //Total combination of all scores
 
-    #region Event Handling
     private void OnEnable()
     {
         //Subscribes the method and event type to the current manager
-        EventManager.currentManager.Subscribe(EventType.OBJECTBOUGHTSCORES, OnObjectBoughtScores);
-        EventManager.currentManager.Subscribe(EventType.OBJECTSOLDSCORES, OnObjectSoldScores);
-        EventManager.currentManager.Subscribe(EventType.OBJECTBUYREQUEST, OnObjectBuyRequest);
+        EventManager.currentManager.Subscribe(EventType.OBJECTBOUGHTSCORES, OnObjectBoughtScores); //Process objects that were bought
+        EventManager.currentManager.Subscribe(EventType.OBJECTSOLDSCORES, OnObjectSoldScores); //Process sold object
+        EventManager.currentManager.Subscribe(EventType.OBJECTBUYREQUEST, OnObjectBuyRequest); //Process a buy request
+        EventManager.currentManager.Subscribe(EventType.PLANTINVADED, OnPlantInvaded); //Increase invaded plant count
+        EventManager.currentManager.Subscribe(EventType.PLANTGASSED, OnPlantGassed); //Decrease invaded plant count
+        EventManager.currentManager.Subscribe(EventType.PLANTINFECTED, OnPlantInfected); //Increase sick plant count
+        EventManager.currentManager.Subscribe(EventType.PLANTCURED, OnPlantCured); //Decrease sick plant count
     }
     private void OnDisable()
     {
@@ -34,8 +37,13 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Unsubscribe(EventType.OBJECTBOUGHTSCORES, OnObjectBoughtScores);
         EventManager.currentManager.Unsubscribe(EventType.OBJECTSOLDSCORES, OnObjectSoldScores);
         EventManager.currentManager.Unsubscribe(EventType.OBJECTBUYREQUEST, OnObjectBuyRequest);
+        EventManager.currentManager.Unsubscribe(EventType.PLANTINVADED, OnPlantInvaded);
+        EventManager.currentManager.Unsubscribe(EventType.PLANTGASSED, OnPlantGassed);
+        EventManager.currentManager.Unsubscribe(EventType.PLANTINFECTED, OnPlantInfected);
+        EventManager.currentManager.Unsubscribe(EventType.PLANTCURED, OnPlantCured);
     }
 
+    #region OnEvents
     private void OnObjectBoughtScores(EventData eventData)
     {
         if (eventData is ObjectBoughtScores)
@@ -81,7 +89,69 @@ public class PlayerScoreManager : MonoBehaviour
             throw new System.Exception("Error: EventData class with EventType.OBJECTBUYREQUEST was received but is not of class ObjectBuyRequest.");
         }
     }
+    private void OnPlantInvaded(EventData eventData)
+    {
+        if (eventData is PlantInvaded)
+        {
+            //Add to invasion count
+            totalInvasiveness++;
 
+            //Request a score update
+            UpdateTotalScores();
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.PLANTINVADED was received but is not of class PlantInvaded.");
+        }
+    }
+    private void OnPlantGassed(EventData eventData)
+    {
+        if (eventData is PlantGassed)
+        {
+            //Add to invasion count
+            totalInvasiveness--;
+
+            //Request a score update
+            UpdateTotalScores();
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.PLANTGASSED was received but is not of class PlantGassed.");
+        }
+    }
+    private void OnPlantInfected(EventData eventData)
+    {
+        if (eventData is PlantInfected)
+        {
+            //Add to invasion count
+            totalInfections++;
+
+            //Request a score update
+            UpdateTotalScores();
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.PLANTINFECTED was received but is not of class PlantInfected.");
+        }
+    }
+    private void OnPlantCured(EventData eventData)
+    {
+        if (eventData is PlantCured)
+        {
+            //Add to invasion count
+            totalInfections--;
+
+            //Request a score update
+            UpdateTotalScores();
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.PLANTCURED was received but is not of class PlantCured.");
+        }
+    }
+    #endregion
+
+    #region Event Data Handlers
     //Handles the events related to a purchase being requested
     private void HandleIncomingBoughtScores(ObjectBoughtScores objectScores)
     {
@@ -129,10 +199,10 @@ public class PlayerScoreManager : MonoBehaviour
     private void UpdateTotalScores()
     {
         //Update the total score
-        totalScore = totalBiodiversity + totalCarbonIntake - (totalDisease + totalInvasiveness);
+        totalScore = totalBiodiversity + totalCarbonIntake - (totalInfections + totalInvasiveness);
 
         //Fire off event with information
-        EventManager.currentManager.AddEvent(new TotalScoresUpdated(totalMoney, totalBiodiversity, totalCarbonIntake, totalAttractiveness, totalInvasiveness, totalDisease));
+        EventManager.currentManager.AddEvent(new TotalScoresUpdated(totalMoney, totalBiodiversity, totalCarbonIntake, totalAttractiveness, totalInvasiveness, totalInfections));
     }
     private bool IsAffordable(int givenCost)
     {
