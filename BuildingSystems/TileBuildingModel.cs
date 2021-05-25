@@ -185,7 +185,7 @@ public class TileBuildingModel : MonoBehaviour
         DebugManager.DebugLog(savedPlaceableData.GetName() + " has been removed!");
     }
 
-    private void UnlinkNeighbours()
+    public void UnlinkNeighbours()
     {
         //Clear neighbour data
         foreach (TileBuildingModel tile in connectedTiles.ToList())
