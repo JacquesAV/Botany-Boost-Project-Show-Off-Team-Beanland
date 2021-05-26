@@ -3,26 +3,26 @@ using UnityEngine;
 public class PlaceableData : MonoBehaviour
 {
     [Header("Visuals")]
-    [SerializeField] private GameObject prefab;
-    [SerializeField] private Sprite displayImage = null;
+    [SerializeField] private GameObject prefab;//the prefab that will be created on visual
+    [SerializeField] private Sprite displayImage = null;//the image displayed in the book
 
     [Header("Data")]
     [SerializeField] private PlaceableType placeableType;
     private PlaceableOrientation placeableOrientation = PlaceableOrientation.Forward; //Default rotation/orientation for an object
     private Vector2 orientatedPlaceableDimensions = Vector2.one; //Current dimensions based on the orientation
     [SerializeField] private Vector2 placeableDimensions = Vector2.one;
-    [SerializeField] private int cost = 0;
-    [SerializeField] private string placeableName;
-    [SerializeField] private int biodiversity;
-    [SerializeField] private int carbonIntake;
-    [SerializeField] private int attractiveScore;
+    [SerializeField] private int cost = 0;//how much it costs to place
+    [SerializeField] private string placeableName;//the name of the plant
+    [SerializeField] private int biodiversity;//the biodiversity the plant provides
+    [SerializeField] private int carbonIntake;//the carbon intake the plant provides
+    [SerializeField] private int appeal;//how appealing the plant is
     [SerializeField] private InsectType insectType;
-    [SerializeField] private int insectAttractiveness;
+    [SerializeField] private int insectAttractiveness;//how many insects attracted
 
     [Header("Spread Effects")]
-    [SerializeField] private int lifespanInDays = 5;
+    [SerializeField] private int lifespanInDays = 5;//how long the plant can live when diseased or fighting invasive species
 
-    [Range(0.05f,0.25f)][SerializeField] private float invaderSpawnChance = 0.25f;
+    [Range(0.05f,0.25f)][SerializeField] private float invaderSpawnChance = 0.25f;//the chance of invasive species spawning
 
     [Range(0.1f, 0.75f)] [SerializeField] private float baseDiseaseChance = 0.25f;//The base chance of being infected
     [Range(0.01f,0.5f)][SerializeField] private float diseaseSpreadModifier = 0.1f;//The modifier chance of spread increasing based on plant count
@@ -41,7 +41,7 @@ public class PlaceableData : MonoBehaviour
         placeableName= baseData.placeableName;
         biodiversity = baseData.biodiversity;
         carbonIntake = baseData.carbonIntake;
-        attractiveScore = baseData.attractiveScore;
+        appeal = baseData.appeal;
         insectType = baseData.insectType;
         insectAttractiveness = baseData.insectAttractiveness;
 
@@ -102,9 +102,9 @@ public class PlaceableData : MonoBehaviour
         return carbonIntake;
     }
 
-    public int GetAttractiveScore()
+    public int GetAppeal()
     {
-        return attractiveScore;
+        return appeal;
     }
 
     public InsectType GetInsectType() 
@@ -160,7 +160,7 @@ public enum PlaceableOrientation
     Back,
     Left
 }
-
+//What insect will be attracted by the plant
 public enum InsectType
 {
     None,

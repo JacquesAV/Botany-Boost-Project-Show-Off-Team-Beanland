@@ -68,7 +68,7 @@ public class PlantEffects : MonoBehaviour
             //DebugManager.DebugLog("plant has dieded");
 
             //Remove the plant benefits from the score manager (with 0 refunded money)
-            EventManager.currentManager.AddEvent(new ObjectSoldScores(0, placeableData.GetBiodiversity(), placeableData.GetCarbonIntake(), placeableData.GetAttractiveScore(), placeableData.GetInsectType(), placeableData.GetInsectAttractiveness()));
+            EventManager.currentManager.AddEvent(new ObjectSoldScores(0, placeableData.GetBiodiversity(), placeableData.GetCarbonIntake(), placeableData.GetAppeal(), placeableData.GetInsectType(), placeableData.GetInsectAttractiveness()));
             
             //Unlink the grid from the plant to free it up for other objects
             gameObject.GetComponentInParent<TileBuildingModel>().UnlinkNeighbours();

@@ -5,7 +5,8 @@ using System.Linq;
 
 public class PlaceableHolder : MonoBehaviour
 {
-    private List<GameObject> placeables=new List<GameObject>();
+    private List<GameObject> placeables=new List<GameObject>();//list of all placeable prefabs
+    //List of each kind of placeable
     private readonly List<GameObject> flowers = new List<GameObject>(), bushes = new List<GameObject>(), trees = new List<GameObject>(), floorings = new List<GameObject>(), ornaments=new List<GameObject>();
 
     void Awake()
