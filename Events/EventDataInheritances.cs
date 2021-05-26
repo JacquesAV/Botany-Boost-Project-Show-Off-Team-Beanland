@@ -160,3 +160,13 @@ public class ObjectBuyRequestResult : EventData
         wasAllowed = givenWasAllowed;
     }
 }
+
+//Event that informs subscribers of the current hovered tile
+public class CurrentHoveredTile : EventData
+{
+    public readonly GameObject currentHoveredTile;
+    public CurrentHoveredTile(GameObject givenTile) : base(EventType.CURRENTHOVEREDTILE)
+    {
+        currentHoveredTile = givenTile;
+    }
+}
