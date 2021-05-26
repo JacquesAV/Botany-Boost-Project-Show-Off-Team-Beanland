@@ -56,27 +56,36 @@ public class GridPlaneGenerator : MonoBehaviour
         }
 
         //Get tiles based on the source tile and dimensions
-        for (int x = 0; x < dimensions.x; x++)
+        //Uses a try catch statement in order to avoid errors when getting a non existant index
+        //Returning empty to represent failure
+        try 
         {
-            for (int z = 0; z < dimensions.y; z++)
+            for (int x = 0; x < dimensions.x; x++)
             {
-                //Temporary int array of neighbour coordinates, starting from the source tile
-                int[] neighbourCoordinates = new int[] { sourceCoordinates[0], sourceCoordinates[1]};
+                for (int z = 0; z < dimensions.y; z++)
+                {
+                    //Temporary int array of neighbour coordinates, starting from the source tile
+                    int[] neighbourCoordinates = new int[] { sourceCoordinates[0], sourceCoordinates[1] };
 
-                //If x axis is negative, move backwards instead of forwards
-                if (xNeg) {neighbourCoordinates[0] -= x;}
-                else { neighbourCoordinates[0] += x;}
+                    //If x axis is negative, move backwards instead of forwards
+                    if (xNeg) { neighbourCoordinates[0] -= x; }
+                    else { neighbourCoordinates[0] += x; }
 
-                //If z axis is negative, move backwards instead of forwards
-                if (zNeg) { neighbourCoordinates[1] -= z;}
-                else { neighbourCoordinates[1] += z;}
+                    //If z axis is negative, move backwards instead of forwards
+                    if (zNeg) { neighbourCoordinates[1] -= z; }
+                    else { neighbourCoordinates[1] += z; }
 
-                //Get the index of the grid tile
-                int index = gridCoordinates[neighbourCoordinates[0], neighbourCoordinates[1]];
+                    //Get the index of the grid tile
+                    int index = gridCoordinates[neighbourCoordinates[0], neighbourCoordinates[1]];
 
-                //Add the relevant index tile
-                tileBuildingNeighbours.Add(gridTiles[index].GetComponent<TileBuildingModel>());
+                    //Add the relevant index tile
+                    tileBuildingNeighbours.Add(gridTiles[index].GetComponent<TileBuildingModel>());
+                }
             }
+        }
+        catch
+        {
+            return null;
         }
 
         //Return temporary list of neighbours
