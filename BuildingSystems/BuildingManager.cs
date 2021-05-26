@@ -33,12 +33,16 @@ public class BuildingManager : MonoBehaviour
 
     private void OnEnable()
     {
+        //Subscribes the method and event type to the current manager
         EventManager.currentManager.Subscribe(EventType.CLICKEDPLACEABLEGUI, OnPlaceableUISelect);
+        EventManager.currentManager.Subscribe(EventType.CURRENTHOVEREDTILE, OnCurrentHoveredSourceTile);
     }
 
     private void OnDisable()
     {
+        //Unsubscribes the method and event type to the current manager
         EventManager.currentManager.Unsubscribe(EventType.CLICKEDPLACEABLEGUI, OnPlaceableUISelect);
+        EventManager.currentManager.Unsubscribe(EventType.CURRENTHOVEREDTILE, OnCurrentHoveredSourceTile);
     }
 
     public GridPlaneGenerator activeGridGenerator = null; //Reference to the active grid that the building manager will interact with
@@ -50,6 +54,9 @@ public class BuildingManager : MonoBehaviour
     public BuildingState managerState = BuildingState.inactive; //State of the manager (for swapping users interactive capabilities)
     private PlaceableOrientation currentOrientation = PlaceableOrientation.Forward; //Current rotation/orientation of the structure being placed
 
+    private List<TileBuildingModel> selectedConnectedTiles = new List<TileBuildingModel>(); //Current list of connected tiles to the current source/hover tile
+    private GameObject hoveredTile = null; //The tile currently being hovered over
+
     private void Update()
     {
         if (managerState == BuildingState.building) {BuildModeRotate(); } //Looks out for key commands to rotate objects
@@ -58,7 +65,7 @@ public class BuildingManager : MonoBehaviour
     public void EnableBuildingMode()
     {
         //Checks if already in build mode or if preview is active
-        //If yes, then remove the old preview to
+        //If yes, then remove the old preview
         if(managerState == BuildingState.building || selectedObjectPreview!=null)
         {
             DisableBuildPreview();
@@ -75,6 +82,9 @@ public class BuildingManager : MonoBehaviour
 
         //Enable the build preview of the object
         EnableBuildPreview();
+
+        //Fire off event with hovered tile
+        EventManager.currentManager.AddEvent(new CurrentHoveredTile(hoveredTile));
     }
 
     public void EnableDestroyingMode()
@@ -229,11 +239,55 @@ public class BuildingManager : MonoBehaviour
 
         //Update the intended orientation for the built object
         selectedObjectPrefab.SetOrientatedDimensions(dimensionOrientated);
+
+        //Update the list of connected tiles so that it correctly reflects the rotation
+        UpdateConnectedTiles();
+    }
+
+    private void OnCurrentHoveredSourceTile(EventData eventData)
+    {
+        if (eventData is CurrentHoveredTile)
+        {
+            //Cast the data to be used
+            CurrentHoveredTile currentHoveredTileData = (CurrentHoveredTile)eventData;
+
+            //Set the new hovered tile
+            hoveredTile = currentHoveredTileData.currentHoveredTile;
+
+            //Update the connected tiles
+            UpdateConnectedTiles();
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.CURRENTHOVEREDTILE was received but is not of class CurrentHoveredTile.");
+        }
+    }
+
+    private void UpdateConnectedTiles()
+    {
+        //Update the list of connecting tiles
+        selectedConnectedTiles = activeGridGenerator.GetGridTileNeighbours(hoveredTile, selectedObjectPrefab.GetOrientatedDimensions());
     }
 
     public Vector3 getFlatObjectOffset()
     {
         return flatObjectOffset;
+    }
+
+    public List<TileBuildingModel> GetSelectedConnectingTiles()
+    {
+        return selectedConnectedTiles;
+    }
+    public bool ConnectingTilesListWasPopulated()
+    {
+        //Checks that connecting tiles are neither empty nor null
+        if (selectedConnectedTiles == null || selectedConnectedTiles.Count <= 0)
+        {
+            //Return invalid
+            return false;
+        }
+        //Return valid
+        return true;
     }
 
     private void OnPlaceableUISelect(EventData eventData)
@@ -242,11 +296,11 @@ public class BuildingManager : MonoBehaviour
         {
             //Adds the event data received to a class for use 
             PlaceableSelectedOnGUI placeableGUISelect = (PlaceableSelectedOnGUI)eventData;
+
             //subtracts money from player 
             if (placeableGUISelect.placeable != null)
             {
                 selectedObjectPrefab = placeableGUISelect.placeable;
-                //EnableBuildingMode();
                 StartCoroutine(EnableBuildingModeCoroutine());
             }
             else

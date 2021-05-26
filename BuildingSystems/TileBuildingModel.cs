@@ -32,7 +32,8 @@ public class TileBuildingModel : MonoBehaviour
 
     //When the user presses down on a tile
     public void OnMouseDown()
-    {        //Check if pointer is over a ui element
+    {
+        //Check if pointer is over a ui element
         if (!EventSystem.current.IsPointerOverGameObject(-1))
         {
             //Check for the correct state
@@ -53,16 +54,16 @@ public class TileBuildingModel : MonoBehaviour
 
     private bool IsTilesVerified()
     {
-        //Checks if the tile is already occupied
-        if (savedPlaceableData != null)
+        //Checks if the tile is already occupied and that the grid tile neighbours are not empty or null
+        if (savedPlaceableData != null || !BuildingManager.currentManager.ConnectingTilesListWasPopulated())
         {
             //Debug that building location is invalid
             DebugManager.DebugLog("Invalid location for placement");
             return false;
         }
 
-        //Checks if neighbouring tiles are already occupied
-        foreach (TileBuildingModel tile in BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(gameObject, BuildingManager.currentManager.selectedObjectPrefab.GetOrientatedDimensions()).ToList())
+        //Checks if neighbouring tiles are already occupied 
+        foreach (TileBuildingModel tile in BuildingManager.currentManager.GetSelectedConnectingTiles().ToList())
         {
             //If occupied, return
             if (tile.savedPlaceableData != null)
@@ -138,22 +139,16 @@ public class TileBuildingModel : MonoBehaviour
         DebugManager.DebugLog(savedPlaceableData.GetName() + " has been placed!");
 
         //Fire off event with created information
-        EventManager.currentManager.AddEvent(new ObjectBoughtScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
+        EventManager.currentManager.AddEvent(new ObjectBoughtScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAppeal(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
 
         //Then link neighbours
         LinkNeighbours();
     }
-
+    
     private void LinkNeighbours()
     {
-        //Clear the connected tiles of any old neighbours
-        connectedTiles.Clear();
-
-        //Get neighbours from the grid generator using the current dimensions of the tile
-        connectedTiles = BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(gameObject,savedPlaceableData.GetOrientatedDimensions());
-
-        //Add source tile to list so it gets cleared when another tile is clicked
-        connectedTiles.Add(this);
+        //Get neighbours from the manager which pre-gets the tiles
+        connectedTiles = BuildingManager.currentManager.GetSelectedConnectingTiles();
 
         //Update neighbour information
         foreach (TileBuildingModel tile in connectedTiles.ToList())
@@ -183,7 +178,7 @@ public class TileBuildingModel : MonoBehaviour
         }
 
         //Fire off event with sold information
-        EventManager.currentManager.AddEvent(new ObjectSoldScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAttractiveScore(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
+        EventManager.currentManager.AddEvent(new ObjectSoldScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAppeal(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
         
         //Debug
         DebugManager.DebugLog(savedPlaceableData.GetName() + " has been removed!");
@@ -217,10 +212,15 @@ public class TileBuildingModel : MonoBehaviour
 
     //Change color when mouse enters
     public void OnMouseEnter()
-    {        //Check if pointer is over a ui element
+    {   
+        //Check if pointer is over a ui element
         if (!EventSystem.current.IsPointerOverGameObject(-1))
         {
+            //Change colors
             ChangeMaterialColor(hoveredColor);
+
+            //Fire off event with this object
+            EventManager.currentManager.AddEvent(new CurrentHoveredTile(transform.gameObject));
         }
     }
 

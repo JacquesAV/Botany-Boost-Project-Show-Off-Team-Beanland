@@ -10,39 +10,38 @@ public class BuildingPreview : MonoBehaviour
     private GameObject hoveredTiled = null; //Tile that is being hovered over
     private List<TileBuildingModel> connectedTiles = new List<TileBuildingModel>(); //List of tiles that connect to the source tile
 
-    private void Update()
+    private void OnEnable()
     {
-        CheckForHoveredTile();
+        //Subscribes the method and event type to the current manager
+        EventManager.currentManager.Subscribe(EventType.CURRENTHOVEREDTILE, OnCurrentHoveredTile);
     }
-    private void CheckForHoveredTile()
+
+    private void OnDisable()
     {
-        //Check if pointer is over a ui element
-        if (!EventSystem.current.IsPointerOverGameObject(-1))
+        //Unsubscribes the method and event type to the current manager
+        EventManager.currentManager.Unsubscribe(EventType.CURRENTHOVEREDTILE, OnCurrentHoveredTile);
+    }
+
+    //Recieved current hovered tile through an event and update acordingly
+    private void OnCurrentHoveredTile(EventData eventData)
+    {
+        if (eventData is CurrentHoveredTile)
         {
-            //Raycast to see where the mouse currently is (if a tile, then display and update location)
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
-            {
-                //If colliding with a gridTile
-                if (hit.transform.tag is "GridTile")
-                {
-                    //If not already the selected tile, update the relevant information
-                    if (hit.transform.gameObject != hoveredTiled)
-                    {
-                        //Set the new tile
-                        hoveredTiled = hit.transform.gameObject;
+            //Cast the data to be used
+            CurrentHoveredTile currentHoveredTileData = (CurrentHoveredTile)eventData;
 
-                        //Do not proceed if no hovered tile exists
-                        if (hoveredTiled == null) { throw new MissingReferenceException(); }
+            //Set the new hovered tile
+            hoveredTiled = currentHoveredTileData.currentHoveredTile;
 
-                        //Update the location
-                        UpdateDisplayLocation();
+            //Update location
+            UpdateDisplayLocation();
 
-                        //Updates colors
-                        HighlightCycle();
-                    }
-                }
-            }
-            return;
+            //Update colors
+            HighlightCycle();
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.CURRENTHOVEREDTILE was received but is not of class CurrentHoveredTile.");
         }
     }
 
@@ -60,9 +59,14 @@ public class BuildingPreview : MonoBehaviour
         //Set the rotation
         transform.rotation = newRotation;
 
+        //Do not proceed if no hovered tile exists
+        //Should be allowed to fail silently as there are a few instances where hovered tile is meant to fail
+        if (hoveredTiled == null) { return; }
+
         //Update the correct display
         UpdateDisplayLocation();
 
+        //Update colors
         HighlightCycle();
     }
 
@@ -72,15 +76,18 @@ public class BuildingPreview : MonoBehaviour
         UnhighlightTiles();
 
         //Find new connected tiles
-        connectedTiles = BuildingManager.currentManager.activeGridGenerator.GetGridTileNeighbours(hoveredTiled, BuildingManager.currentManager.selectedObjectPrefab.GetOrientatedDimensions());
+        connectedTiles = BuildingManager.currentManager.GetSelectedConnectingTiles();
 
         //Change tile colors for viewing
         HighlightTileColors();
     }
 
     //Highlight functionality
-    private void HighlightTileColors()
+    public void HighlightTileColors()
     {
+        //Do not proceed if connected tiles are null
+        if (connectedTiles is null || connectedTiles.Count == 0) { return; }
+
         //Checks for neighbouring tiles and update color
         foreach (TileBuildingModel tile in connectedTiles)
         {
@@ -90,10 +97,14 @@ public class BuildingPreview : MonoBehaviour
 
     public void UnhighlightTiles()
     {
+        //Do not proceed if connected tiles are null or empty
+        if (connectedTiles is null || connectedTiles.Count == 0) { return; }
+
         //Unhighlight old tiles
         foreach (TileBuildingModel tile in connectedTiles)
         {
             tile.UpdateMaterialColor();
         }
+       
     }
 }
