@@ -7,7 +7,7 @@ public class ScoreView : MonoBehaviour
 {
     [SerializeField]
     //Text panels that are meant to visualize the recieved data/changes in player scores
-    private TextMeshProUGUI biodiversityText = null, carbonIntakeText = null, attractivenessText = null, moneyText = null, invasivenessText = null, diseaseText = null;
+    private TextMeshProUGUI biodiversityText = null, carbonIntakeText = null, appealText = null, moneyText = null, invasivenessText = null, diseaseText = null;
 
     private void OnEnable()
     {
@@ -31,7 +31,7 @@ public class ScoreView : MonoBehaviour
             //Updates all the score view text to match the scores
             biodiversityText.text = updatedScores.biodiversity.ToString();
             carbonIntakeText.text = updatedScores.carbonIntake.ToString();
-            attractivenessText.text = updatedScores.attractiveScore.ToString();
+            appealText.text = updatedScores.attractiveScore.ToString();
             moneyText.text = updatedScores.money.ToString();
             invasivenessText.text = updatedScores.invasiveness.ToString();
             diseaseText.text = updatedScores.disease.ToString();

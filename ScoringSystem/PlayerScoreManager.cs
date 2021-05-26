@@ -15,7 +15,7 @@ public class PlayerScoreManager : MonoBehaviour
     private int butterflyScore = 0; //Insect attractiveness (insect biodiversity)
     private int beetleScore = 0; //Insect attractiveness (insect biodiversity)
     private int totalCarbonIntake = 0; //Total carbon intake score, is not influenced by others
-    private int totalAttractiveness = 0; //Total attractiveness of the objects in general, more of a "human" likeability score
+    private int totalAppeal = 0; //Total attractiveness of the objects in general, more of a "human" likeability score
     private int totalInvasiveness = 0; //Level of invasiveness, calculated from the number of negatively affected plants
     private int totalInfections = 0; //Level of disease, calculated from the number of negatively affected plants
     private int totalScore = 0; //Total combination of all scores
@@ -159,7 +159,7 @@ public class PlayerScoreManager : MonoBehaviour
         RemoveMoney(objectScores.cost);
         AddBiodiversity(objectScores.biodiversity, objectScores.insectType, objectScores.insectAttractiveness);
         AddCarbonIntake(objectScores.carbonIntake);
-        AddAttractiveness(objectScores.attractiveScore);
+        AddAppeal(objectScores.attractiveScore);
 
         //Update final scores and fire event
         UpdateTotalScores();
@@ -189,7 +189,7 @@ public class PlayerScoreManager : MonoBehaviour
         AddMoney(objectScores.refund);
         RemoveBiodiversity(objectScores.biodiversity, objectScores.insectType, objectScores.insectAttractiveness);
         RemoveCarbonIntake(objectScores.carbonIntake);
-        RemoveAttractiveness(objectScores.attractiveScore);
+        RemoveAppeal(objectScores.attractiveScore);
 
         //Update final scores and fire event
         UpdateTotalScores();
@@ -202,7 +202,7 @@ public class PlayerScoreManager : MonoBehaviour
         totalScore = totalBiodiversity + totalCarbonIntake - (totalInfections + totalInvasiveness);
 
         //Fire off event with information
-        EventManager.currentManager.AddEvent(new TotalScoresUpdated(totalMoney, totalBiodiversity, totalCarbonIntake, totalAttractiveness, totalInvasiveness, totalInfections));
+        EventManager.currentManager.AddEvent(new TotalScoresUpdated(totalMoney, totalBiodiversity, totalCarbonIntake, totalAppeal, totalInvasiveness, totalInfections));
     }
     private bool IsAffordable(int givenCost)
     {
@@ -242,15 +242,15 @@ public class PlayerScoreManager : MonoBehaviour
     }
 
     //Adds attractivenesss to the total attractiveness
-    private void AddAttractiveness(int attractiveness)
+    private void AddAppeal(int appeal)
     {
-        totalAttractiveness += attractiveness;
+        totalAppeal += appeal;
     }
 
     //Removes attractivenesss to the total attractiveness
-    private void RemoveAttractiveness(int attractiveness)
+    private void RemoveAppeal(int appeal)
     {
-        totalAttractiveness -= attractiveness;
+        totalAppeal -= appeal;
     }
 
     //Adds to the different biodiversity scores and updates the total
