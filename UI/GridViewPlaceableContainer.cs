@@ -10,6 +10,10 @@ public class GridViewPlaceableContainer : MonoBehaviour, IPlaceableContainer
     public PlaceableData Placeable => placeable;//Public getter for the placeable, required by IPlaceableContainer interface.
 
     [SerializeField] private Image icon;
+    [SerializeField] private TextMeshProUGUI biodiversityText;
+    [SerializeField] private TextMeshProUGUI carbonIntakeText;
+    [SerializeField] private TextMeshProUGUI appealText;
+    [SerializeField] private TextMeshProUGUI moneyText;
 
     private PlaceableData placeable;
 
@@ -27,5 +31,10 @@ public class GridViewPlaceableContainer : MonoBehaviour, IPlaceableContainer
         {
             icon.sprite = sprite;
         }
+
+        biodiversityText.text = placeable.GetBiodiversity().ToString();
+        carbonIntakeText.text = placeable.GetCarbonIntake().ToString();
+        appealText.text = placeable.GetAppeal().ToString();
+        moneyText.text = placeable.GetCost().ToString();
     }
 }
