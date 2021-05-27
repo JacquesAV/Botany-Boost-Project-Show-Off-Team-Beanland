@@ -17,6 +17,14 @@ public class TimeCycle : MonoBehaviour
     private int currentDayInTheWeek=1;//The day of the week
     private int currentWeek = 1;//The current week *shrugs*
 
+    private void Start()
+    {
+        if (sceneLight==null)
+        {
+            DebugManager.DebugLog("No Light Source was added");
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
