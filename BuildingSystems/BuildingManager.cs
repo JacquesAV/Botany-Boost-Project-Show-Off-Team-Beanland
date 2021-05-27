@@ -191,8 +191,17 @@ public class BuildingManager : MonoBehaviour
         //Debug the change in rotation
         DebugManager.DebugLog("Rotation changed to " + Enum.GetName(typeof(PlaceableOrientation), currentOrientation) + " orientation!");
 
+        //Create a temporary reference to make method calls less intensive
+        BuildingPreview selectedObjectPreviewScript = selectedObjectPreview.GetComponent<BuildingPreview>();
+
+        //Update the visuals based on rotations
+        selectedObjectPreviewScript.SetIsUprightObject(selectedObjectPrefab.GetIsUprightObject());
+
         //Rotate based on the current orientation
-        selectedObjectPreview.GetComponent<BuildingPreview>().UpdateRotation(currentOrientation);
+        selectedObjectPreviewScript.UpdateRotation(currentOrientation);
+
+        //Update the visuals based on rotations
+        selectedObjectPreviewScript.UpdateVisuals();
 
         //Set the correct rotation to the built object
         selectedObjectPrefab.SetOrientation(currentOrientation);
@@ -301,7 +310,7 @@ public class BuildingManager : MonoBehaviour
             if (placeableGUISelect.placeable != null)
             {
                 selectedObjectPrefab = placeableGUISelect.placeable;
-                StartCoroutine(EnableBuildingModeCoroutine());
+                EnableBuildingMode();
             }
             else
             {
@@ -312,11 +321,5 @@ public class BuildingManager : MonoBehaviour
         {
             throw new System.Exception("Error: EventData class with EventType.CLICKEDPLACEABLEGUI was received but is not of class PlaceableSelectedOnGUI.");
         }
-    }
-    IEnumerator EnableBuildingModeCoroutine()
-    {
-        yield return new WaitForEndOfFrame();
-
-        EnableBuildingMode();
     }
 }

@@ -143,6 +143,9 @@ public class TileBuildingModel : MonoBehaviour
 
         //Then link neighbours
         LinkNeighbours();
+
+        //Apply normals after the neighbours have been gotten
+        ApplyNormalOrientation();
     }
     
     private void LinkNeighbours()
@@ -264,5 +267,33 @@ public class TileBuildingModel : MonoBehaviour
     {
         //Update the object rotation based on the orientation
         objectView.transform.rotation = Quaternion.Euler(0, 90 * (int)savedPlaceableData.GetOrientation(), 0);
+    }
+
+    private void ApplyNormalOrientation()
+    {
+        //Do not proceed if the object is meant to be upright
+        if (savedPlaceableData.GetIsUprightObject()) { return; }
+
+        //Apply correct normal orientation
+        objectView.transform.rotation = Quaternion.FromToRotation(Vector3.up, GetAverageNormal()) * objectView.transform.rotation;
+    }
+
+    private Vector3 GetAverageNormal()
+    {
+        //Temporary variable
+        Vector3 averageNormal = Vector3.zero;
+
+        //Add each normal together
+        foreach (TileBuildingModel tile in connectedTiles)
+        {
+            //Add the normal
+            averageNormal += tile.gameObject.GetComponent<GridTile>().GetAverageNormal();
+        }
+
+        //Divide for average
+        averageNormal = averageNormal / connectedTiles.Count;
+
+        //Return
+        return averageNormal;
     }
 }
