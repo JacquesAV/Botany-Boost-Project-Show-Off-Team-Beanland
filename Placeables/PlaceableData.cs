@@ -5,6 +5,7 @@ public class PlaceableData : MonoBehaviour
     [Header("Visuals")]
     [SerializeField] private GameObject prefab;//the prefab that will be created on visual
     [SerializeField] private Sprite displayImage = null;//the image displayed in the book
+    [SerializeField] private bool isUprightObject = false;
 
     [Header("Data")]
     [SerializeField] private PlaceableType placeableType;
@@ -22,10 +23,10 @@ public class PlaceableData : MonoBehaviour
     [Header("Spread Effects")]
     [SerializeField] private int lifespanInDays = 5;//how long the plant can live when diseased or fighting invasive species
 
-    [Range(0.05f,0.25f)][SerializeField] private float invaderSpawnChance = 0.25f;//the chance of invasive species spawning
+    [Range(0.05f, 0.25f)] [SerializeField] private float invaderSpawnChance = 0.25f;//the chance of invasive species spawning
 
     [Range(0.1f, 0.75f)] [SerializeField] private float baseDiseaseChance = 0.25f;//The base chance of being infected
-    [Range(0.01f,0.5f)][SerializeField] private float diseaseSpreadModifier = 0.1f;//The modifier chance of spread increasing based on plant count
+    [Range(0.01f, 0.5f)] [SerializeField] private float diseaseSpreadModifier = 0.1f;//The modifier chance of spread increasing based on plant count
 
 
     public PlaceableData Initialize(PlaceableData baseData)
@@ -33,12 +34,13 @@ public class PlaceableData : MonoBehaviour
         //Set information based on pre-created placeable data script
         prefab = baseData.prefab;
         displayImage = baseData.displayImage;
+        isUprightObject = baseData.isUprightObject;
 
         placeableType = baseData.placeableType;
         placeableOrientation = baseData.placeableOrientation;
         placeableDimensions = baseData.placeableDimensions;
         cost = baseData.cost;
-        placeableName= baseData.placeableName;
+        placeableName = baseData.placeableName;
         biodiversity = baseData.biodiversity;
         carbonIntake = baseData.carbonIntake;
         appeal = baseData.appeal;
@@ -57,9 +59,15 @@ public class PlaceableData : MonoBehaviour
     {
         return prefab;
     }
+
     public Sprite GetDisplayImage()
     {
         return displayImage;
+    }
+
+    public bool GetIsUprightObject()
+    {
+        return isUprightObject;
     }
 
     public string GetPlaceableType()
@@ -107,10 +115,10 @@ public class PlaceableData : MonoBehaviour
         return appeal;
     }
 
-    public InsectType GetInsectType() 
-    { 
-        return insectType; 
-    } 
+    public InsectType GetInsectType()
+    {
+        return insectType;
+    }
 
     public int GetInsectAttractiveness()
     {
