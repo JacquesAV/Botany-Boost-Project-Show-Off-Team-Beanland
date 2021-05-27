@@ -9,6 +9,7 @@ public class TileBuildingModel : MonoBehaviour
     public PlaceableData savedPlaceableData = null; //The data of the selected object
     public GameObject objectView = null; //Prefab of the selected object
     private GridTile gridTile = null; //The gridTile connected to the object
+    private PlantEffects plantEffects = null; //The effects based functionality of a plant, infection and invaders
 
     private List<TileBuildingModel> connectedTiles = new List<TileBuildingModel>(); //The gridTile connected to the object
 
@@ -37,17 +38,31 @@ public class TileBuildingModel : MonoBehaviour
         if (!EventSystem.current.IsPointerOverGameObject(-1))
         {
             //Check for the correct state
-            if (BuildingManager.currentManager.managerState == BuildingState.building)
+            switch (BuildingManager.currentManager.managerState)
             {
-                //Building Functionalities
-                if (!IsTilesVerified()) { return; }
-                OnBuildClick();
-            }
-            else if (BuildingManager.currentManager.managerState == BuildingState.destroying)
-            {
-                //Destroying Functionalities
-                OnSellClick();
-                UnlinkNeighbours();
+                case PlayerInteractionState.building:
+                    //Building Functionalities
+                    if (!IsTilesVerified()) { return; }
+                    OnBuildClick();
+                    break;
+
+                case PlayerInteractionState.destroying:
+                    //Destroying Functionalities
+                    OnSellClick();
+                    UnlinkNeighbours();
+                    break;
+
+                case PlayerInteractionState.curing:
+                    //Plant curing functionalities if existing
+                    if (plantEffects!=null) { plantEffects.CurePlant(); }
+                    else { DebugManager.DebugLog("Nothing to cure!"); }
+                    break;
+
+                case PlayerInteractionState.gassing:
+                    //Plant gassing functionalities if existing
+                    if (plantEffects != null) { plantEffects.GasPlant(); }
+                    else { DebugManager.DebugLog("Nothing to gas!"); }
+                    break;
             }
         }
     }
@@ -119,7 +134,8 @@ public class TileBuildingModel : MonoBehaviour
         string placeableType = savedPlaceableData.GetPlaceableType();
         if (placeableType != "Flooring" && placeableType != "Ornament")
         {
-            objectView.AddComponent<PlantEffects>();
+            plantEffects = objectView.AddComponent<PlantEffects>();
+            plantEffects.tileModel = this;
             objectView.tag = "Plant";
             SphereCollider sphere = objectView.AddComponent<SphereCollider>();
             sphere.isTrigger = true;

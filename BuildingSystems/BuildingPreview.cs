@@ -65,9 +65,6 @@ public class BuildingPreview : MonoBehaviour
         //Should be allowed to fail silently as there are a few instances where hovered tile is meant to fail
         if (hoveredTiled == null) { return; }
 
-        //Update location
-        UpdateDisplayLocation();
-
         //Change tile colors for viewing
         UnhighlightTiles();
 
@@ -79,6 +76,9 @@ public class BuildingPreview : MonoBehaviour
 
         //Rotate the object to its intended normal 
         ApplyNormalOrientation();
+
+        //Update location
+        UpdateDisplayLocation();
     }
 
     //Highlight functionality

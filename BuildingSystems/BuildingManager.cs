@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum BuildingState
+public enum PlayerInteractionState
 {
     building=0,
     destroying,
-    inactive
+    inactive,
+    curing,
+    gassing
 }
 
 public class BuildingManager : MonoBehaviour
@@ -51,28 +53,34 @@ public class BuildingManager : MonoBehaviour
     private GameObject selectedObjectPreview; //Active preview of the selected object
     private Vector3 flatObjectOffset = new Vector3(0.5f, 0, 0.5f); //Offset for the preview and placed object without considering the grid height
 
-    public BuildingState managerState = BuildingState.inactive; //State of the manager (for swapping users interactive capabilities)
+    public PlayerInteractionState managerState = PlayerInteractionState.inactive; //State of the manager (for swapping users interactive capabilities)
     private PlaceableOrientation currentOrientation = PlaceableOrientation.Forward; //Current rotation/orientation of the structure being placed
 
     private List<TileBuildingModel> selectedConnectedTiles = new List<TileBuildingModel>(); //Current list of connected tiles to the current source/hover tile
     private GameObject hoveredTile = null; //The tile currently being hovered over
 
-    private void Update()
+    private void Start()
     {
-        if (managerState == BuildingState.building) {BuildModeRotate(); } //Looks out for key commands to rotate objects
+        //Automatically fetch a default starting tile
+        if (hoveredTile==null){ hoveredTile = activeGridGenerator.GetGridTilesReference()[0]; }
     }
 
+    private void Update()
+    {
+        if (managerState == PlayerInteractionState.building) {BuildModeRotate(); } //Looks out for key commands to rotate objects
+    }
+
+    #region Building state Mode Enablers/Disablers
     public void EnableBuildingMode()
     {
-        //Checks if already in build mode or if preview is active
-        //If yes, then remove the old preview
-        if(managerState == BuildingState.building || selectedObjectPreview!=null)
+        //Checks if preview is already active, if yes, then remove the old preview
+        if(selectedObjectPreview != null)
         {
             DisableBuildPreview();
         }
 
         //Enables the build mode
-        managerState = BuildingState.building;
+        managerState = PlayerInteractionState.building;
 
         //Debug that building mode is activated
         DebugManager.DebugLog("Building manager set to build mode!");
@@ -90,20 +98,45 @@ public class BuildingManager : MonoBehaviour
     public void EnableDestroyingMode()
     {
         //Enables the sell mode
-        managerState = BuildingState.destroying;
+        managerState = PlayerInteractionState.destroying;
 
         //Debug that destroying mode is activated
         DebugManager.DebugLog("Building manager set to destroy mode!");
 
         DisableBuildPreview();
     }
+
     public void EnableInactiveMode()
     {
         //Enables the inactive mode
-        managerState = BuildingState.inactive;
+        managerState = PlayerInteractionState.inactive;
 
         //Debug that inactive mode is activated
         DebugManager.DebugLog("Building manager set to inactive mode!");
+
+        //Disable the build preview of the object
+        DisableBuildPreview();
+    }
+
+    public void EnableCuringMode()
+    {
+        //Enables the inactive mode
+        managerState = PlayerInteractionState.curing;
+
+        //Debug that inactive mode is activated
+        DebugManager.DebugLog("Building manager set to curing mode!");
+
+        //Disable the build preview of the object
+        DisableBuildPreview();
+    }
+
+    public void EnableGassingMode()
+    {
+        //Enables the inactive mode
+        managerState = PlayerInteractionState.gassing;
+
+        //Debug that inactive mode is activated
+        DebugManager.DebugLog("Building manager set to gassing mode!");
 
         //Disable the build preview of the object
         DisableBuildPreview();
@@ -130,6 +163,9 @@ public class BuildingManager : MonoBehaviour
 
     private void DisableBuildPreview()
     {
+        //Ignore if already destroyed
+        if (selectedObjectPreview == null) { return; }
+
         //Unhighlight cells on the preview
         selectedObjectPreview.GetComponent<BuildingPreview>().UnhighlightTiles();
 
@@ -139,6 +175,7 @@ public class BuildingManager : MonoBehaviour
         //Set back to null
         selectedObjectPreview = null;
     }
+    #endregion
 
     //Gets the rotation
     //Rotating Rightwards: Forward (0) -> Right (1) -> Back (2) -> Left (3)
