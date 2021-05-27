@@ -114,7 +114,23 @@ public class GridTile : MonoBehaviour
     {
         return coordinates;
     }
+    public Vector3 GetAverageNormal()
+    {
+        //Temporary variable
+        Vector3 averageNormal = Vector3.zero;
 
+        //Iterate over each
+        foreach(Vector3 normal in tileMesh.normals)
+        {
+            averageNormal += normal;
+        }
+
+        //Divide for average
+        averageNormal = averageNormal / tileMesh.normals.Length;
+
+        //Return
+        return averageNormal;
+    }
     private void OnDrawGizmos()
     {
         //Do not continue if vertices are not set yet
