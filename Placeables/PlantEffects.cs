@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlantEffects : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class PlantEffects : MonoBehaviour
     private bool hasInvaders = false;//if the plant has an invaded
 
     private int lifespanInDays;//the time that the plant lives
+
+    public TileBuildingModel tileModel = null;
 
     private void Start()
     {
@@ -65,7 +68,7 @@ public class PlantEffects : MonoBehaviour
             }
 
             //Debug
-            //DebugManager.DebugLog("plant has dieded");
+            DebugManager.DebugLog("Plant has died - WasSick: "+ isSick +" | WasInvaded: "+ hasInvaders);
 
             //Remove the plant benefits from the score manager (with 0 refunded money)
             EventManager.currentManager.AddEvent(new ObjectSoldScores(0, placeableData.GetBiodiversity(), placeableData.GetCarbonIntake(), placeableData.GetAppeal(), placeableData.GetInsectType(), placeableData.GetInsectAttractiveness()));
@@ -107,13 +110,16 @@ public class PlantEffects : MonoBehaviour
             float diseaseChance = baseDiseaseChance + (samePlantCount * diseaseSpreadModifier) * 100;
             if (Random.Range(1, 100) <= diseaseChance)
             {
-                //DebugManager.DebugLog("You just got diseased");
+                //DebugManager.DebugLog("Plant got sick!");
+                tileModel.ChangeMaterialColor(Color.cyan);
+
+                //Set to sick and fire off event that it was infected
                 isSick = true;
                 EventManager.currentManager.AddEvent(new PlantInfected());
             }
             else
             {
-                //DebugManager.DebugLog("You are helfy");
+                //DebugManager.DebugLog("Plant was found to be without sickness!");
             }
         }
         else
@@ -146,13 +152,16 @@ public class PlantEffects : MonoBehaviour
             float invadorChance = baseInvaderSpawnChance + (combinedPlantSpawnChances * baseInvaderSpawnChance) * 100;
             if (Random.Range(1, 100) <= invadorChance)
             {
-                //DebugManager.DebugLog("There is an imposter among us");
+                //DebugManager.DebugLog("Plant got invaded!");
+                tileModel.ChangeMaterialColor(Color.magenta);
+
+                //Set to invaded and fire off event that it was invaded
                 hasInvaders = true;
                 EventManager.currentManager.AddEvent(new PlantInvaded());
             }
             else
             {
-                //DebugManager.DebugLog("I am ino");
+                //DebugManager.DebugLog("Plant was found to be without invaders!");
             }
         }
         else
@@ -161,21 +170,31 @@ public class PlantEffects : MonoBehaviour
             lifespanInDays--;
         }
     }
+
     public void SetPlaceableData(PlaceableData data)
     {
         placeableData = data;
     }
 
-    public void PlantCured()
+    public void CurePlant()
     {
+        //First check if the plant is sick
+        if (!isSick) { DebugManager.DebugLog("Nothing to cure!"); return; }
+
         //set plant to not being sick and send out event that it was cured
         isSick = false;
         EventManager.currentManager.AddEvent(new PlantCured());
+        DebugManager.DebugLog("Plant was cured!");
     }
-    public void PlantGassed()
+
+    public void GasPlant()
     {
+        //First check if the plant is invaded
+        if (!hasInvaders) { DebugManager.DebugLog("Nothing to gas!"); return; }
+
         //set plant to not being invaded and send out event that it was gasses
         hasInvaders = false;
         EventManager.currentManager.AddEvent(new PlantGassed());
+        DebugManager.DebugLog("Plant was gassed!");
     }
 }

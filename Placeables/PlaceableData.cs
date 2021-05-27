@@ -28,7 +28,6 @@ public class PlaceableData : MonoBehaviour
     [Range(0.1f, 0.75f)] [SerializeField] private float baseDiseaseChance = 0.25f;//The base chance of being infected
     [Range(0.01f, 0.5f)] [SerializeField] private float diseaseSpreadModifier = 0.1f;//The modifier chance of spread increasing based on plant count
 
-
     public PlaceableData Initialize(PlaceableData baseData)
     {
         //Set information based on pre-created placeable data script
