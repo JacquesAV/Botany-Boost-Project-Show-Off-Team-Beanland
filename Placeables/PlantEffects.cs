@@ -6,10 +6,10 @@ using UnityEngine.EventSystems;
 public class PlantEffects : MonoBehaviour
 {
     private PlaceableData placeableData;//the data of the object that it is attached to
-    private readonly int radius=2;//the radius of the spread
+    private readonly int radius = 2;//the radius of the spread
     private float baseDiseaseChance = 0.25f;//the base chance of getting disease
-    private float diseaseSpreadModifier=0.1f;//the modifier to obtaining a disease
-    private bool isSick=false;//if the plant got a disease
+    private float diseaseSpreadModifier = 0.1f;//the modifier to obtaining a disease
+    private bool isSick = false;//if the plant got a disease
 
     private float baseInvaderSpawnChance = 0.25f;//base chance of an invasive species spawning on the plant
     private bool hasInvaders = false;//if the plant has an invaded
@@ -18,13 +18,45 @@ public class PlantEffects : MonoBehaviour
 
     public TileBuildingModel tileModel = null;
 
+    private GameObject diseaseFX;
+    private GameObject invaderFX;
+
     private void Start()
     {
         //set variables to the ones of the prefab
-        placeableData=gameObject.GetComponent<PlaceableData>();
+        placeableData = gameObject.GetComponent<PlaceableData>();
         lifespanInDays = placeableData.GetLifespan();
         baseDiseaseChance = placeableData.GetBaseDiseaseChance();
         diseaseSpreadModifier = placeableData.GetDiseaseSpreadModifier();
+
+        //Create a variable for assignment
+        GameObject p = null;
+        //If plant holder contains a diseaseFX
+        if ((p = PlantHolder.GetDiseaseFX()) != null)
+        {
+            //Create diseaseFX and disable it
+            diseaseFX = Instantiate(p, transform, false);
+            diseaseFX.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Warning: Could not find a DiseaseFX from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
+        }
+        //Reset p to null
+        p = null;
+        //If plant holder contains a invaderFX
+        if ((p = PlantHolder.GetInvaderFX()) != null)
+        {
+            //Create invaderFX and disable it
+            invaderFX = Instantiate(p, transform, false);
+            invaderFX.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Warning: Could not find a InvaderFX from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
+        }
+
+
     }
 
     private void OnEnable()
@@ -49,7 +81,7 @@ public class PlantEffects : MonoBehaviour
         else
         {
             throw new System.Exception("Error: EventData class with EventType.PURCHASEBEGIN was received but is not of class DayHasPassed.");
-        } 
+        }
     }
 
     private void CheckIfPlantDied()
@@ -58,7 +90,7 @@ public class PlantEffects : MonoBehaviour
         if (lifespanInDays < 1)
         {
             //If infected or invaded, reduce the counter amount
-            if(hasInvaders)
+            if (hasInvaders)
             {
                 EventManager.currentManager.AddEvent(new PlantGassed());
             }
@@ -68,11 +100,11 @@ public class PlantEffects : MonoBehaviour
             }
 
             //Debug
-            DebugManager.DebugLog("Plant has died - WasSick: "+ isSick +" | WasInvaded: "+ hasInvaders);
+            DebugManager.DebugLog("Plant has died - WasSick: " + isSick + " | WasInvaded: " + hasInvaders);
 
             //Remove the plant benefits from the score manager (with 0 refunded money)
             EventManager.currentManager.AddEvent(new ObjectSoldScores(0, placeableData.GetBiodiversity(), placeableData.GetCarbonIntake(), placeableData.GetAppeal(), placeableData.GetInsectType(), placeableData.GetInsectAttractiveness()));
-            
+
             //Unlink the grid from the plant to free it up for other objects
             gameObject.GetComponentInParent<TileBuildingModel>().UnlinkNeighbours();
         }
@@ -116,6 +148,11 @@ public class PlantEffects : MonoBehaviour
                 //Set to sick and fire off event that it was infected
                 isSick = true;
                 EventManager.currentManager.AddEvent(new PlantInfected());
+                //Enable disease particle
+                if (diseaseFX != null)
+                {
+                    diseaseFX.SetActive(true);
+                }
             }
             else
             {
@@ -158,6 +195,11 @@ public class PlantEffects : MonoBehaviour
                 //Set to invaded and fire off event that it was invaded
                 hasInvaders = true;
                 EventManager.currentManager.AddEvent(new PlantInvaded());
+                //Enable invader particle
+                if (invaderFX != null)
+                {
+                    invaderFX.SetActive(true);
+                }
             }
             else
             {
@@ -179,22 +221,41 @@ public class PlantEffects : MonoBehaviour
     public void CurePlant()
     {
         //First check if the plant is sick
-        if (!isSick) { DebugManager.DebugLog("Nothing to cure!"); return; }
+        if (!isSick)
+        {
+            DebugManager.DebugLog("Nothing to cure!");
+            return;
+        }
 
         //set plant to not being sick and send out event that it was cured
         isSick = false;
         EventManager.currentManager.AddEvent(new PlantCured());
         DebugManager.DebugLog("Plant was cured!");
+        //disable invader effect
+        if (invaderFX != null)
+        {
+            diseaseFX.SetActive(false);
+        }
     }
 
     public void GasPlant()
     {
         //First check if the plant is invaded
-        if (!hasInvaders) { DebugManager.DebugLog("Nothing to gas!"); return; }
+        if (!hasInvaders)
+        {
+            DebugManager.DebugLog("Nothing to gas!");
+            return;
+        }
 
         //set plant to not being invaded and send out event that it was gasses
         hasInvaders = false;
         EventManager.currentManager.AddEvent(new PlantGassed());
         DebugManager.DebugLog("Plant was gassed!");
+
+        //disable disease effect
+        if (diseaseFX != null)
+        {
+            invaderFX.SetActive(false);
+        }
     }
 }
