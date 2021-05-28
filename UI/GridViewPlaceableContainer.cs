@@ -26,15 +26,50 @@ public class GridViewPlaceableContainer : MonoBehaviour, IPlaceableContainer
         this.placeable = placeable;
 
         Sprite sprite = placeable.GetDisplayImage();
-
-        if (sprite != null)
+        //Sprite replace
+        if (sprite != null && icon != null)
         {
             icon.sprite = sprite;
         }
-
-        biodiversityText.text = placeable.GetBiodiversity().ToString();
-        carbonIntakeText.text = placeable.GetCarbonIntake().ToString();
-        appealText.text = placeable.GetAppeal().ToString();
-        moneyText.text = placeable.GetCost().ToString();
+        else
+        {
+            Debug.LogWarning("Warning: Could not set icon for placeable image");
+        }
+        //bio text replace
+        if (biodiversityText != null)
+        {
+            biodiversityText.text = placeable.GetBiodiversity().ToString();
+        }
+        else
+        {
+            Debug.LogWarning("biodiversity text reference was not set");
+        }
+        //carbon text replace
+        if (carbonIntakeText != null)
+        {
+            carbonIntakeText.text = placeable.GetCarbonIntake().ToString();
+        }
+        else
+        {
+            Debug.LogWarning("carbonIntake text reference was not set");
+        }
+        //appeal text replace
+        if (appealText != null)
+        {
+            appealText.text = placeable.GetAppeal().ToString();
+        }
+        else
+        {
+            Debug.LogWarning("appeal text reference was not set");
+        }
+        //money text replace
+        if (moneyText != null)
+        {
+            moneyText.text = placeable.GetCost().ToString();
+        }
+        else
+        {
+            Debug.LogWarning("money text reference was not set");
+        }
     }
 }
