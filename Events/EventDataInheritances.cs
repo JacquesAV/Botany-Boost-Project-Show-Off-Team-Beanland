@@ -170,3 +170,13 @@ public class CurrentHoveredTile : EventData
         currentHoveredTile = givenTile;
     }
 }
+
+//Event that informs subscribers of new active missions
+public class CurrentActiveMissions : EventData
+{
+    public readonly List<GameObject> activeMissions;
+    public CurrentActiveMissions(List<GameObject> givenActiveMissions) : base(EventType.CURRENTACTIVEMISSIONS)
+    {
+        activeMissions = givenActiveMissions;
+    }
+}
