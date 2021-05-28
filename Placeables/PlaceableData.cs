@@ -19,6 +19,7 @@ public class PlaceableData : MonoBehaviour
     [SerializeField] private int appeal;//how appealing the plant is
     [SerializeField] private InsectType insectType;
     [SerializeField] private int insectAttractiveness;//how many insects attracted
+    [SerializeField] private string plantInfoText;//the text shown on the extra info section
 
     [Header("Spread Effects")]
     [SerializeField] private int lifespanInDays = 5;//how long the plant can live when diseased or fighting invasive species
@@ -122,6 +123,11 @@ public class PlaceableData : MonoBehaviour
     public int GetInsectAttractiveness()
     {
         return insectAttractiveness;
+    }
+
+    public string GetExtraInfoText()
+    {
+        return plantInfoText;
     }
 
     public int GetLifespan()
