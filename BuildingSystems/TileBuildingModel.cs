@@ -178,6 +178,9 @@ public class TileBuildingModel : MonoBehaviour
             //Set the placeable data
             tile.savedPlaceableData = savedPlaceableData;
 
+            //Set the active plant effects
+            tile.plantEffects = plantEffects;
+
             //Update the references connected tiles on each other tile
             tile.connectedTiles = connectedTiles;
 
