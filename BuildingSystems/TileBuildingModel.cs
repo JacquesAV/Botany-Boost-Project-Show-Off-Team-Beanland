@@ -131,7 +131,7 @@ public class TileBuildingModel : MonoBehaviour
         objectView.AddComponent<PlaceableData>().Initialize(savedPlaceableData);
 
         //Add PlantEffect script to placeables that are plants
-        string placeableType = savedPlaceableData.GetPlaceableType();
+        string placeableType = savedPlaceableData.GetPlaceableType().ToString();
         if (placeableType != "Flooring" && placeableType != "Ornament")
         {
             plantEffects = objectView.AddComponent<PlantEffects>();
@@ -156,6 +156,7 @@ public class TileBuildingModel : MonoBehaviour
 
         //Fire off event with created information
         EventManager.currentManager.AddEvent(new ObjectBoughtScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAppeal(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
+        EventManager.currentManager.AddEvent(new PlacedObjectMissionDataXYZ(savedPlaceableData.GetPlaceableType(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetYieldsProduce(), savedPlaceableData.GetAttractsBirds()));
 
         //Then link neighbours
         LinkNeighbours();
@@ -201,7 +202,8 @@ public class TileBuildingModel : MonoBehaviour
 
         //Fire off event with sold information
         EventManager.currentManager.AddEvent(new ObjectSoldScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAppeal(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
-        
+        EventManager.currentManager.AddEvent(new RemovedObjectMissionDataXYZ(savedPlaceableData.GetPlaceableType(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetYieldsProduce(), savedPlaceableData.GetAttractsBirds()));
+
         //Debug
         DebugManager.DebugLog(savedPlaceableData.GetName() + " has been removed!");
     }
