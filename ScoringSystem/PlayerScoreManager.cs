@@ -8,7 +8,8 @@ public class PlayerScoreManager : MonoBehaviour
     [SerializeField]
     private int totalMoney = 50; //Total money the user has to spend
     [SerializeField]
-    private int beeThreshold=50, butterflyThreshold = 50, beetleThreshold = 50; //Thresholds for bees/butterflies/beetles to appear at
+    private int beeThreshold = 50, butterflyThreshold = 50, beetleThreshold = 50; //Thresholds for bees/butterflies/beetles to appear at
+    private bool reachedBeeThreshold = false, reachedButterflyThreshold = false, reachedBeetleThreshold = false;
     private int totalBiodiversity = 0; //Total biodiversity, based on plants and insect attractiveness
     private int objectBiodiversity = 0; //Biodiversity, based on objects
     private int beeScore = 0; //Insect attractiveness (insect biodiversity)
@@ -53,6 +54,7 @@ public class PlayerScoreManager : MonoBehaviour
 
             //Handle the incoming data
             HandleIncomingBoughtScores(objectScores);
+            CheckIfInsectReachedThresholds();
         }
         else
         {
@@ -68,6 +70,7 @@ public class PlayerScoreManager : MonoBehaviour
 
             //Handle the incoming data
             HandleIncomingSoldScores(objectScores);
+            CheckIfInsectLostThresholds();
         }
         else
         {
@@ -169,11 +172,11 @@ public class PlayerScoreManager : MonoBehaviour
     private void HandleIncomingObjectBuyRequest(ObjectBuyRequest objectRequest)
     {
         //Check if purchase is possible (Is there enough money?)
-        if(IsAffordable(objectRequest.requestedObject.GetCost()))
+        if (IsAffordable(objectRequest.requestedObject.GetCost()))
         {
             //Fire off confirming that it is possible
             EventManager.currentManager.AddEvent(new ObjectBuyRequestResult(objectRequest.requestedObject, true));
-            DebugManager.DebugLog("Approved purchase for "+ objectRequest.requestedObject.GetName() +"!");
+            DebugManager.DebugLog("Approved purchase for " + objectRequest.requestedObject.GetName() + "!");
         }
         else
         {
@@ -207,13 +210,62 @@ public class PlayerScoreManager : MonoBehaviour
     private bool IsAffordable(int givenCost)
     {
         //Check that money would not go negative
-        if(totalMoney - givenCost < 0)
+        if (totalMoney - givenCost < 0)
         {
             //Purchase not possible
             return false;
         }
         //Else the purchase is possible
         return true;
+    }
+
+    private void CheckIfInsectReachedThresholds()
+    {
+        //The bee score is enough to spawn bees
+        if (beeThreshold <= beeScore && !reachedBeeThreshold)
+        {
+            reachedBeeThreshold = true;
+            //Send out event that threshold was reach
+            EventManager.currentManager.AddEvent(new BeeThresholdReached());
+        }
+        //The beetle score is enough to spawn beetles
+        if (beetleThreshold <= beetleScore && !reachedBeetleThreshold)
+        {
+            reachedBeetleThreshold = true;
+            //Send out event that threshold was reach
+            EventManager.currentManager.AddEvent(new BeetleThresholdReached());
+        }
+        //The butterly score is enough to spawn butterflies
+        if (butterflyThreshold <= butterflyScore && !reachedButterflyThreshold)
+        {
+            reachedButterflyThreshold = true;
+            //Send out event that threshold was reach
+            EventManager.currentManager.AddEvent(new ButterflyThresholdReached());
+        }
+    }
+    private void CheckIfInsectLostThresholds()
+    {
+        //The bee score is enough to spawn bees
+        if (beeThreshold > beeScore && reachedBeeThreshold)
+        {
+            reachedBeeThreshold = false;
+            //Send out event that threshold was reach
+            EventManager.currentManager.AddEvent(new BeeThresholdLost());
+        }
+        //The beetle score is enough to spawn beetles
+        if (beetleThreshold > beetleScore && reachedBeetleThreshold)
+        {
+            reachedBeetleThreshold = false;
+            //Send out event that threshold was reach
+            EventManager.currentManager.AddEvent(new BeetleThresholdLost());
+        }
+        //The butterly score is enough to spawn butterflies
+        if (butterflyThreshold > butterflyScore && reachedButterflyThreshold)
+        {
+            reachedButterflyThreshold = false;
+            //Send out event that threshold was reach
+            EventManager.currentManager.AddEvent(new ButterflyThresholdLost());
+        }
     }
 
     #region Score Changing Related Methods
