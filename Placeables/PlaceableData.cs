@@ -20,6 +20,8 @@ public class PlaceableData : MonoBehaviour
     [SerializeField] private InsectType insectType;
     [SerializeField] private int insectAttractiveness;//how many insects attracted
     [SerializeField] private string plantInfoText;//the text shown on the extra info section
+    [SerializeField] private bool yieldsProduce;//if the object produces food
+    [SerializeField] private bool attractsBirds;//if the object attracts birds
 
     [Header("Spread Effects")]
     [SerializeField] private int lifespanInDays = 5;//how long the plant can live when diseased or fighting invasive species
