@@ -48,6 +48,9 @@ public class PlaceableData : MonoBehaviour
         appeal = baseData.appeal;
         insectType = baseData.insectType;
         insectAttractiveness = baseData.insectAttractiveness;
+        plantInfoText = baseData.plantInfoText;
+        yieldsProduce = baseData.yieldsProduce;
+        attractsBirds = baseData.attractsBirds;
 
         lifespanInDays = baseData.lifespanInDays;
         invaderSpawnChance = baseData.invaderSpawnChance;
