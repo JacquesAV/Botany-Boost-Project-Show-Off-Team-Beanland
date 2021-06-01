@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Mission : MonoBehaviour
 {
-    [Header("Mission Details")]
+    [Header("Mission Details and Requirements")]
     [SerializeField]
     protected private string missionDescription = "Mission Description"; //The message that should explain the mission
     [SerializeField]
