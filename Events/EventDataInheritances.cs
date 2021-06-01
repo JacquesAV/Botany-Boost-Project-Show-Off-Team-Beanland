@@ -180,6 +180,49 @@ public class CurrentActiveMissions : EventData
         activeMissions = givenActiveMissions;
     }
 }
+
+//Event that informs subscribers of a mission being completed and its reward value
+public class MissionCompleted : EventData
+{
+    public readonly int rewardAmount;
+    public MissionCompleted(int givenReward) : base(EventType.MISSIONCOMPLETED)
+    {
+        rewardAmount = givenReward;
+    }
+}
+
+//Event that informs subscribers of mission relevant info
+public class ObjectMissionDataXYZ : EventData
+{
+    public readonly PlaceableType placeableType;
+    public readonly InsectType insectType;
+    public readonly bool yieldsProduce;
+    public readonly bool attractsBirds;
+    public ObjectMissionDataXYZ(PlaceableType givenPlaceableType, InsectType givenInsectType, bool givenYieldsProduce, bool givenAttractsBirds) : base(EventType.MISSIONDATAXYZ)
+    {
+        placeableType = givenPlaceableType;
+        insectType = givenInsectType;
+        yieldsProduce = givenYieldsProduce;
+        attractsBirds = givenAttractsBirds;
+    }
+}
+
+//Event that informs subscribers of mission relevant info
+public class RemovedObjectMissionDataXYZ : ObjectMissionDataXYZ
+{
+    public RemovedObjectMissionDataXYZ(PlaceableType givenPlaceableType, InsectType givenInsectType, bool givenYieldsProduce, bool givenAttractsBirds) : base(givenPlaceableType, givenInsectType, givenYieldsProduce, givenAttractsBirds)
+    {
+    }
+}
+
+//Event that informs subscribers of a mission experiencing a change/update
+public class MissionUpdated : EventData
+{
+    public MissionUpdated() : base(EventType.MISSIONUPDATED)
+    {
+    }
+}
+
 //Event that informs subscribers of a threshold being reached
 public class BeetleThresholdReached : EventData
 {
@@ -187,6 +230,7 @@ public class BeetleThresholdReached : EventData
     {
     }
 }
+
 //Event that informs subscribers of a threshold being lost
 public class BeetleThresholdLost : EventData
 {
@@ -194,6 +238,7 @@ public class BeetleThresholdLost : EventData
     {
     }
 }
+
 //Event that informs subscribers of a threshold being reached
 public class ButterflyThresholdReached : EventData
 {
@@ -201,6 +246,7 @@ public class ButterflyThresholdReached : EventData
     {
     }
 }
+
 //Event that informs subscribers of a threshold being lost
 public class ButterflyThresholdLost : EventData
 {
@@ -208,6 +254,7 @@ public class ButterflyThresholdLost : EventData
     {
     }
 }
+
 //Event that informs subscribers of a threshold being reached
 public class BeeThresholdReached : EventData
 {
@@ -215,6 +262,7 @@ public class BeeThresholdReached : EventData
     {
     }
 }
+
 //Event that informs subscribers of a threshold being lost
 public class BeeThresholdLost : EventData
 {
