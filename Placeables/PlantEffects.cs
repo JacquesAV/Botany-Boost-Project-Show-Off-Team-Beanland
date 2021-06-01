@@ -67,7 +67,7 @@ public class PlantEffects : MonoBehaviour
                 //If plant holder contains a BugFX
                 if ((p = PlantHolder.GetBeeFX()) != null)
                 {
-                    //Create BugFX and disable it
+                    //Create BugFX and disable it if it has not reached the threshold
                     bugFX = Instantiate(p, transform, false);
                     if (!PlantHolder.GetShowBees())
                         bugFX.SetActive(false);
@@ -85,7 +85,7 @@ public class PlantEffects : MonoBehaviour
                 //If plant holder contains a BugFX
                 if ((p = PlantHolder.GetBeetleFX()) != null)
                 {
-                    //Create BugFX and disable it
+                    //Create BugFX and disable it if it has not reached the threshold
                     bugFX = Instantiate(p, transform, false);
                     if (!PlantHolder.GetShowBeetles())
                         bugFX.SetActive(false);
@@ -103,7 +103,7 @@ public class PlantEffects : MonoBehaviour
                 //If plant holder contains a BugFX
                 if ((p = PlantHolder.GetButterflyFX()) != null)
                 {
-                    //Create BugFX and disable it
+                    //Create BugFX and disable it if it has not reached the threshold
                     bugFX = Instantiate(p, transform, false);
                     if (!PlantHolder.GetShowButterflies())
                         bugFX.SetActive(false);
