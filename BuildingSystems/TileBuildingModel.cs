@@ -222,7 +222,7 @@ public class TileBuildingModel : MonoBehaviour
     private void ClearDataView()
     {
         //Remove the object
-        Destroy(objectView);
+        Destroy(objectView,0.1f);
 
         //Clear stored information
         objectView = null;
