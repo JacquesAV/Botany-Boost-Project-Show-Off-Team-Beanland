@@ -69,7 +69,8 @@ public class PlantEffects : MonoBehaviour
                 {
                     //Create BugFX and disable it
                     bugFX = Instantiate(p, transform, false);
-                    bugFX.SetActive(false);
+                    if (!PlantHolder.GetShowBees())
+                        bugFX.SetActive(false);
                 }
                 else
                 {
@@ -86,7 +87,8 @@ public class PlantEffects : MonoBehaviour
                 {
                     //Create BugFX and disable it
                     bugFX = Instantiate(p, transform, false);
-                    bugFX.SetActive(false);
+                    if (!PlantHolder.GetShowBeetles())
+                        bugFX.SetActive(false);
                 }
                 else
                 {
@@ -103,7 +105,8 @@ public class PlantEffects : MonoBehaviour
                 {
                     //Create BugFX and disable it
                     bugFX = Instantiate(p, transform, false);
-                    bugFX.SetActive(false);
+                    if (!PlantHolder.GetShowButterflies())
+                        bugFX.SetActive(false);
                 }
                 else
                 {
@@ -139,12 +142,10 @@ public class PlantEffects : MonoBehaviour
     }
     private void OnThresholdReached(EventData eventData)
     {
-        Debug.Log("PLAY GODMANDAS YOU");
         bugFX.SetActive(true);
     }
     private void OnThresholdLost(EventData eventData)
     {
-        Debug.Log("It off");
         if (gameObject != null)
         {
             bugFX.SetActive(false);
