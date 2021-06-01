@@ -194,5 +194,6 @@ public enum PlaceableType
     Bush,
     Tree,
     Flooring,
-    Ornament
+    Ornament,
+    Undefined
 }
