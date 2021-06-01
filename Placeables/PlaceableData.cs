@@ -75,9 +75,9 @@ public class PlaceableData : MonoBehaviour
         return isUprightObject;
     }
 
-    public string GetPlaceableType()
+    public PlaceableType GetPlaceableType()
     {
-        return placeableType.ToString();
+        return placeableType;
     }
 
     public PlaceableOrientation GetOrientation()
@@ -133,6 +133,16 @@ public class PlaceableData : MonoBehaviour
     public string GetExtraInfoText()
     {
         return plantInfoText;
+    }
+
+    public bool GetYieldsProduce()
+    {
+        return yieldsProduce;
+    }
+
+    public bool GetAttractsBirds()
+    {
+        return attractsBirds;
     }
 
     public int GetLifespan()
