@@ -208,6 +208,14 @@ public class ObjectMissionDataXYZ : EventData
 }
 
 //Event that informs subscribers of mission relevant info
+public class PlacedObjectMissionDataXYZ : ObjectMissionDataXYZ
+{
+    public PlacedObjectMissionDataXYZ(PlaceableType givenPlaceableType, InsectType givenInsectType, bool givenYieldsProduce, bool givenAttractsBirds) : base(givenPlaceableType, givenInsectType, givenYieldsProduce, givenAttractsBirds)
+    {
+    }
+}
+
+//Event that informs subscribers of mission relevant info
 public class RemovedObjectMissionDataXYZ : ObjectMissionDataXYZ
 {
     public RemovedObjectMissionDataXYZ(PlaceableType givenPlaceableType, InsectType givenInsectType, bool givenYieldsProduce, bool givenAttractsBirds) : base(givenPlaceableType, givenInsectType, givenYieldsProduce, givenAttractsBirds)
