@@ -192,13 +192,13 @@ public class MissionCompleted : EventData
 }
 
 //Event that informs subscribers of mission relevant info
-public class ObjectMissionDataXYZ : EventData
+public class ObjectMissionData : EventData
 {
     public readonly PlaceableType placeableType;
     public readonly InsectType insectType;
     public readonly bool yieldsProduce;
     public readonly bool attractsBirds;
-    public ObjectMissionDataXYZ(PlaceableType givenPlaceableType, InsectType givenInsectType, bool givenYieldsProduce, bool givenAttractsBirds) : base(EventType.MISSIONDATAXYZ)
+    public ObjectMissionData(PlaceableType givenPlaceableType, InsectType givenInsectType, bool givenYieldsProduce, bool givenAttractsBirds) : base(EventType.MISSIONDATA)
     {
         placeableType = givenPlaceableType;
         insectType = givenInsectType;
@@ -208,17 +208,17 @@ public class ObjectMissionDataXYZ : EventData
 }
 
 //Event that informs subscribers of mission relevant info
-public class PlacedObjectMissionDataXYZ : ObjectMissionDataXYZ
+public class PlacedObjectMissionData : ObjectMissionData
 {
-    public PlacedObjectMissionDataXYZ(PlaceableType givenPlaceableType, InsectType givenInsectType, bool givenYieldsProduce, bool givenAttractsBirds) : base(givenPlaceableType, givenInsectType, givenYieldsProduce, givenAttractsBirds)
+    public PlacedObjectMissionData(PlaceableType givenPlaceableType, InsectType givenInsectType, bool givenYieldsProduce, bool givenAttractsBirds) : base(givenPlaceableType, givenInsectType, givenYieldsProduce, givenAttractsBirds)
     {
     }
 }
 
 //Event that informs subscribers of mission relevant info
-public class RemovedObjectMissionDataXYZ : ObjectMissionDataXYZ
+public class RemovedObjectMissionData : ObjectMissionData
 {
-    public RemovedObjectMissionDataXYZ(PlaceableType givenPlaceableType, InsectType givenInsectType, bool givenYieldsProduce, bool givenAttractsBirds) : base(givenPlaceableType, givenInsectType, givenYieldsProduce, givenAttractsBirds)
+    public RemovedObjectMissionData(PlaceableType givenPlaceableType, InsectType givenInsectType, bool givenYieldsProduce, bool givenAttractsBirds) : base(givenPlaceableType, givenInsectType, givenYieldsProduce, givenAttractsBirds)
     {
     }
 }
