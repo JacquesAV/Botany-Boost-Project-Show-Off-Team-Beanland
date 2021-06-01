@@ -180,3 +180,45 @@ public class CurrentActiveMissions : EventData
         activeMissions = givenActiveMissions;
     }
 }
+//Event that informs subscribers of a threshold being reached
+public class BeetleThresholdReached : EventData
+{
+    public BeetleThresholdReached() : base(EventType.BEETLETHRESHOLDREACHED)
+    {
+    }
+}
+//Event that informs subscribers of a threshold being lost
+public class BeetleThresholdLost : EventData
+{
+    public BeetleThresholdLost() : base(EventType.BEETLETHRESHOLDLOST)
+    {
+    }
+}
+//Event that informs subscribers of a threshold being reached
+public class ButterflyThresholdReached : EventData
+{
+    public ButterflyThresholdReached() : base(EventType.BUTTERFLYTHRESHOLDREACHED)
+    {
+    }
+}
+//Event that informs subscribers of a threshold being lost
+public class ButterflyThresholdLost : EventData
+{
+    public ButterflyThresholdLost() : base(EventType.BUTTERFLYTHRESHOLDLOST)
+    {
+    }
+}
+//Event that informs subscribers of a threshold being reached
+public class BeeThresholdReached : EventData
+{
+    public BeeThresholdReached() : base(EventType.BEETHRESHOLDREACHED)
+    {
+    }
+}
+//Event that informs subscribers of a threshold being lost
+public class BeeThresholdLost : EventData
+{
+    public BeeThresholdLost() : base(EventType.BEETHRESHOLDLOST)
+    {
+    }
+}
