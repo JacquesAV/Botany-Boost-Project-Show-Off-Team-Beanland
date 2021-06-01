@@ -31,6 +31,7 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Subscribe(EventType.PLANTGASSED, OnPlantGassed); //Decrease invaded plant count
         EventManager.currentManager.Subscribe(EventType.PLANTINFECTED, OnPlantInfected); //Increase sick plant count
         EventManager.currentManager.Subscribe(EventType.PLANTCURED, OnPlantCured); //Decrease sick plant count
+        EventManager.currentManager.Subscribe(EventType.MISSIONCOMPLETED, OnMissionComplete); //Increase money count based on reward
     }
     private void OnDisable()
     {
@@ -42,6 +43,7 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Unsubscribe(EventType.PLANTGASSED, OnPlantGassed);
         EventManager.currentManager.Unsubscribe(EventType.PLANTINFECTED, OnPlantInfected);
         EventManager.currentManager.Unsubscribe(EventType.PLANTCURED, OnPlantCured);
+        EventManager.currentManager.Unsubscribe(EventType.MISSIONCOMPLETED, OnMissionComplete);
     }
 
     #region OnEvents
@@ -150,6 +152,24 @@ public class PlayerScoreManager : MonoBehaviour
         else
         {
             throw new System.Exception("Error: EventData class with EventType.PLANTCURED was received but is not of class PlantCured.");
+        }
+    }
+    private void OnMissionComplete(EventData eventData)
+    {
+        if (eventData is MissionCompleted)
+        {
+            //Cast the event so it can be used
+            MissionCompleted missionReward = (MissionCompleted)eventData;
+
+            //Add to user money
+            AddMoney(missionReward.rewardAmount);
+
+            //Request a score update
+            UpdateTotalScores();
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.MISSIONCOMPLETED was received but is not of class MissionCompleted.");
         }
     }
     #endregion
