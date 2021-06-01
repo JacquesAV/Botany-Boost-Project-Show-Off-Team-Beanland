@@ -20,6 +20,17 @@ public class PlantHolder : MonoBehaviour
         invaderFX = Resources.Load<GameObject>("Effects/InvaderEffect");
     }
 
+    private void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
+    #region Getters
     public static GameObject GetBeetleFX()
     {
         return beetleFX;
@@ -44,4 +55,5 @@ public class PlantHolder : MonoBehaviour
     {
         return invaderFX;
     }
+    #endregion
 }

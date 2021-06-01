@@ -20,6 +20,7 @@ public class PlantEffects : MonoBehaviour
 
     private GameObject diseaseFX;
     private GameObject invaderFX;
+    private GameObject bugFX;
 
     private void Start()
     {
@@ -28,7 +29,7 @@ public class PlantEffects : MonoBehaviour
         lifespanInDays = placeableData.GetLifespan();
         baseDiseaseChance = placeableData.GetBaseDiseaseChance();
         diseaseSpreadModifier = placeableData.GetDiseaseSpreadModifier();
-
+        #region ParticleSetup
         //Create a variable for assignment
         GameObject p = null;
         //If plant holder contains a diseaseFX
@@ -55,8 +56,61 @@ public class PlantEffects : MonoBehaviour
         {
             Debug.LogWarning("Warning: Could not find a InvaderFX from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
         }
-
-
+        #endregion
+        switch (placeableData.GetInsectType())
+        {
+            case InsectType.Bee:
+                EventManager.currentManager.Subscribe(EventType.BEETHRESHOLDREACHED, OnThresholdReached);
+                EventManager.currentManager.Subscribe(EventType.BEETHRESHOLDLOST, OnThresholdLost);
+                //Create a variable for assignment
+                p = null;
+                //If plant holder contains a BugFX
+                if ((p = PlantHolder.GetBeeFX()) != null)
+                {
+                    //Create BugFX and disable it
+                    bugFX = Instantiate(p, transform, false);
+                    bugFX.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("Warning: Could not find a BugFX, bee, from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
+                }
+                break;
+            case InsectType.Beetle:
+                EventManager.currentManager.Subscribe(EventType.BEETLETHRESHOLDREACHED, OnThresholdReached);
+                EventManager.currentManager.Subscribe(EventType.BEETLETHRESHOLDLOST, OnThresholdLost);
+                //Create a variable for assignment
+                p = null;
+                //If plant holder contains a BugFX
+                if ((p = PlantHolder.GetBeetleFX()) != null)
+                {
+                    //Create BugFX and disable it
+                    bugFX = Instantiate(p, transform, false);
+                    bugFX.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("Warning: Could not find a BugFX, beetle, from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
+                }
+                break;
+            case InsectType.Butterfly:
+                EventManager.currentManager.Subscribe(EventType.BUTTERFLYTHRESHOLDREACHED, OnThresholdReached);
+                EventManager.currentManager.Subscribe(EventType.BUTTERFLYTHRESHOLDLOST, OnThresholdLost);
+                //Create a variable for assignment
+                p = null;
+                //If plant holder contains a BugFX
+                if ((p = PlantHolder.GetButterflyFX()) != null)
+                {
+                    //Create BugFX and disable it
+                    bugFX = Instantiate(p, transform, false);
+                    bugFX.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("Warning: Could not find a BugFX, butterfly, from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
+                }
+                break;
+        }
     }
 
     private void OnEnable()
@@ -68,8 +122,8 @@ public class PlantEffects : MonoBehaviour
     {
         EventManager.currentManager.Unsubscribe(EventType.DAYPASSED, OnDayPassed);
     }
-
-    public void OnDayPassed(EventData eventData)
+    #region OnEvents
+    private void OnDayPassed(EventData eventData)
     {
         //when day passes
         if (eventData is DayHasPassed)
@@ -80,10 +134,24 @@ public class PlantEffects : MonoBehaviour
         }
         else
         {
-            throw new System.Exception("Error: EventData class with EventType.PURCHASEBEGIN was received but is not of class DayHasPassed.");
+            throw new System.Exception("Error: EventData class with EventType.DAYPASSED was received but is not of class DayHasPassed.");
         }
     }
-
+    private void OnThresholdReached(EventData eventData)
+    {
+        Debug.Log("PLAY GODMANDAS YOU");
+        bugFX.SetActive(true);
+    }
+    private void OnThresholdLost(EventData eventData)
+    {
+        Debug.Log("It off");
+        if (gameObject != null)
+        {
+            bugFX.SetActive(false);
+        }
+    }
+    #endregion
+    #region PlantHealth
     private void CheckIfPlantDied()
     {
         //If the lifespan is considered dead
@@ -258,4 +326,5 @@ public class PlantEffects : MonoBehaviour
             invaderFX.SetActive(false);
         }
     }
+    #endregion
 }
