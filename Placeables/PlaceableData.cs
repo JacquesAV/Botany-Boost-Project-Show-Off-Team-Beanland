@@ -135,6 +135,16 @@ public class PlaceableData : MonoBehaviour
         return plantInfoText;
     }
 
+    public bool GetYieldsProduce()
+    {
+        return yieldsProduce;
+    }
+
+    public bool GetAttractsBirds()
+    {
+        return attractsBirds;
+    }
+
     public int GetLifespan()
     {
         return lifespanInDays;
