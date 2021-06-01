@@ -26,19 +26,19 @@ public class PlaceableHolder : MonoBehaviour
             {
                 switch (temp.GetPlaceableType())
                 {
-                    case "Flower":
+                    case PlaceableType.Flower:
                         flowers.Add(placeable);
                         break;
-                    case "Bush":
+                    case PlaceableType.Bush:
                         bushes.Add(placeable);
                         break;
-                    case "Tree":
+                    case PlaceableType.Tree:
                         trees.Add(placeable);
                         break;
-                    case "Flooring":
+                    case PlaceableType.Flooring:
                         floorings.Add(placeable);
                         break;
-                    case "Ornament":
+                    case PlaceableType.Ornament:
                         ornaments.Add(placeable);
                         break;
                     default:
