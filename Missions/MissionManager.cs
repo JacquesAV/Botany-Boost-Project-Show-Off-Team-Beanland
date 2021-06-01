@@ -16,11 +16,13 @@ public class MissionManager : MonoBehaviour
     {
         //Subscribes the method and event type to the current manager
         EventManager.currentManager.Subscribe(EventType.WEEKPASSED, OnWeekPassed);
+        EventManager.currentManager.Subscribe(EventType.MISSIONUPDATED, OnMissionUpdated);
     }
     private void OnDisable()
     {
         //Unsubscribes the method and event type to the current manager
         EventManager.currentManager.Unsubscribe(EventType.WEEKPASSED, OnWeekPassed);
+        EventManager.currentManager.Unsubscribe(EventType.MISSIONUPDATED, OnMissionUpdated);
     }
 
     //Gets called when a WeekHasPassed event has been called
@@ -28,12 +30,28 @@ public class MissionManager : MonoBehaviour
     {
         if (eventData is WeekHasPassed)
         {
+            //Fire off rewards for missions that reward you at the end of the week (if they're completed!)
+            ProcessEndOfWeekMissions();
+
             //Populate a list of new missions and clear the previous one
-            UpdateMissions();
+            UpdateNewMissions();
         }
         else
         {
             throw new System.Exception("Error: EventData class with EventType.WEEKPASSED was received but is not of class WeekHasPassed.");
+        }
+    }
+
+    private void OnMissionUpdated(EventData eventData)
+    {
+        if (eventData is MissionUpdated)
+        {
+            //Fire off event of current active missions with updated information
+            EventManager.currentManager.AddEvent(new CurrentActiveMissions(activeMissions));
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.MISSIONUPDATED was received but is not of class MissionUpdated.");
         }
     }
 
@@ -80,8 +98,19 @@ public class MissionManager : MonoBehaviour
         }
     }
 
+    //Processes end of week missions so that rewards are fired off (if completed)
+    private void ProcessEndOfWeekMissions()
+    {
+        //Iterate over each and call the end of week method (mission class handles if this is valid)
+        foreach (GameObject missionObject in activeMissions)
+        {
+            //Reset the mission data
+            missionObject.GetComponent<Mission>().OnWeekPassedReward();
+        }
+    }
+
     //Updates the list of active missions, adding failed/completed ones to the completed missions and moving onto new ones
-    private void UpdateMissions()
+    private void UpdateNewMissions()
     {
         //If there are no available missions or not enough available missions, reset the list available list
         if (availableMissionsPool.Count < numberOfActiveMissions)
@@ -99,6 +128,7 @@ public class MissionManager : MonoBehaviour
             PoolNewActiveMissions();
         }
         Debug.Log("Number of missions remaining in the pool: " + availableMissionsPool.Count);
+
         //Fire off event with the new active missions
         EventManager.currentManager.AddEvent(new CurrentActiveMissions(activeMissions));
     }

@@ -8,7 +8,7 @@ public class MissionLog : MonoBehaviour
 {
     [SerializeField]
     //Text panels that are meant to visualize the mission
-    private TextMeshProUGUI moneyRewardText = null, descriptionText = null;
+    private TextMeshProUGUI moneyRewardText = null, descriptionText = null, progressText = null;
 
     [SerializeField]
     //Checkbox that gets image changed
@@ -24,6 +24,7 @@ public class MissionLog : MonoBehaviour
         //Set the correct text
         moneyRewardText.SetText(mission.GetMissionReward().ToString());
         descriptionText.SetText(mission.GetMissionDescription().ToString());
+        progressText.SetText(mission.GetProgressText());
         checkboxObject.GetComponent<Image>().sprite = uncheckedBox;
 
         //Update the checkbox
