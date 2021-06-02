@@ -17,6 +17,12 @@ public class CamController : MonoBehaviour
     //Lock camera movement so that it does not annoy testing
     [SerializeField] private bool movementLocked = false;
 
+    [Header("View constraints")]
+    [SerializeField] private int xMaxConstraint=5, xMinConstraint = -5;
+    [SerializeField] private int zMaxConstraint=5, zMinConstraint = -5;
+    [SerializeField] private int yMaxConstraint=10, yMinConstraint = 0;
+
+
     //Keys used for keybinding (RIGHT NOW NOT IN USE)
     //Zooming
     private KeyCode zoomIn = KeyCode.Equals;
@@ -24,6 +30,14 @@ public class CamController : MonoBehaviour
     //Rotation
     private KeyCode rotateRight = KeyCode.E;
     private KeyCode rotateLeft = KeyCode.Q;
+
+    private Camera mainCamera;
+
+    private void Start()
+    {
+        mainCamera = Camera.main;
+    }
+
     private void Update()
     {
         CameraMovement();
@@ -33,9 +47,10 @@ public class CamController : MonoBehaviour
         CameraRotate();
     }
     private void CameraMovement()
-    {
+    { 
         if (!movementLocked)
         {
+            Vector3 previousPos = cameraHolder.transform.position;
             //Move up
             if (Input.mousePosition.y >= Screen.height * topNRightBarrier || Input.GetKey(KeyCode.W))
             {
@@ -55,7 +70,36 @@ public class CamController : MonoBehaviour
             if (Input.mousePosition.x >= Screen.width * topNRightBarrier || Input.GetKey(KeyCode.D))
             {
                 cameraHolder.transform.Translate(Camera.main.transform.right * Time.deltaTime * scrollSpeed, Space.World);
-            } }
+            }
+            //CONSTRAINTS
+            //x-axis
+            if (cameraHolder.transform.position.x>xMaxConstraint)
+            {
+                cameraHolder.transform.position=new Vector3(xMaxConstraint, cameraHolder.transform.position.y, cameraHolder.transform.position.z);
+            }
+            if (cameraHolder.transform.position.x < xMinConstraint)
+            {
+                cameraHolder.transform.position = new Vector3(xMinConstraint, cameraHolder.transform.position.y, cameraHolder.transform.position.z);
+            }
+            //z-axis
+            if (cameraHolder.transform.position.z > zMaxConstraint)
+            {
+                cameraHolder.transform.position = new Vector3(cameraHolder.transform.position.x, cameraHolder.transform.position.y, zMaxConstraint);
+            }
+            if (cameraHolder.transform.position.z < zMinConstraint)
+            {
+                cameraHolder.transform.position = new Vector3(cameraHolder.transform.position.x, cameraHolder.transform.position.y, zMinConstraint);
+            }
+            //y-axis
+            if (cameraHolder.transform.position.y > yMaxConstraint)
+            {
+                cameraHolder.transform.position = new Vector3(cameraHolder.transform.position.x, yMaxConstraint, cameraHolder.transform.position.z);
+            }
+            if (cameraHolder.transform.position.y < yMinConstraint)
+            {
+                cameraHolder.transform.position = new Vector3(cameraHolder.transform.position.x, yMinConstraint, cameraHolder.transform.position.z);
+            }
+        }
     }
 
     private void CameraZoom()
@@ -63,12 +107,12 @@ public class CamController : MonoBehaviour
         //Zoom in
         if (Input.GetKey(zoomIn) || Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
-            Camera.main.orthographicSize -= zoomSpeed;
+            mainCamera.orthographicSize -= zoomSpeed;
         }
         //Zoom out
         if (Input.GetKey(zoomOut) || Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
-            Camera.main.orthographicSize += zoomSpeed;
+            mainCamera.orthographicSize += zoomSpeed;
         }
     }
 
