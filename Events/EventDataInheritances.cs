@@ -80,18 +80,20 @@ public class TotalScoresUpdated : EventData
     public readonly int money;
     public readonly int biodiversity;
     public readonly int carbonIntake;
-    public readonly int attractiveScore;
+    public readonly int appealScore;
     public readonly int invasiveness;
-    public readonly int disease;
+    public readonly int infections;
+    public readonly int totalScore;
 
-    public TotalScoresUpdated(int givenMoney, int givenBiodiversity, int givenCarbonIntake, int givenAttractiveScore, int givenInvasiveness, int givenDisease) : base(EventType.TOTALSCORESUPDATED)
+    public TotalScoresUpdated(int givenMoney, int givenBiodiversity, int givenCarbonIntake, int givenAppealScore, int givenInvasiveness, int givenInfections, int givenTotalScore) : base(EventType.TOTALSCORESUPDATED)
     {
         money = givenMoney;
         biodiversity = givenBiodiversity;
         carbonIntake = givenCarbonIntake;
-        attractiveScore = givenAttractiveScore;
+        appealScore = givenAppealScore;
         invasiveness = givenInvasiveness;
-        disease = givenDisease;
+        infections = givenInfections;
+        totalScore = givenTotalScore;
     }
 }
 
@@ -219,6 +221,14 @@ public class PlacedObjectMissionData : ObjectMissionData
 public class RemovedObjectMissionData : ObjectMissionData
 {
     public RemovedObjectMissionData(PlaceableType givenPlaceableType, InsectType givenInsectType, bool givenYieldsProduce, bool givenAttractsBirds) : base(givenPlaceableType, givenInsectType, givenYieldsProduce, givenAttractsBirds)
+    {
+    }
+}
+
+//Event that informs subscribers of mission relevant info
+public class RequestScoreData : EventData
+{
+    public RequestScoreData() : base(EventType.REQUESTSCOREDATA)
     {
     }
 }
