@@ -19,7 +19,6 @@ public class CamController : MonoBehaviour
 
     [Header("View constraints")]
     [SerializeField] private Terrain terrain;
-    [Range(0,1)][SerializeField] private float constraintLimit = 1f;
 
     [SerializeField] private float xMaxConstraint = 10, xMinConstraint =0;
     [SerializeField] private float zMaxConstraint = 10, zMinConstraint =0;
