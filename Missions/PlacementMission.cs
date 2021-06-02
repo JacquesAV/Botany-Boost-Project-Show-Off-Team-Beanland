@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlacementMission : Mission
 {
-    [SerializeField] protected private PlaceableType mustBeObjectType = PlaceableType.None; //The object type that is permitted/tracked for the mission
-    [SerializeField] protected private InsectType mustAttractInsectType = InsectType.None; //If the goal should attract insects
+    [SerializeField] private PlaceableType mustBeObjectType = PlaceableType.None; //The object type that is permitted/tracked for the mission
+    [SerializeField] private InsectType mustAttractInsectType = InsectType.None; //If the goal should attract insects
     [SerializeField] private bool mustYieldProduce; //If the goal should produce food
     [SerializeField] private bool mustAttractBirds; //If the goal should attract birds
     [SerializeField] protected private int placementGoal = 0; //The number of objects that must be placed
@@ -138,7 +138,7 @@ public class PlacementMission : Mission
         }
         else
         {
-            throw new System.Exception("Error: EventData class with EventType.MISSIONDATAXYZ was received but is not of class ObjectMissionDataXYZ or its derived classes.");
+            throw new System.Exception("Error: EventData class with EventType.MISSIONDATA was received but is not of class ObjectMissionData or its derived classes.");
         }
     }
 }

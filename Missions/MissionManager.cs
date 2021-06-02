@@ -15,8 +15,8 @@ public class MissionManager : MonoBehaviour
     private void OnEnable()
     {
         //Subscribes the method and event type to the current manager
-        EventManager.currentManager.Subscribe(EventType.WEEKPASSED, OnWeekPassed);
-        EventManager.currentManager.Subscribe(EventType.MISSIONUPDATED, OnMissionUpdated);
+        EventManager.currentManager.Subscribe(EventType.WEEKPASSED, OnWeekPassed); //Process when a week has passed
+        EventManager.currentManager.Subscribe(EventType.MISSIONUPDATED, OnMissionUpdated); //Process when a mission has been updated
     }
     private void OnDisable()
     {
