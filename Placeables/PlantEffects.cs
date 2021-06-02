@@ -29,91 +29,9 @@ public class PlantEffects : MonoBehaviour
         lifespanInDays = placeableData.GetLifespan();
         baseDiseaseChance = placeableData.GetBaseDiseaseChance();
         diseaseSpreadModifier = placeableData.GetDiseaseSpreadModifier();
-        #region ParticleSetup
-        //Create a variable for assignment
-        GameObject p = null;
-        //If plant holder contains a diseaseFX
-        if ((p = PlantHolder.GetDiseaseFX()) != null)
-        {
-            //Create diseaseFX and disable it
-            diseaseFX = Instantiate(p, transform, false);
-            diseaseFX.SetActive(false);
-        }
-        else
-        {
-            Debug.LogWarning("Warning: Could not find a DiseaseFX from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
-        }
-        //Reset p to null
-        p = null;
-        //If plant holder contains a invaderFX
-        if ((p = PlantHolder.GetInvaderFX()) != null)
-        {
-            //Create invaderFX and disable it
-            invaderFX = Instantiate(p, transform, false);
-            invaderFX.SetActive(false);
-        }
-        else
-        {
-            Debug.LogWarning("Warning: Could not find a InvaderFX from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
-        }
-        #endregion
-        switch (placeableData.GetInsectType())
-        {
-            case InsectType.Bee:
-                EventManager.currentManager.Subscribe(EventType.BEETHRESHOLDREACHED, OnThresholdReached);
-                EventManager.currentManager.Subscribe(EventType.BEETHRESHOLDLOST, OnThresholdLost);
-                //Create a variable for assignment
-                p = null;
-                //If plant holder contains a BugFX
-                if ((p = PlantHolder.GetBeeFX()) != null)
-                {
-                    //Create BugFX and disable it if it has not reached the threshold
-                    bugFX = Instantiate(p, transform, false);
-                    if (!PlantHolder.GetShowBees())
-                        bugFX.SetActive(false);
-                }
-                else
-                {
-                    Debug.LogWarning("Warning: Could not find a BugFX, bee, from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
-                }
-                break;
-            case InsectType.Beetle:
-                EventManager.currentManager.Subscribe(EventType.BEETLETHRESHOLDREACHED, OnThresholdReached);
-                EventManager.currentManager.Subscribe(EventType.BEETLETHRESHOLDLOST, OnThresholdLost);
-                //Create a variable for assignment
-                p = null;
-                //If plant holder contains a BugFX
-                if ((p = PlantHolder.GetBeetleFX()) != null)
-                {
-                    //Create BugFX and disable it if it has not reached the threshold
-                    bugFX = Instantiate(p, transform, false);
-                    if (!PlantHolder.GetShowBeetles())
-                        bugFX.SetActive(false);
-                }
-                else
-                {
-                    Debug.LogWarning("Warning: Could not find a BugFX, beetle, from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
-                }
-                break;
-            case InsectType.Butterfly:
-                EventManager.currentManager.Subscribe(EventType.BUTTERFLYTHRESHOLDREACHED, OnThresholdReached);
-                EventManager.currentManager.Subscribe(EventType.BUTTERFLYTHRESHOLDLOST, OnThresholdLost);
-                //Create a variable for assignment
-                p = null;
-                //If plant holder contains a BugFX
-                if ((p = PlantHolder.GetButterflyFX()) != null)
-                {
-                    //Create BugFX and disable it if it has not reached the threshold
-                    bugFX = Instantiate(p, transform, false);
-                    if (!PlantHolder.GetShowButterflies())
-                        bugFX.SetActive(false);
-                }
-                else
-                {
-                    Debug.LogWarning("Warning: Could not find a BugFX, butterfly, from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
-                }
-                break;
-        }
+        //Setup fx
+        SetupHealthFX();
+        SetupBugFX();
     }
 
     private void OnEnable()
@@ -325,6 +243,99 @@ public class PlantEffects : MonoBehaviour
         if (diseaseFX != null)
         {
             invaderFX.SetActive(false);
+        }
+    }
+    #endregion
+    #region PlantSetup
+    private void SetupHealthFX()
+    {
+        //Create a variable for assignment
+        GameObject p = null;
+        //If plant holder contains a diseaseFX
+        if ((p = PlantHolder.GetDiseaseFX()) != null)
+        {
+            //Create diseaseFX and disable it
+            diseaseFX = Instantiate(p, transform, false);
+            diseaseFX.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Warning: Could not find a DiseaseFX from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
+        }
+        //Reset p to null
+        p = null;
+        //If plant holder contains a invaderFX
+        if ((p = PlantHolder.GetInvaderFX()) != null)
+        {
+            //Create invaderFX and disable it
+            invaderFX = Instantiate(p, transform, false);
+            invaderFX.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Warning: Could not find a InvaderFX from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
+        }
+    }
+    private void SetupBugFX()
+    {
+        //Create a variable for assignment
+        GameObject p = null;
+        switch (placeableData.GetInsectType())
+        {
+            case InsectType.Bee:
+                EventManager.currentManager.Subscribe(EventType.BEETHRESHOLDREACHED, OnThresholdReached);
+                EventManager.currentManager.Subscribe(EventType.BEETHRESHOLDLOST, OnThresholdLost);
+                //Create a variable for assignment
+                p = null;
+                //If plant holder contains a BugFX
+                if ((p = PlantHolder.GetBeeFX()) != null)
+                {
+                    //Create BugFX and disable it if it has not reached the threshold
+                    bugFX = Instantiate(p, transform, false);
+                    if (!PlantHolder.GetShowBees())
+                        bugFX.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("Warning: Could not find a BugFX, bee, from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
+                }
+                break;
+            case InsectType.Beetle:
+                EventManager.currentManager.Subscribe(EventType.BEETLETHRESHOLDREACHED, OnThresholdReached);
+                EventManager.currentManager.Subscribe(EventType.BEETLETHRESHOLDLOST, OnThresholdLost);
+                //Create a variable for assignment
+                p = null;
+                //If plant holder contains a BugFX
+                if ((p = PlantHolder.GetBeetleFX()) != null)
+                {
+                    //Create BugFX and disable it if it has not reached the threshold
+                    bugFX = Instantiate(p, transform, false);
+                    if (!PlantHolder.GetShowBeetles())
+                        bugFX.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("Warning: Could not find a BugFX, beetle, from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
+                }
+                break;
+            case InsectType.Butterfly:
+                EventManager.currentManager.Subscribe(EventType.BUTTERFLYTHRESHOLDREACHED, OnThresholdReached);
+                EventManager.currentManager.Subscribe(EventType.BUTTERFLYTHRESHOLDLOST, OnThresholdLost);
+                //Create a variable for assignment
+                p = null;
+                //If plant holder contains a BugFX
+                if ((p = PlantHolder.GetButterflyFX()) != null)
+                {
+                    //Create BugFX and disable it if it has not reached the threshold
+                    bugFX = Instantiate(p, transform, false);
+                    if (!PlantHolder.GetShowButterflies())
+                        bugFX.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("Warning: Could not find a BugFX, butterfly, from PlantHolder, make sure you have script attached to an object and that there is a file in the resource folder");
+                }
+                break;
         }
     }
     #endregion
