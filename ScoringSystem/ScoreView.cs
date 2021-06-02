@@ -31,10 +31,10 @@ public class ScoreView : MonoBehaviour
             //Updates all the score view text to match the scores
             biodiversityText.text = updatedScores.biodiversity.ToString();
             carbonIntakeText.text = updatedScores.carbonIntake.ToString();
-            appealText.text = updatedScores.attractiveScore.ToString();
+            appealText.text = updatedScores.appealScore.ToString();
             moneyText.text = updatedScores.money.ToString();
             invasivenessText.text = updatedScores.invasiveness.ToString();
-            diseaseText.text = updatedScores.disease.ToString();
+            diseaseText.text = updatedScores.infections.ToString();
         }
         else
         {

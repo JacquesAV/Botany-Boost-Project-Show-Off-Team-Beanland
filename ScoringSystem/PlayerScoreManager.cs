@@ -32,6 +32,7 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Subscribe(EventType.PLANTINFECTED, OnPlantInfected); //Increase sick plant count
         EventManager.currentManager.Subscribe(EventType.PLANTCURED, OnPlantCured); //Decrease sick plant count
         EventManager.currentManager.Subscribe(EventType.MISSIONCOMPLETED, OnMissionComplete); //Increase money count based on reward
+        EventManager.currentManager.Subscribe(EventType.REQUESTSCOREDATA, OnScoreRequest); //Process when a request for the scores
     }
     private void OnDisable()
     {
@@ -44,6 +45,7 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Unsubscribe(EventType.PLANTINFECTED, OnPlantInfected);
         EventManager.currentManager.Unsubscribe(EventType.PLANTCURED, OnPlantCured);
         EventManager.currentManager.Unsubscribe(EventType.MISSIONCOMPLETED, OnMissionComplete);
+        EventManager.currentManager.Unsubscribe(EventType.REQUESTSCOREDATA, OnScoreRequest);
     }
 
     #region OnEvents
@@ -172,6 +174,18 @@ public class PlayerScoreManager : MonoBehaviour
             throw new System.Exception("Error: EventData class with EventType.MISSIONCOMPLETED was received but is not of class MissionCompleted.");
         }
     }
+    private void OnScoreRequest(EventData eventData)
+    {
+        if (eventData is RequestScoreData)
+        {
+            //Fire off event with the total scores
+            EventManager.currentManager.AddEvent(new TotalScoresUpdated(totalMoney, totalBiodiversity, totalCarbonIntake, totalAppeal, totalInvasiveness, totalInfections, totalScore));
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.REQUESTSCOREDATA was received but is not of class RequestScoreData.");
+        }
+    }
     #endregion
 
     #region Event Data Handlers
@@ -225,7 +239,7 @@ public class PlayerScoreManager : MonoBehaviour
         totalScore = totalBiodiversity + totalCarbonIntake - (totalInfections + totalInvasiveness);
 
         //Fire off event with information
-        EventManager.currentManager.AddEvent(new TotalScoresUpdated(totalMoney, totalBiodiversity, totalCarbonIntake, totalAppeal, totalInvasiveness, totalInfections));
+        EventManager.currentManager.AddEvent(new TotalScoresUpdated(totalMoney, totalBiodiversity, totalCarbonIntake, totalAppeal, totalInvasiveness, totalInfections, totalScore));
     }
     private bool IsAffordable(int givenCost)
     {
