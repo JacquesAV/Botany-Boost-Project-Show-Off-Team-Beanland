@@ -156,7 +156,7 @@ public class TileBuildingModel : MonoBehaviour
 
         //Fire off event with created information
         EventManager.currentManager.AddEvent(new ObjectBoughtScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAppeal(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
-        EventManager.currentManager.AddEvent(new PlacedObjectMissionDataXYZ(savedPlaceableData.GetPlaceableType(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetYieldsProduce(), savedPlaceableData.GetAttractsBirds()));
+        EventManager.currentManager.AddEvent(new PlacedObjectMissionData(savedPlaceableData.GetPlaceableType(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetYieldsProduce(), savedPlaceableData.GetAttractsBirds()));
 
         //Then link neighbours
         LinkNeighbours();
@@ -202,7 +202,7 @@ public class TileBuildingModel : MonoBehaviour
 
         //Fire off event with sold information
         EventManager.currentManager.AddEvent(new ObjectSoldScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAppeal(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
-        EventManager.currentManager.AddEvent(new RemovedObjectMissionDataXYZ(savedPlaceableData.GetPlaceableType(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetYieldsProduce(), savedPlaceableData.GetAttractsBirds()));
+        EventManager.currentManager.AddEvent(new RemovedObjectMissionData(savedPlaceableData.GetPlaceableType(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetYieldsProduce(), savedPlaceableData.GetAttractsBirds()));
 
         //Debug
         DebugManager.DebugLog(savedPlaceableData.GetName() + " has been removed!");
