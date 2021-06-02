@@ -18,11 +18,14 @@ public class CamController : MonoBehaviour
     [SerializeField] private bool movementLocked = false;
 
     [Header("View constraints")]
-    [SerializeField] private int xMaxConstraint=5, xMinConstraint = -5;
-    [SerializeField] private int zMaxConstraint=5, zMinConstraint = -5;
-    [SerializeField] private int yMaxConstraint=10, yMinConstraint = 0;
+    [SerializeField] private Terrain terrain;
+    [Range(0,1)][SerializeField] private float constraintLimit = 1f;
 
+    [SerializeField] private float xMaxConstraint = 10, xMinConstraint =0;
+    [SerializeField] private float zMaxConstraint = 10, zMinConstraint =0;
 
+    [SerializeField] private float zoomOutMax = 10;
+    [SerializeField] private float zoomInMax = 2;
     //Keys used for keybinding (RIGHT NOW NOT IN USE)
     //Zooming
     private KeyCode zoomIn = KeyCode.Equals;
@@ -32,10 +35,12 @@ public class CamController : MonoBehaviour
     private KeyCode rotateLeft = KeyCode.Q;
 
     private Camera mainCamera;
-
+    private float upDownModifier=2;//up and down on camera is slower so it needs it own multiplier
     private void Start()
     {
         mainCamera = Camera.main;
+
+        UpdateConstraints();
     }
 
     private void Update()
@@ -54,12 +59,15 @@ public class CamController : MonoBehaviour
             //Move up
             if (Input.mousePosition.y >= Screen.height * topNRightBarrier || Input.GetKey(KeyCode.W))
             {
-                cameraHolder.transform.Translate(Vector3.up * Time.deltaTime * scrollSpeed, Space.World);
+                //cameraHolder.transform.Translate(Vector3.up * Time.deltaTime * scrollSpeed, Space.World);
+                cameraHolder.transform.Translate(Vector3.Scale(transform.forward, new Vector3(1, 0, 1)) * Time.deltaTime * scrollSpeed* upDownModifier, Space.World);
             }
             //Move down
             if (Input.mousePosition.y <= Screen.height * botNLeftBarrier || Input.GetKey(KeyCode.S))
             {
-                cameraHolder.transform.Translate(Vector3.down * Time.deltaTime * scrollSpeed, Space.World);
+                //cameraHolder.transform.Translate(Vector3.down * Time.deltaTime * scrollSpeed, Space.World);
+                cameraHolder.transform.Translate(-Vector3.Scale(transform.forward, new Vector3(1, 0, 1)) * Time.deltaTime * scrollSpeed* upDownModifier, Space.World);
+                
             }
             //Move left
             if (Input.mousePosition.x <= Screen.width * botNLeftBarrier || Input.GetKey(KeyCode.A))
@@ -90,27 +98,18 @@ public class CamController : MonoBehaviour
             {
                 cameraHolder.transform.position = new Vector3(cameraHolder.transform.position.x, cameraHolder.transform.position.y, zMinConstraint);
             }
-            //y-axis
-            if (cameraHolder.transform.position.y > yMaxConstraint)
-            {
-                cameraHolder.transform.position = new Vector3(cameraHolder.transform.position.x, yMaxConstraint, cameraHolder.transform.position.z);
-            }
-            if (cameraHolder.transform.position.y < yMinConstraint)
-            {
-                cameraHolder.transform.position = new Vector3(cameraHolder.transform.position.x, yMinConstraint, cameraHolder.transform.position.z);
-            }
         }
     }
 
     private void CameraZoom()
     {
         //Zoom in
-        if (Input.GetKey(zoomIn) || Input.GetAxis("Mouse ScrollWheel") > 0f)
+        if ((Input.GetKey(zoomIn) || Input.GetAxis("Mouse ScrollWheel") > 0f)&&mainCamera.orthographicSize>= zoomInMax)
         {
             mainCamera.orthographicSize -= zoomSpeed;
         }
         //Zoom out
-        if (Input.GetKey(zoomOut) || Input.GetAxis("Mouse ScrollWheel") < 0f)
+        if ((Input.GetKey(zoomOut) || Input.GetAxis("Mouse ScrollWheel") < 0f)&& mainCamera.orthographicSize <= zoomOutMax)
         {
             mainCamera.orthographicSize += zoomSpeed;
         }
@@ -127,6 +126,23 @@ public class CamController : MonoBehaviour
         if (Input.GetKey(rotateRight))
         {
             cameraHolder.transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    private void UpdateConstraints()
+    {
+        if (terrain != null)
+        {
+            //x-axis
+            xMaxConstraint = terrain.terrainData.size.x;
+            xMinConstraint = 0;
+            //z-axis
+            zMaxConstraint = terrain.terrainData.size.z;
+            zMinConstraint = 0;
+        }
+        else
+        {
+            Debug.LogWarning("terrain on Camera was not set, will use manual values.");
         }
     }
 }
