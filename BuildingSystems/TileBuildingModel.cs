@@ -170,14 +170,14 @@ public class TileBuildingModel : MonoBehaviour
     {
         //Fire off event to check if building price is possible and subscribe to an event so that it may recieve the result with ease
         EventManager.currentManager.Subscribe(EventType.PLANTCUREGASREQUESTRESULT, OnCureGasRequestResult);
-        EventManager.currentManager.AddEvent(new PlantCureGasRequest(true,false));
+        EventManager.currentManager.AddEvent(new PlantCureGasRequest(true, false, plantEffects.GetIsSick(), plantEffects.GetHasInvaders()));
     }
 
     private void OnGasClick()
     {
         //Fire off event to check if building price is possible and subscribe to an event so that it may recieve the result with ease
         EventManager.currentManager.Subscribe(EventType.PLANTCUREGASREQUESTRESULT, OnCureGasRequestResult);
-        EventManager.currentManager.AddEvent(new PlantCureGasRequest(false, true));
+        EventManager.currentManager.AddEvent(new PlantCureGasRequest(false, true, plantEffects.GetIsSick(), plantEffects.GetHasInvaders()));
     }
 
     private void OnCureGasRequestResult(EventData eventData)
