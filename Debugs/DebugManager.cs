@@ -37,9 +37,12 @@ public class DebugManager : MonoBehaviour
     private void Update()
     {
         ToggleDebugging();
-        CheckIfActive();
-        SkipCurrentDay();
-        SkipCurrentWeek();
+        if (debugStarted)
+        {
+            CheckIfActive();
+            SkipCurrentDay();
+            SkipCurrentWeek();
+        }
     }
 
     public void OnDebugStart(EventData eventData)
