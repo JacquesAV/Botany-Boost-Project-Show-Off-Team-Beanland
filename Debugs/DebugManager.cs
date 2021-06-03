@@ -7,7 +7,7 @@ public class DebugManager : MonoBehaviour
     //Singleton
     //Getter and setter for the current debugger, static so that there is only one manager at any given time
     public static DebugManager currentDebugger { get; set; } = null;
-    private bool debugStarted = true;
+    [SerializeField] private bool debugStarted = true;
     [SerializeField] private Transform debugUI=null;
 
     //Awake function ensures that only one copy exists in the scene at a given time
