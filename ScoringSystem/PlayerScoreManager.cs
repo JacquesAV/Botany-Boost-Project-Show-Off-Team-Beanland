@@ -5,10 +5,11 @@ using UnityEngine;
 public class PlayerScoreManager : MonoBehaviour
 {
     //Variables that are tracked in order to calculate score
-    [SerializeField]
-    private int totalMoney = 50; //Total money the user has to spend
-    [SerializeField]
-    private int beeThreshold = 50, butterflyThreshold = 50, beetleThreshold = 50; //Thresholds for bees/butterflies/beetles to appear at
+    [SerializeField] private int totalMoney = 50; //Total money the user has to spend
+    [SerializeField] private int curingCost = 50; //Cost per cure attempt
+    [SerializeField] private int gassingCost = 50; //Cost per gas attempt
+    [SerializeField] [Range(0.1f,1f)] private float refundRation = 0.5f; //Selling ratio/refund
+    [SerializeField] private int beeThreshold = 50, butterflyThreshold = 50, beetleThreshold = 50; //Thresholds for bees/butterflies/beetles to appear at
     private bool reachedBeeThreshold = false, reachedButterflyThreshold = false, reachedBeetleThreshold = false;
     private int totalBiodiversity = 0; //Total biodiversity, based on plants and insect attractiveness
     private int objectBiodiversity = 0; //Biodiversity, based on objects
@@ -31,6 +32,7 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Subscribe(EventType.PLANTGASSED, OnPlantGassed); //Decrease invaded plant count
         EventManager.currentManager.Subscribe(EventType.PLANTINFECTED, OnPlantInfected); //Increase sick plant count
         EventManager.currentManager.Subscribe(EventType.PLANTCURED, OnPlantCured); //Decrease sick plant count
+        EventManager.currentManager.Subscribe(EventType.PLANTCUREGASREQUEST, OnCureGasRequest); //Process a cure/gas request
         EventManager.currentManager.Subscribe(EventType.MISSIONCOMPLETED, OnMissionComplete); //Increase money count based on reward
         EventManager.currentManager.Subscribe(EventType.REQUESTSCOREDATA, OnScoreRequest); //Process when a request for the scores
     }
@@ -44,6 +46,7 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Unsubscribe(EventType.PLANTGASSED, OnPlantGassed);
         EventManager.currentManager.Unsubscribe(EventType.PLANTINFECTED, OnPlantInfected);
         EventManager.currentManager.Unsubscribe(EventType.PLANTCURED, OnPlantCured);
+        EventManager.currentManager.Subscribe(EventType.PLANTCUREGASREQUEST, OnCureGasRequest);
         EventManager.currentManager.Unsubscribe(EventType.MISSIONCOMPLETED, OnMissionComplete);
         EventManager.currentManager.Unsubscribe(EventType.REQUESTSCOREDATA, OnScoreRequest);
     }
@@ -156,6 +159,21 @@ public class PlayerScoreManager : MonoBehaviour
             throw new System.Exception("Error: EventData class with EventType.PLANTCURED was received but is not of class PlantCured.");
         }
     }
+    private void OnCureGasRequest(EventData eventData)
+    {
+        if (eventData is PlantCureGasRequest)
+        {
+            //Cast the event so it can be used
+            PlantCureGasRequest request = (PlantCureGasRequest)eventData;
+
+            //Handle the incoming data
+            HandleIncomingPlantCureGasRequest(request);
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.PLANTCUREGASREQUEST was received but is not of class PlantCureGasRequest.");
+        }
+    }
     private void OnMissionComplete(EventData eventData)
     {
         if (eventData is MissionCompleted)
@@ -202,7 +220,7 @@ public class PlayerScoreManager : MonoBehaviour
         UpdateTotalScores();
     }
 
-    //Handles the events related to scores being added or removed
+    //Handles the events related to scores being added
     private void HandleIncomingObjectBuyRequest(ObjectBuyRequest objectRequest)
     {
         //Check if purchase is possible (Is there enough money?)
@@ -219,17 +237,56 @@ public class PlayerScoreManager : MonoBehaviour
             DebugManager.DebugLog("Denied purchase for " + objectRequest.requestedObject.GetName() + "!");
         }
     }
-
+    
+    //Handles the events related to scores being removed
     private void HandleIncomingSoldScores(ObjectSoldScores objectScores)
     {
         //Apply all recieved scores
-        AddMoney(objectScores.refund);
+        AddMoney((int)(objectScores.refund*refundRation));
         RemoveBiodiversity(objectScores.biodiversity, objectScores.insectType, objectScores.insectAttractiveness);
         RemoveCarbonIntake(objectScores.carbonIntake);
         RemoveAppeal(objectScores.attractiveScore);
 
         //Update final scores and fire event
         UpdateTotalScores();
+    }
+
+    //Handles the events related to if the cure/gas request if possible
+    private void HandleIncomingPlantCureGasRequest(PlantCureGasRequest request)
+    {
+        //Temporary variables
+        bool cureApproved = false;
+        bool gasApproved = false;
+
+        //Check if request is possible (Is there enough money?)
+        //If cure request
+        if (request.isCureRequest)
+        {
+            if (IsAffordable(curingCost))
+            {
+                //Mark as approved
+                cureApproved = true;
+
+                //Subtract cost
+                RemoveMoney(curingCost);
+            }
+        }
+
+        //If gas request
+        if (request.isGasRequest)
+        {
+            if (IsAffordable(gassingCost))
+            {
+                //Mark as approved
+                gasApproved = true;
+
+                //Subtract cost
+                RemoveMoney(gassingCost);
+            }
+        }
+
+        //Fire off event with what is approved or dissaproved
+        EventManager.currentManager.AddEvent(new PlantCureGasRequestResult(cureApproved, gasApproved));
     }
     #endregion
 
