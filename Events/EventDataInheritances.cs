@@ -57,6 +57,7 @@ public class PlantCured: EventData
 
     }
 }
+
 //Event that informs subscribers of plant being invaded
 public class PlantInvaded : EventData
 {
@@ -65,12 +66,39 @@ public class PlantInvaded : EventData
 
     }
 }
+
 //Event that informs subscribers of plant invasive species being removed
 public class PlantGassed : EventData
 {
     public PlantGassed() : base(EventType.PLANTGASSED)
     {
 
+    }
+}
+
+//Event that informs player score manager of a cure, gas or both request
+public class PlantCureGasRequest : EventData
+{
+    public readonly bool isCureRequest;
+    public readonly bool isGasRequest;
+
+    public PlantCureGasRequest(bool givenIsCureRequest, bool givenIsGasRequest) : base(EventType.PLANTCUREGASREQUEST)
+    {
+        isCureRequest = givenIsCureRequest;
+        isGasRequest = givenIsGasRequest;
+    }
+}
+
+//Event that informs player score manager of a cure, gas or both request
+public class PlantCureGasRequestResult : EventData
+{
+    public readonly bool wasCureApproved;
+    public readonly bool wasGasApproved;
+
+    public PlantCureGasRequestResult(bool givenCureApproval, bool givenGasApproval) : base(EventType.PLANTCUREGASREQUESTRESULT)
+    {
+        wasCureApproved = givenCureApproval;
+        wasGasApproved = givenGasApproval;
     }
 }
 
