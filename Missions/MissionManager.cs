@@ -56,13 +56,19 @@ public class MissionManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         //Load in the missions
         LoadResourceMissions();
 
         //Reset the mission pools in case of junk/old data
         ResetMissionPools();
+    }
+
+    private void Start()
+    {
+        //Start first week missions
+        UpdateNewMissions();
     }
 
     //First time the missions should be initialized
