@@ -54,13 +54,13 @@ public class TileBuildingModel : MonoBehaviour
 
                 case PlayerInteractionState.curing:
                     //Plant curing functionalities if existing
-                    if (plantEffects!=null) { plantEffects.CurePlant(); }
+                    if (plantEffects != null) { OnCureClick(); }
                     else { DebugManager.DebugLog("Nothing to cure!"); }
                     break;
 
                 case PlayerInteractionState.gassing:
                     //Plant gassing functionalities if existing
-                    if (plantEffects != null) { plantEffects.GasPlant(); }
+                    if (plantEffects != null) { OnGasClick(); }
                     else { DebugManager.DebugLog("Nothing to gas!"); }
                     break;
             }
@@ -119,6 +119,7 @@ public class TileBuildingModel : MonoBehaviour
             throw new System.Exception("Error: EventData class with EventType.OBJECTBUYREQUESTRESULT was received but is not of class ObjectBuyRequestResult.");
         }
     }
+
     private void HandleIncomingObjectBuyResult(ObjectBuyRequestResult objectResult)
     {
         //Update the saved data on the tile
@@ -164,7 +165,51 @@ public class TileBuildingModel : MonoBehaviour
         //Apply normals after the neighbours have been gotten
         ApplyNormalOrientation();
     }
-    
+
+    private void OnCureClick()
+    {
+        //Fire off event to check if building price is possible and subscribe to an event so that it may recieve the result with ease
+        EventManager.currentManager.Subscribe(EventType.PLANTCUREGASREQUESTRESULT, OnCureGasRequestResult);
+        EventManager.currentManager.AddEvent(new PlantCureGasRequest(true,false));
+    }
+
+    private void OnGasClick()
+    {
+        //Fire off event to check if building price is possible and subscribe to an event so that it may recieve the result with ease
+        EventManager.currentManager.Subscribe(EventType.PLANTCUREGASREQUESTRESULT, OnCureGasRequestResult);
+        EventManager.currentManager.AddEvent(new PlantCureGasRequest(false, true));
+    }
+
+    private void OnCureGasRequestResult(EventData eventData)
+    {
+        if (eventData is PlantCureGasRequestResult && plantEffects != null)
+        {
+            //Cast the event so it can be used
+            PlantCureGasRequestResult result = (PlantCureGasRequestResult)eventData;
+
+            //Handle if cure request
+            if(result.wasCureApproved)
+            {
+                //Cure the plant
+                plantEffects.CurePlant();
+            }
+
+            //Handle if gas request
+            if (result.wasGasApproved)
+            {
+                //Gas the plant
+                plantEffects.GasPlant();
+            }
+
+            //Unsubscribe from waiting for a request
+            EventManager.currentManager.Unsubscribe(EventType.PLANTCUREGASREQUESTRESULT, OnCureGasRequestResult);
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.PLANTCUREGASREQUESTRESULT was received but is not of class PlantCureGasRequestResult.");
+        }
+    }
+
     private void LinkNeighbours()
     {
         //Get neighbours from the manager which pre-gets the tiles

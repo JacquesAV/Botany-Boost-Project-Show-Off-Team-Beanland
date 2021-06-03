@@ -62,7 +62,7 @@ public class BuildingManager : MonoBehaviour
     private void Start()
     {
         //Automatically fetch a default starting tile
-        if (hoveredTile==null){ hoveredTile = activeGridGenerator.GetGridTilesReference()[0]; }
+        if (hoveredTile==null) { hoveredTile = activeGridGenerator.GetGridTilesReference()[0]; }
     }
 
     private void Update()
