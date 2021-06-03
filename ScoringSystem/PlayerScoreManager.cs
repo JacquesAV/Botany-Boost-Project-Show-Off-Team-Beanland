@@ -259,8 +259,8 @@ public class PlayerScoreManager : MonoBehaviour
         bool gasApproved = false;
 
         //Check if request is possible (Is there enough money?)
-        //If cure request
-        if (request.isCureRequest)
+        //If cure request and is sick
+        if (request.isCureRequest && request.isSick)
         {
             if (IsAffordable(curingCost))
             {
@@ -272,8 +272,8 @@ public class PlayerScoreManager : MonoBehaviour
             }
         }
 
-        //If gas request
-        if (request.isGasRequest)
+        //If gas request and is invaded
+        if (request.isGasRequest && request.isInvaded)
         {
             if (IsAffordable(gassingCost))
             {
@@ -287,6 +287,9 @@ public class PlayerScoreManager : MonoBehaviour
 
         //Fire off event with what is approved or dissaproved
         EventManager.currentManager.AddEvent(new PlantCureGasRequestResult(cureApproved, gasApproved));
+
+        //Update the scores
+        UpdateTotalScores();
     }
     #endregion
 
