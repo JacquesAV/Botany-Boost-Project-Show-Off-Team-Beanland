@@ -223,6 +223,7 @@ public class PlantEffects : MonoBehaviour
         isSick = false;
         EventManager.currentManager.AddEvent(new PlantCured());
         DebugManager.DebugLog("Plant was cured!");
+
         //disable invader effect
         if (invaderFX != null)
         {
@@ -362,5 +363,17 @@ public class PlantEffects : MonoBehaviour
                 EventManager.currentManager.Unsubscribe(EventType.BUTTERFLYTHRESHOLDLOST, OnThresholdLost);
                 break;
         }
+    }
+
+    //Gets if the plant is sick
+    public bool GetIsSick()
+    {
+        return isSick;
+    }
+
+    //Gets if the plant is invaded
+    public bool GetHasInvaders()
+    {
+        return hasInvaders;
     }
 }
