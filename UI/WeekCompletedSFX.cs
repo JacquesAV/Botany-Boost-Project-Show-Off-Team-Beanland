@@ -13,7 +13,7 @@ public class WeekCompletedSFX : MonoBehaviour
 
     private void OnDisable()
     {
-        EventManager.currentManager.Subscribe(EventType.WEEKPASSED, OnWeekCompleted);
+        EventManager.currentManager.Unsubscribe(EventType.WEEKPASSED, OnWeekCompleted);
     }
 
     private void OnWeekCompleted(EventData eventData)

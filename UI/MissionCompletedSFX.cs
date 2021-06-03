@@ -13,7 +13,7 @@ public class MissionCompletedSFX : MonoBehaviour
 
     private void OnDisable()
     {
-        EventManager.currentManager.Subscribe(EventType.MISSIONCOMPLETED, OnMissionCompleted);
+        EventManager.currentManager.Unsubscribe(EventType.MISSIONCOMPLETED, OnMissionCompleted);
     }
 
     private void OnMissionCompleted(EventData eventData)

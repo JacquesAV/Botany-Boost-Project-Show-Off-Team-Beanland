@@ -13,7 +13,7 @@ public class PlaceableRemovedSFX : MonoBehaviour
 
     private void OnDisable()
     {
-        EventManager.currentManager.Subscribe(EventType.OBJECTSOLDSCORES, OnPlaceablePlaced);
+        EventManager.currentManager.Unsubscribe(EventType.OBJECTSOLDSCORES, OnPlaceablePlaced);
     }
 
     private void OnPlaceablePlaced(EventData eventData)
