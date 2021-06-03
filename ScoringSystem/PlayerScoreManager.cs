@@ -46,9 +46,15 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Unsubscribe(EventType.PLANTGASSED, OnPlantGassed);
         EventManager.currentManager.Unsubscribe(EventType.PLANTINFECTED, OnPlantInfected);
         EventManager.currentManager.Unsubscribe(EventType.PLANTCURED, OnPlantCured);
-        EventManager.currentManager.Subscribe(EventType.PLANTCUREGASREQUEST, OnCureGasRequest);
+        EventManager.currentManager.Unsubscribe(EventType.PLANTCUREGASREQUEST, OnCureGasRequest);
         EventManager.currentManager.Unsubscribe(EventType.MISSIONCOMPLETED, OnMissionComplete);
         EventManager.currentManager.Unsubscribe(EventType.REQUESTSCOREDATA, OnScoreRequest);
+    }
+
+    private void Awake()
+    {
+        //Update the scores when the game starts
+        UpdateTotalScores();
     }
 
     #region OnEvents
