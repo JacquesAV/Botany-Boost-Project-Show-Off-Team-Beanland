@@ -60,11 +60,14 @@ public class PlantEffects : MonoBehaviour
     }
     private void OnThresholdReached(EventData eventData)
     {
-        bugFX.SetActive(true);
+        if (this != null&&gameObject!=null)
+        {
+            bugFX.SetActive(true);
+        }
     }
     private void OnThresholdLost(EventData eventData)
     {
-        if (gameObject != null)
+        if (this != null && gameObject != null)
         {
             bugFX.SetActive(false);
         }
@@ -92,8 +95,10 @@ public class PlantEffects : MonoBehaviour
             //Remove the plant benefits from the score manager (with 0 refunded money)
             EventManager.currentManager.AddEvent(new ObjectSoldScores(0, placeableData.GetBiodiversity(), placeableData.GetCarbonIntake(), placeableData.GetAppeal(), placeableData.GetInsectType(), placeableData.GetInsectAttractiveness()));
 
+            UnsubscribeFromThresholds();
             //Unlink the grid from the plant to free it up for other objects
             gameObject.GetComponentInParent<TileBuildingModel>().UnlinkNeighbours();
+            
         }
         //If completely healthy, reset its lifespan count
         if (!isSick && !hasInvaders)
@@ -339,4 +344,23 @@ public class PlantEffects : MonoBehaviour
         }
     }
     #endregion
+    private void UnsubscribeFromThresholds()
+    {
+        //Unsubscribes from respective thresholds
+        switch (placeableData.GetInsectType())
+        {
+            case InsectType.Bee:
+                EventManager.currentManager.Unsubscribe(EventType.BEETHRESHOLDREACHED, OnThresholdReached);
+                EventManager.currentManager.Unsubscribe(EventType.BEETHRESHOLDLOST, OnThresholdLost);
+                break;
+            case InsectType.Beetle:
+                EventManager.currentManager.Unsubscribe(EventType.BEETLETHRESHOLDREACHED, OnThresholdReached);
+                EventManager.currentManager.Unsubscribe(EventType.BEETLETHRESHOLDLOST, OnThresholdLost);
+                break;
+            case InsectType.Butterfly:
+                EventManager.currentManager.Unsubscribe(EventType.BUTTERFLYTHRESHOLDREACHED, OnThresholdReached);
+                EventManager.currentManager.Unsubscribe(EventType.BUTTERFLYTHRESHOLDLOST, OnThresholdLost);
+                break;
+        }
+    }
 }
