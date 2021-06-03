@@ -81,11 +81,15 @@ public class PlantCureGasRequest : EventData
 {
     public readonly bool isCureRequest;
     public readonly bool isGasRequest;
+    public readonly bool isSick;
+    public readonly bool isInvaded;
 
-    public PlantCureGasRequest(bool givenIsCureRequest, bool givenIsGasRequest) : base(EventType.PLANTCUREGASREQUEST)
+    public PlantCureGasRequest(bool givenIsCureRequest, bool givenIsGasRequest, bool givenIsSick, bool givenIsInvaded) : base(EventType.PLANTCUREGASREQUEST)
     {
         isCureRequest = givenIsCureRequest;
         isGasRequest = givenIsGasRequest;
+        isSick = givenIsSick;
+        isInvaded = givenIsInvaded;
     }
 }
 
