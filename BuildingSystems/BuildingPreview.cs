@@ -47,7 +47,7 @@ public class BuildingPreview : MonoBehaviour
     private void UpdateDisplayLocation()
     {
         //Update the location based on the position intended offset for the tile
-        transform.position = hoveredTiled.transform.position + hoveredTiled.GetComponent<TileBuildingModel>().RecalculateGridOffset();
+        transform.position = hoveredTiled.transform.position + hoveredTiled.GetComponent<TileBuildingModel>().RecalculateGridOffset(connectedTiles);
     }
 
     public void UpdateRotation(PlaceableOrientation newOrientation)

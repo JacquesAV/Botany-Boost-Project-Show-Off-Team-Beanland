@@ -143,8 +143,11 @@ public class TileBuildingModel : MonoBehaviour
             objectView.layer = 2; //Set to ignore raycast layer
         }
 
+        //Then link neighbours
+        LinkNeighbours();
+
         //Update the position based on the intended offset of the object
-        objectView.transform.position += RecalculateGridOffset();
+        objectView.transform.position += RecalculateGridOffset(connectedTiles);
 
         //Rename the object for the unity editor
         objectView.name = savedPlaceableData.GetName() + " View";
@@ -158,9 +161,6 @@ public class TileBuildingModel : MonoBehaviour
         //Fire off event with created information
         EventManager.currentManager.AddEvent(new ObjectBoughtScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAppeal(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
         EventManager.currentManager.AddEvent(new PlacedObjectMissionData(savedPlaceableData.GetPlaceableType(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetYieldsProduce(), savedPlaceableData.GetAttractsBirds()));
-
-        //Then link neighbours
-        LinkNeighbours();
 
         //Apply normals after the neighbours have been gotten
         ApplyNormalOrientation();
@@ -245,6 +245,16 @@ public class TileBuildingModel : MonoBehaviour
             return;
         }
 
+        //Fire off event that the disease and sickness is no longer counted (if it has!)
+        if (plantEffects.GetIsSick())
+        {
+            EventManager.currentManager.AddEvent(new PlantCured());
+        }
+        if (plantEffects.GetHasInvaders())
+        {
+            EventManager.currentManager.AddEvent(new PlantGassed());
+        }
+
         //Fire off event with sold information
         EventManager.currentManager.AddEvent(new ObjectSoldScores(savedPlaceableData.GetCost(), savedPlaceableData.GetBiodiversity(), savedPlaceableData.GetCarbonIntake(), savedPlaceableData.GetAppeal(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetInsectAttractiveness()));
         EventManager.currentManager.AddEvent(new RemovedObjectMissionData(savedPlaceableData.GetPlaceableType(), savedPlaceableData.GetInsectType(), savedPlaceableData.GetYieldsProduce(), savedPlaceableData.GetAttractsBirds()));
@@ -317,13 +327,34 @@ public class TileBuildingModel : MonoBehaviour
     }
 
     //Should only be called once when placing an object
-    public Vector3 RecalculateGridOffset()
+    public Vector3 RecalculateGridOffset(List<TileBuildingModel> additionalTiles)
     {
         //Update the base offset without height considered based on the current selected building object
         gridOffset = BuildingManager.currentManager.getFlatObjectOffset();
 
-        //Update the height offset of the grid
-        gridOffset.y += gridTile.GetAverageHeight();
+        float averageHeight = 0;
+
+        //Update the height offset of the grid based on this tile and/or its neighbours
+        if(additionalTiles == null)
+        {
+            //Single grid only
+            averageHeight += gridTile.GetAverageHeight();
+        }
+        else
+        {
+            //Iterate over each tile for the height
+            foreach (TileBuildingModel tile in additionalTiles)
+            {
+                //Get height of each tile
+                averageHeight += tile.GetComponent<GridTile>().GetAverageHeight();
+            }
+
+            //Get the average
+            averageHeight /= additionalTiles.Count;
+        }
+
+        //Apply to the offset
+        gridOffset.y += averageHeight;
 
         //Return
         return gridOffset;

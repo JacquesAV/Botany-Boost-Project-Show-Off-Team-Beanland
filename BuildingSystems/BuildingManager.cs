@@ -63,6 +63,8 @@ public class BuildingManager : MonoBehaviour
     {
         //Automatically fetch a default starting tile
         if (hoveredTile==null) { hoveredTile = activeGridGenerator.GetGridTilesReference()[0]; }
+
+        Debug.Log(managerState);
     }
 
     private void Update()
@@ -146,8 +148,8 @@ public class BuildingManager : MonoBehaviour
     {
         //Error handling
         if (selectedObjectPrefab == null)
-        { 
-            throw new MissingReferenceException();
+        {
+           Debug.LogWarning("No object prefab selected, but don't worry this is expected!");
         }
 
         //Create a build preview object
@@ -164,7 +166,7 @@ public class BuildingManager : MonoBehaviour
     private void DisableBuildPreview()
     {
         //Ignore if already destroyed
-        if (selectedObjectPreview == null) { return; }
+        if (selectedObjectPreview == null) { Debug.LogWarning("No object prefab selected, but don't worry this is expected!"); return; }
 
         //Unhighlight cells on the preview
         selectedObjectPreview.GetComponent<BuildingPreview>().UnhighlightTiles();
