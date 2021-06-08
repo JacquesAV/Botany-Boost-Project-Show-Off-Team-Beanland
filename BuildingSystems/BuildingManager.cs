@@ -70,6 +70,16 @@ public class BuildingManager : MonoBehaviour
     private void Update()
     {
         if (managerState == PlayerInteractionState.building) {BuildModeRotate(); } //Looks out for key commands to rotate objects
+        if (Input.GetKeyDown(KeyCode.Escape)) { OnEscapeKey(); } //Looks out for the escape key
+    }
+
+    private void OnEscapeKey()
+    {
+        //Fire off event with current building state
+        EventManager.currentManager.AddEvent(new BuildingManagerEscapeKeyPressed(managerState));
+
+        //Exit out of other modes
+        EnableInactiveMode();
     }
 
     #region Building state Mode Enablers/Disablers
