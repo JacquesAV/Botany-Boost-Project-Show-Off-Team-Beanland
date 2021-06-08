@@ -8,7 +8,7 @@ public class PlantEffects : MonoBehaviour
     private PlaceableData placeableData;//the data of the object that it is attached to
     private readonly int radius = 2;//the radius of the spread
     private float baseDiseaseChance = 0.25f;//the base chance of getting disease
-    private float diseaseSpreadModifier = 0.1f;//the modifier to obtaining a disease
+    private float diseaseSoftCap = 0.1f;//the soft cap of a disease
     private bool isSick = false;//if the plant got a disease
 
     private float baseInvaderSpawnChance = 0.25f;//base chance of an invasive species spawning on the plant
@@ -27,8 +27,9 @@ public class PlantEffects : MonoBehaviour
         //set variables to the ones of the prefab
         placeableData = gameObject.GetComponent<PlaceableData>();
         lifespanInDays = placeableData.GetLifespan();
-        baseDiseaseChance = placeableData.GetBaseDiseaseChance();
-        diseaseSpreadModifier = placeableData.GetDiseaseSpreadModifier();
+        //flips the value for calculation
+        baseDiseaseChance = 1-placeableData.GetBaseDiseaseChance();
+        diseaseSoftCap = placeableData.GetDiseaseSoftCap();
         //Setup fx
         SetupHealthFX();
         SetupBugFX();
@@ -111,7 +112,7 @@ public class PlantEffects : MonoBehaviour
     {
         if (!isSick)
         {
-            float samePlantCount = 0;
+            float samePlantDiseaseCombined = 1;
             //checks if the plant
             Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, radius);
             foreach (Collider hitCollider in hitColliders)
@@ -125,13 +126,13 @@ public class PlantEffects : MonoBehaviour
                         //make sure they have the same name
                         if (hitCollider.gameObject.GetComponent<PlaceableData>().GetName() == placeableData.GetName())
                         {
-                            samePlantCount++;
+                            samePlantDiseaseCombined=samePlantDiseaseCombined*baseDiseaseChance;
                         }
                     }
                 }
             }
             //checks if the plant got infected with percentile chance
-            float diseaseChance = baseDiseaseChance + (samePlantCount * diseaseSpreadModifier) * 100;
+            float diseaseChance = (1-samePlantDiseaseCombined) * diseaseSoftCap * 100;
             if (Random.Range(1, 100) <= diseaseChance)
             {
                 //DebugManager.DebugLog("Plant got sick!");
@@ -178,7 +179,8 @@ public class PlantEffects : MonoBehaviour
                 }
             }
             //checks if the plant got an invasive species
-            float invadorChance = baseInvaderSpawnChance + (combinedPlantSpawnChances * baseInvaderSpawnChance) * 100;
+            float invadorChance = baseInvaderSpawnChance + (combinedPlantSpawnChances * baseInvaderSpawnChance)*diseaseSoftCap * 100;
+            Debug.Log(invadorChance);
             if (Random.Range(1, 100) <= invadorChance)
             {
                 //DebugManager.DebugLog("Plant got invaded!");

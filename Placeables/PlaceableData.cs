@@ -29,7 +29,7 @@ public class PlaceableData : MonoBehaviour
     [Range(0.05f, 0.25f)] [SerializeField] private float invaderSpawnChance = 0.25f;//the chance of invasive species spawning
 
     [Range(0.1f, 0.75f)] [SerializeField] private float baseDiseaseChance = 0.25f;//The base chance of being infected
-    [Range(0.01f, 0.5f)] [SerializeField] private float diseaseSpreadModifier = 0.1f;//The modifier chance of spread increasing based on plant count
+    [Range(0f, 1f)] [SerializeField] private float diseaseChanceSoftCap = 0.1f;//The cap to how high a disease spread chance can go
 
     public PlaceableData Initialize(PlaceableData baseData)
     {
@@ -55,7 +55,7 @@ public class PlaceableData : MonoBehaviour
         lifespanInDays = baseData.lifespanInDays;
         invaderSpawnChance = baseData.invaderSpawnChance;
         baseDiseaseChance = baseData.baseDiseaseChance;
-        diseaseSpreadModifier = baseData.diseaseSpreadModifier;
+        diseaseChanceSoftCap = baseData.diseaseChanceSoftCap;
         return this;
     }
 
@@ -160,9 +160,9 @@ public class PlaceableData : MonoBehaviour
         return baseDiseaseChance;
     }
 
-    public float GetDiseaseSpreadModifier()
+    public float GetDiseaseSoftCap()
     {
-        return diseaseSpreadModifier;
+        return diseaseChanceSoftCap;
     }
 
     #endregion
