@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CamController : MonoBehaviour
 {
@@ -35,6 +36,8 @@ public class CamController : MonoBehaviour
 
     private Camera mainCamera;
     private float upDownModifier=2;//up and down on camera is slower so it needs it own multiplier
+
+    private int scrollsSpeedWheelModifier=4;
     private void Start()
     {
         mainCamera = Camera.main;
@@ -102,13 +105,29 @@ public class CamController : MonoBehaviour
 
     private void CameraZoom()
     {
+        //Zoom with mouse
+        if (!EventSystem.current.IsPointerOverGameObject(-1))
+        {
+            //Zoom in
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f && mainCamera.orthographicSize >= zoomInMax)
+            {
+                mainCamera.orthographicSize -= zoomSpeed* scrollsSpeedWheelModifier;
+            }
+            //Zoom out
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f && mainCamera.orthographicSize <= zoomOutMax)
+            {
+                mainCamera.orthographicSize += zoomSpeed* scrollsSpeedWheelModifier;
+            }
+        }
+        //Zoom with buttons
+
         //Zoom in
-        if ((Input.GetKey(zoomIn) || Input.GetAxis("Mouse ScrollWheel") > 0f)&&mainCamera.orthographicSize>= zoomInMax)
+        if (Input.GetKey(zoomIn) && mainCamera.orthographicSize >= zoomInMax)
         {
             mainCamera.orthographicSize -= zoomSpeed;
         }
         //Zoom out
-        if ((Input.GetKey(zoomOut) || Input.GetAxis("Mouse ScrollWheel") < 0f)&& mainCamera.orthographicSize <= zoomOutMax)
+        if (Input.GetKey(zoomOut) && mainCamera.orthographicSize <= zoomOutMax)
         {
             mainCamera.orthographicSize += zoomSpeed;
         }
