@@ -246,13 +246,16 @@ public class TileBuildingModel : MonoBehaviour
         }
 
         //Fire off event that the disease and sickness is no longer counted (if it has!)
-        if (plantEffects.GetIsSick())
+        if(plantEffects!=null)
         {
-            EventManager.currentManager.AddEvent(new PlantCured());
-        }
-        if (plantEffects.GetHasInvaders())
-        {
-            EventManager.currentManager.AddEvent(new PlantGassed());
+            if (plantEffects.GetIsSick())
+            {
+                EventManager.currentManager.AddEvent(new PlantCured());
+            }
+            if (plantEffects.GetHasInvaders())
+            {
+                EventManager.currentManager.AddEvent(new PlantGassed());
+            }
         }
 
         //Fire off event with sold information

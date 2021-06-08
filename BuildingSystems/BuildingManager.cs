@@ -38,6 +38,7 @@ public class BuildingManager : MonoBehaviour
         //Subscribes the method and event type to the current manager
         EventManager.currentManager.Subscribe(EventType.CLICKEDPLACEABLEGUI, OnPlaceableUISelect);
         EventManager.currentManager.Subscribe(EventType.CURRENTHOVEREDTILE, OnCurrentHoveredSourceTile);
+        EventManager.currentManager.Subscribe(EventType.ACTIVATEINTERACTIONSTATE, OnInteractionStateChange);
     }
 
     private void OnDisable()
@@ -45,6 +46,7 @@ public class BuildingManager : MonoBehaviour
         //Unsubscribes the method and event type to the current manager
         EventManager.currentManager.Unsubscribe(EventType.CLICKEDPLACEABLEGUI, OnPlaceableUISelect);
         EventManager.currentManager.Unsubscribe(EventType.CURRENTHOVEREDTILE, OnCurrentHoveredSourceTile);
+        EventManager.currentManager.Unsubscribe(EventType.ACTIVATEINTERACTIONSTATE, OnInteractionStateChange);
     }
 
     public GridPlaneGenerator activeGridGenerator = null; //Reference to the active grid that the building manager will interact with
@@ -369,6 +371,43 @@ public class BuildingManager : MonoBehaviour
         else
         {
             throw new System.Exception("Error: EventData class with EventType.CLICKEDPLACEABLEGUI was received but is not of class PlaceableSelectedOnGUI.");
+        }
+    }
+
+    private void OnInteractionStateChange(EventData eventData)
+    {
+        if (eventData is ActivateInteractionState)
+        {
+            //Cast the event for ease of use
+            ActivateInteractionState interactionState = (ActivateInteractionState)eventData;
+
+            //Apply the state change based on the input
+            switch (interactionState.interactionState)
+            {
+                case PlayerInteractionState.building:
+                    EnableBuildingMode();
+                    break;
+
+                case PlayerInteractionState.destroying:
+                    EnableDestroyingMode();
+                    break;
+
+                case PlayerInteractionState.curing:
+                    EnableCuringMode();
+                    break;
+
+                case PlayerInteractionState.gassing:
+                    EnableGassingMode();
+                    break;
+
+                case PlayerInteractionState.inactive:
+                    EnableInactiveMode();
+                    break;
+            }
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.ACTIVATEINTERACTIONSTATE was received but is not of class ActivateInteractionState.");
         }
     }
 }
