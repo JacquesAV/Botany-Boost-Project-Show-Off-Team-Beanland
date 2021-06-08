@@ -12,6 +12,7 @@ public class PlantEffects : MonoBehaviour
     private bool isSick = false;//if the plant got a disease
 
     private float baseInvaderSpawnChance = 0.25f;//base chance of an invasive species spawning on the plant
+    private float invaderSoftCap = 0.1f;//the soft cap of an invader
     private bool hasInvaders = false;//if the plant has an invaded
 
     private int lifespanInDays;//the time that the plant lives
@@ -30,6 +31,10 @@ public class PlantEffects : MonoBehaviour
         //flips the value for calculation
         baseDiseaseChance = 1-placeableData.GetBaseDiseaseChance();
         diseaseSoftCap = placeableData.GetDiseaseSoftCap();
+
+        baseInvaderSpawnChance = placeableData.GetBaseDiseaseChance();
+        invaderSoftCap = placeableData.GetInvaderSoftCap();
+
         //Setup fx
         SetupHealthFX();
         SetupBugFX();
@@ -179,8 +184,7 @@ public class PlantEffects : MonoBehaviour
                 }
             }
             //checks if the plant got an invasive species
-            float invadorChance = baseInvaderSpawnChance + (combinedPlantSpawnChances * baseInvaderSpawnChance)*diseaseSoftCap * 100;
-            Debug.Log(invadorChance);
+            float invadorChance = baseInvaderSpawnChance + (combinedPlantSpawnChances * baseInvaderSpawnChance)* invaderSoftCap * 100;
             if (Random.Range(1, 100) <= invadorChance)
             {
                 //DebugManager.DebugLog("Plant got invaded!");
