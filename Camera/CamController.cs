@@ -6,7 +6,7 @@ public class CamController : MonoBehaviour
 {
     [Range(5,30)][SerializeField] private int scrollSpeed=10;//speed at which you move the camera
     [Range(0f,1f)][SerializeField] private float zoomSpeed=0.05f;//Speed at which you can zoom
-    [Range(5, 30)] [SerializeField] private int rotationSpeed = 5;//speed at which you can rotate
+    [Range(1, 100)] [SerializeField] private int rotationSpeed = 5;//speed at which you can rotate
 
     //The barriers of the screen used for determining when the mouse it at an edge
     [Range(0f,1f)][SerializeField] private float topNRightBarrier=0.97f;
