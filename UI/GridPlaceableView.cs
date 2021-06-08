@@ -141,36 +141,6 @@ public class GridPlaceableView : MonoBehaviour
     }
 
     #endregion
-     
-    //------------------------------------------------------------------------------------------------------------------------ 
-    //                                                  RepopulateToolkit() 
-    //------------------------------------------------------------------------------------------------------------------------         
-    //Clears the grid view and repopulates it with toolkit button/icons 
-    private void RepopulateToolkitView() 
-    { 
-        ClearIconView(); 
-        PopulateToolkitView(); 
-    } 
- 
-    //------------------------------------------------------------------------------------------------------------------------ 
-    //                                                  PopulateToolkitView() 
-    //------------------------------------------------------------------------------------------------------------------------         
-    //Adds one button for each intended toolkit functionality 
-    private void PopulateToolkitView() 
-    { 
-        if (toolkitButtons.Count > 0 && toolkitButtons != null) 
-        { 
-            foreach (GameObject buttonObject in toolkitButtons) 
-            { 
-                if (buttonObject!=null) 
-                { 
-                    GameObject newButton = Instantiate(buttonObject); 
-                    newButton.transform.SetParent(placeableLayoutGroup.transform); 
-                    newButton.transform.localScale = Vector3.one; //The scale would automatically change in Unity so we set it back to Vector3.one. 
-                } 
-            } 
-        } 
-    }
 
     #region SelectedSetters
     public void SetToToolKit()
