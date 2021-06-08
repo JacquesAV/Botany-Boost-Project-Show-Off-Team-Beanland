@@ -42,6 +42,7 @@ public class DebugManager : MonoBehaviour
             CheckIfActive();
             SkipCurrentDay();
             SkipCurrentWeek();
+            GiveLotsOfMoney();
         }
     }
 
@@ -132,6 +133,14 @@ public class DebugManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F2))
         {
             EventManager.currentManager.AddEvent(new WeekHasPassed());
+        }
+    }
+
+    private void GiveLotsOfMoney()
+    {
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            EventManager.currentManager.AddEvent(new MissionCompleted(1000));
         }
     }
 }
