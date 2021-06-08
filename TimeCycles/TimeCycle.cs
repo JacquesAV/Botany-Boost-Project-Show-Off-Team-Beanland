@@ -9,9 +9,12 @@ public class TimeCycle : MonoBehaviour
     [SerializeField] private float nightLength = 5;//how long night time is
     [SerializeField] private HDAdditionalLightData sceneLight;//The scene light
 
-    private float upperLuxBound = 130000; //The maximum value for the lux emission intensity lighting
-    private float middleLuxBound = 10000; //The middle bound that separates day and night
-    private float lowerLuxBound = 0; //The minimum value for the lux emission intensity lighting
+    [SerializeField] [Range(10000, 130000)] private float upperLuxBound = 130000; //The maximum value for the lux emission intensity lighting
+    private float middleLuxBound = 10000; //The middle bound that separates day and night, ideally this should not be changed
+    private float lowerLuxBound = 0; //The minimum value for the lux emission intensity lighting, ideally this should not be changed
+
+    [SerializeField] private Color dayColor = new Color(1, 1, 1);//the global lights color during day
+    [SerializeField] private Color nightColor = new Color(0.2196078f, 0.08627451f, 0.08627451f);//the global lights color during night 
 
     public bool Daytime { get; private set; }//whether it is daytime or nightime
     private float timeRemaining;//amount of time of the current part of day that is left
@@ -32,8 +35,11 @@ public class TimeCycle : MonoBehaviour
         //Checks for a day change
         AlternateDaytime();
 
-        //ChangeColorGradientBasedOnTime();
+        //Reduce the intensity
         ChangeLightingEmmisionIntensityBasedOnTime();
+
+        //Bleed in different colors
+        ChangeColorGradientBasedOnTime();
     }
 
     //Checks for when a day has passed
@@ -126,6 +132,30 @@ public class TimeCycle : MonoBehaviour
         return givenLuxBound / (dayOrNightLength / 2) * Time.deltaTime;
     }
 
+    //Blends color based on the current time of day 
+    private void ChangeColorGradientBasedOnTime()
+    {
+        //If it is day 
+        if (Daytime)
+        {
+            sceneLight.color = BlendColorValue(nightColor, dayColor, dayLength);
+        }
+        //Else nightime 
+        else
+        {
+            sceneLight.color = BlendColorValue(dayColor, nightColor, nightLength);
+        }
+    }
+
+    //Blends the colors together for clean transition of the color 
+    private Color BlendColorValue(Color orinalColor, Color newColor, float dayOrNightLength)
+    {
+        //convers into a fraction that is between 1-0 
+        float timePassed = timeRemaining / dayOrNightLength;
+        //linear average blending 
+        return (1 - timePassed) * orinalColor + timePassed * newColor;
+    }
+
     //Checks for when a week has passed
     private void AlternateWeek()
     {
@@ -142,3 +172,4 @@ public class TimeCycle : MonoBehaviour
         }
     }
 }
+
