@@ -85,7 +85,7 @@ public class GridPlaceableView : MonoBehaviour
     {
         GameObject newItemIcon = Instantiate(placeableUIPrefab);
         newItemIcon.transform.SetParent(placeableLayoutGroup.transform);
-        newItemIcon.transform.localScale = Vector3.one;//The scale would automatically change in Unity so we set it back to Vector3.one.
+        newItemIcon.transform.localScale = Vector3.one*1.5f;//The scale would automatically change in Unity so we set it back to Vector3.one.
 
         GridViewPlaceableContainer placeableContainer = newItemIcon.GetComponent<GridViewPlaceableContainer>();
         Debug.Assert(placeableContainer != null);

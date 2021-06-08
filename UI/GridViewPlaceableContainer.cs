@@ -10,6 +10,7 @@ public class GridViewPlaceableContainer : MonoBehaviour, IPlaceableContainer
     public PlaceableData Placeable => placeable;//Public getter for the placeable, required by IPlaceableContainer interface.
 
     [SerializeField] private Image icon;
+    [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI biodiversityText;
     [SerializeField] private TextMeshProUGUI carbonIntakeText;
     [SerializeField] private TextMeshProUGUI appealText;
@@ -34,6 +35,15 @@ public class GridViewPlaceableContainer : MonoBehaviour, IPlaceableContainer
         else
         {
             Debug.LogWarning("Warning: Could not set icon for placeable image");
+        }
+        //name text replace
+        if (nameText != null)
+        {
+            nameText.text = placeable.GetName();
+        }
+        else
+        {
+            Debug.LogWarning("biodiversity text reference was not set");
         }
         //bio text replace
         if (biodiversityText != null)
