@@ -331,3 +331,14 @@ public class BuildingManagerEscapeKeyPressed : EventData
         playerState = givenState;
     }
 }
+
+//Event that informs subscribers about a requested change in the player interaction state
+public class ActivateInteractionState : EventData
+{
+    public readonly PlayerInteractionState interactionState;
+
+    public ActivateInteractionState(PlayerInteractionState givenState) : base(EventType.ACTIVATEINTERACTIONSTATE)
+    {
+        interactionState = givenState;
+    }
+}
