@@ -8,6 +8,7 @@ public class ExtraPlaceableInfo : MonoBehaviour
 {
     [SerializeField] private GameObject extraInfoPanel;
     [SerializeField] private Image displayImage;
+    [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI extraInfo;
 
     private void OnEnable()
@@ -45,6 +46,15 @@ public class ExtraPlaceableInfo : MonoBehaviour
             else
             {
                 Debug.LogWarning("No display image target object was set.");
+            }
+
+            if (nameText != null)
+            {
+                nameText.text = placeableGUISelect.placeable.GetName();
+            }
+            else
+            {
+                Debug.LogWarning("No plant name text was set, this is required.");
             }
 
             if (extraInfo != null)
