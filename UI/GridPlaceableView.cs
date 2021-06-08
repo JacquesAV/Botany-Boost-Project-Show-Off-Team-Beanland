@@ -12,8 +12,7 @@ public class GridPlaceableView : MonoBehaviour
 
     [SerializeField] private GameObject placeableUIPrefab; //A prefab to display an item in the view
 
-    [SerializeField] private List<GameObject> toolkitButtons; //Prefabs that each hold different event functionalities 
-
+    [SerializeField] private List<GameObject> toolkitButtons; //Prefabs that each hold different event functionalities
 
     private ViewConfig viewConfig; //To set up the grid view, we need to know how many columns the grid view has, in the current setup,
                                    //this information can be found in a ViewConfig scriptable object, which serves as a configuration file for
@@ -110,6 +109,37 @@ public class GridPlaceableView : MonoBehaviour
             }
         }
     }
+
+    //------------------------------------------------------------------------------------------------------------------------
+    //                                                  RepopulateToolkit()
+    //------------------------------------------------------------------------------------------------------------------------        
+    //Clears the grid view and repopulates it with toolkit button/icons
+    private void RepopulateToolkitView()
+    {
+        ClearIconView();
+        PopulateToolkitView();
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------
+    //                                                  PopulateToolkitView()
+    //------------------------------------------------------------------------------------------------------------------------        
+    //Adds one button for each intended toolkit functionality
+    private void PopulateToolkitView()
+    {
+        if (toolkitButtons.Count > 0 && toolkitButtons != null)
+        {
+            foreach (GameObject buttonObject in toolkitButtons)
+            {
+                if (buttonObject!=null)
+                {
+                    GameObject newButton = Instantiate(buttonObject);
+                    newButton.transform.SetParent(placeableLayoutGroup.transform);
+                    newButton.transform.localScale = Vector3.one; //The scale would automatically change in Unity so we set it back to Vector3.one.
+                }
+            }
+        }
+    }
+
     #endregion
      
     //------------------------------------------------------------------------------------------------------------------------ 
