@@ -320,3 +320,14 @@ public class BeeThresholdLost : EventData
     {
     }
 }
+
+//Event that informs subscribers that the escape key was pressed 
+public class BuildingManagerEscapeKeyPressed : EventData
+{
+    public readonly PlayerInteractionState playerState;
+
+    public BuildingManagerEscapeKeyPressed(PlayerInteractionState givenState) : base(EventType.BUILDINGMANAGERESCAPEKEYPRESSED)
+    {
+        playerState = givenState;
+    }
+}
