@@ -35,7 +35,7 @@ public class CamController : MonoBehaviour
     private KeyCode rotateLeft = KeyCode.Q;
 
     private Camera mainCamera;
-    private float upDownModifier=2;//up and down on camera is slower so it needs it own multiplier
+    private float upDownModifier=1.6f;//up and down on camera is slower so it needs it own multiplier
 
     private int scrollsSpeedWheelModifier=4;
     private void Start()
