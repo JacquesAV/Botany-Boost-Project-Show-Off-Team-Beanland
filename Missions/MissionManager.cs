@@ -11,7 +11,7 @@ public class MissionManager : MonoBehaviour
     private List<GameObject> availableMissionsPool = new List<GameObject>(); //List of all potential/incomplete missions
     private List<GameObject> activeMissions = new List<GameObject>(); //List of the currently active missions
     private List<GameObject> completedMissions = new List<GameObject>(); //List of all completed missions
-    private int weeksPassed = 0; //The current week, important in separating missions by week cycle
+    private int currentWeekIndex = 0; //The current week, important in separating missions by week cycle (starting at 0 for indexing purposes!)
 
     private void OnEnable()
     {
@@ -32,10 +32,13 @@ public class MissionManager : MonoBehaviour
         if (eventData is WeekHasPassed)
         {
             //Increase the week counter
-            weeksPassed++;
+            currentWeekIndex++;
 
             //Fire off rewards for missions that reward you at the end of the week (if they're completed!)
             ProcessEndOfWeekMissions();
+
+            //Add new weekly missions to the active pool
+            PoolWeekSpecificMissions(currentWeekIndex);
 
             //Populate a list of new missions and clear the previous one
             UpdateNewMissions();
@@ -71,6 +74,7 @@ public class MissionManager : MonoBehaviour
 
     private void Start()
     {
+        //Initialize with the intended first set of missions
         UpdateNewMissions();
     }
 
@@ -132,7 +136,7 @@ public class MissionManager : MonoBehaviour
     //Updates the list of active missions, adding failed/completed ones to the completed missions and moving onto new ones
     private void UpdateNewMissions()
     {
-        //If there are no available missions or not enough available missions, reset the list available list
+        //If there are no available missions or not enough available missions, reset the available list of missions
         if (availableMissionsPool.Count < numberOfActiveMissions)
         {
             Debug.Log("Resseting pool");
@@ -166,30 +170,39 @@ public class MissionManager : MonoBehaviour
         availableMissionsPool.Clear();
 
         //Save all available missions to the mission pool and reset them based on their week of availability
-        for (int week = 0; week <= weeksPassed; week++)
+        for (int week = 0; week <= currentWeekIndex; week++)
         {
-            //Error handling to prevent pooling from non-existant weeks, early break
-            if (week >= missionObjects.Count) { break; }
-
-            //Iterate over all missions
-            foreach (GameObject missionObject in missionObjects[week])
-            {
-                //Reset the mission data
-                missionObject.GetComponent<Mission>().ResetMission();
-
-                //Disable the object
-                missionObject.SetActive(false);
-
-                //Add to missions pool 
-                availableMissionsPool.Add(missionObject);
-            }
+            PoolWeekSpecificMissions(week);
         }
+    }
+
+    //Pools the new missions that belong to the new upcoming week 
+    private bool PoolWeekSpecificMissions(int givenWeek)
+    {
+        //Error handling to prevent pooling from non-existant weeks, return early without new additions
+        if (givenWeek >= missionObjects.Count) { return false; }
+
+        //Iterate over the week being pooled missions
+        foreach (GameObject missionObject in missionObjects[givenWeek])
+        {
+            //Reset the mission data
+            missionObject.GetComponent<Mission>().ResetMission();
+
+            //Disable the object
+            missionObject.SetActive(false);
+
+            //Add to missions pool 
+            availableMissionsPool.Add(missionObject);
+        }
+
+        //Return as sucessful
+        return true;
     }
 
     //Get a set number of active missions
     private void PoolNewActiveMissions()
     {
-        //Get a set number of active missions
+        //Get a set number of active missions while under the number of active missions and has available missions to pull
         while (activeMissions.Count < numberOfActiveMissions && availableMissionsPool.Count > 0)
         {
             //Get random index
@@ -206,6 +219,7 @@ public class MissionManager : MonoBehaviour
         }
     }
 
+    //Moves the active missions into the completed missions
     private void LeakActiveMissions()
     {
         //Move the active missions to the completed missions list and clear the list
