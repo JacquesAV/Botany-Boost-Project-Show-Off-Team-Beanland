@@ -55,9 +55,9 @@ public class TimeCycle : MonoBehaviour
                 //set the time remaining to the night length
                 timeRemaining = nightLength;
                 //Send out event that Day has passed
-                EventManager.currentManager.AddEvent(new DayHasPassed());
                 currentDayInTheWeek++;
                 AlternateWeek();
+                EventManager.currentManager.AddEvent(new DayHasPassed());
             }
         }
     }
