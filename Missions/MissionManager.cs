@@ -7,10 +7,11 @@ public class MissionManager : MonoBehaviour
 {
     [SerializeField]
     private int numberOfActiveMissions = 1; //Number of active missions at one time
-    private List<GameObject> missionObjects = new List<GameObject>(); //List of mission objects
+    private List<List<GameObject>> missionObjects = new List<List<GameObject>>(); //List of mission objects
     private List<GameObject> availableMissionsPool = new List<GameObject>(); //List of all potential/incomplete missions
     private List<GameObject> activeMissions = new List<GameObject>(); //List of the currently active missions
     private List<GameObject> completedMissions = new List<GameObject>(); //List of all completed missions
+    private int weeksPassed = 0; //The current week, important in separating missions by week cycle
 
     private void OnEnable()
     {
@@ -30,6 +31,9 @@ public class MissionManager : MonoBehaviour
     {
         if (eventData is WeekHasPassed)
         {
+            //Increase the week counter
+            weeksPassed++;
+
             //Fire off rewards for missions that reward you at the end of the week (if they're completed!)
             ProcessEndOfWeekMissions();
 
@@ -67,7 +71,6 @@ public class MissionManager : MonoBehaviour
 
     private void Start()
     {
-        //Start first week missions
         UpdateNewMissions();
     }
 
@@ -89,19 +92,30 @@ public class MissionManager : MonoBehaviour
             }
         }
 
+        //Temporary int to track number of missions
+        int numberOfMissions = 0;
+
         //Instantiate mission objects
         foreach (GameObject missionObject in loadedObjects)
         {
-            //Create temporary object
-            GameObject temporaryMissionObject = Instantiate(missionObject, transform);
-            temporaryMissionObject.name = temporaryMissionObject.GetComponent<Mission>().GetType().ToString();
+            //Create temporary objects
+            GameObject temporaryMissionGameObject = Instantiate(missionObject, transform);
+            Mission temporaryMissionObject = temporaryMissionGameObject.GetComponent<Mission>();
+            temporaryMissionGameObject.name = temporaryMissionObject.GetType().ToString();
 
             //Set object to disabled
-            temporaryMissionObject.SetActive(false);
+            temporaryMissionGameObject.SetActive(false);
 
-            //Add to the mission objects so that an active reference exists
-            missionObjects.Add(temporaryMissionObject);
+            //Add to the mission objects based on its week counter so that an active reference exists
+            int weekOfAppearance = temporaryMissionObject.GetAppearsFromWeek();
+            UpdateMissionObjectMatrixIndices(weekOfAppearance);
+            missionObjects[weekOfAppearance-1].Add(temporaryMissionGameObject);
+
+            //Add to the temporary tracking variable
+            numberOfMissions++;
         }
+
+        DebugManager.DebugLog("Succesfully loaded in " + numberOfMissions + " missions!");
     }
 
     //Processes end of week missions so that rewards are fired off (if completed)
@@ -151,17 +165,24 @@ public class MissionManager : MonoBehaviour
         //Clear available missions pool
         availableMissionsPool.Clear();
 
-        //Save all available missions to the mission pool and reset them
-        foreach (GameObject missionObject in missionObjects)
+        //Save all available missions to the mission pool and reset them based on their week of availability
+        for (int week = 0; week <= weeksPassed; week++)
         {
-            //Reset the mission data
-            missionObject.GetComponent<Mission>().ResetMission();
+            //Error handling to prevent pooling from non-existant weeks, early break
+            if (week >= missionObjects.Count) { break; }
 
-            //Disable the object
-            missionObject.SetActive(false);
+            //Iterate over all missions
+            foreach (GameObject missionObject in missionObjects[week])
+            {
+                //Reset the mission data
+                missionObject.GetComponent<Mission>().ResetMission();
 
-            //Add to missions pool 
-            availableMissionsPool.Add(missionObject);
+                //Disable the object
+                missionObject.SetActive(false);
+
+                //Add to missions pool 
+                availableMissionsPool.Add(missionObject);
+            }
         }
     }
 
@@ -202,5 +223,15 @@ public class MissionManager : MonoBehaviour
 
         //Clear the list of active missions
         activeMissions.Clear();
+    }
+
+    private void UpdateMissionObjectMatrixIndices(int givenWeek)
+    {
+        //While the weekly missions count does not match the targetted number of weeks, create it
+        while(missionObjects.Count < givenWeek)
+        {
+            //Create the new week slot
+            missionObjects.Add(new List<GameObject>());
+        }
     }
 }

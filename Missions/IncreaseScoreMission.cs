@@ -66,6 +66,9 @@ public class IncreaseScoreMission : ScoreMission
                     //Fire off the event
                     FireMissionCompletedReward();
                 }
+
+                //Prevent the counter from going over the goal
+                currentScore = scoreIncreaseGoal;
             }
 
             //Check if mission went below 0 on score increase

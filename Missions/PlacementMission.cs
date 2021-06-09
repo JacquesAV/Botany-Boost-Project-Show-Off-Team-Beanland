@@ -80,6 +80,9 @@ public class PlacementMission : Mission
                                     //Fire off the event
                                     FireMissionCompletedReward();
                                 }
+
+                                //Prevent the counter from going over the goal
+                                currentPlacements = placementGoal;
                             }
 
                             //Update the progress text

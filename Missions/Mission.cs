@@ -12,6 +12,9 @@ public abstract class Mission : MonoBehaviour
     protected private int missionReward = 0; //The amount of money to be earned after completing a mission
     [SerializeField]
     protected private bool isEndOfWeekReward = false; //Designates if a mission can be completed before or at the end of a week
+    [SerializeField]
+    [Range(1,100)]
+    protected private int appearsFromWeek = 1; //Designates during what week a mission is able to appear at
     protected private bool isMissionComplete = false; //Bool that states wether a mission has been completed or not
     protected private string progressText; //String that states the progress of the current mission
 
@@ -44,6 +47,12 @@ public abstract class Mission : MonoBehaviour
     public string GetProgressText()
     {
         return progressText;
+    }
+
+    //Gets the week that the mission appears in
+    public int GetAppearsFromWeek()
+    {
+        return appearsFromWeek;
     }
     #endregion
 
