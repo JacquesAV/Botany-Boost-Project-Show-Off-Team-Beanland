@@ -48,7 +48,7 @@ public class GridViewPlaceableContainer : MonoBehaviour, IPlaceableContainer
         //bio text replace
         if (biodiversityText != null)
         {
-            biodiversityText.text = placeable.GetBiodiversity().ToString();
+            biodiversityText.text = "+" + placeable.GetBiodiversity().ToString();
         }
         else
         {
@@ -57,7 +57,7 @@ public class GridViewPlaceableContainer : MonoBehaviour, IPlaceableContainer
         //carbon text replace
         if (carbonIntakeText != null)
         {
-            carbonIntakeText.text = placeable.GetCarbonIntake().ToString();
+            carbonIntakeText.text = "+" + placeable.GetCarbonIntake().ToString();
         }
         else
         {
@@ -66,7 +66,7 @@ public class GridViewPlaceableContainer : MonoBehaviour, IPlaceableContainer
         //appeal text replace
         if (appealText != null)
         {
-            appealText.text = placeable.GetAppeal().ToString();
+            appealText.text = "+" + placeable.GetAppeal().ToString();
         }
         else
         {
@@ -75,7 +75,7 @@ public class GridViewPlaceableContainer : MonoBehaviour, IPlaceableContainer
         //money text replace
         if (moneyText != null)
         {
-            moneyText.text = placeable.GetCost().ToString();
+            moneyText.text = "-" + placeable.GetCost().ToString();
         }
         else
         {
