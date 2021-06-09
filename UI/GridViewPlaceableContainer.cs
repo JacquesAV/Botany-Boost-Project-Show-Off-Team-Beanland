@@ -17,12 +17,27 @@ public class GridViewPlaceableContainer : MonoBehaviour, IPlaceableContainer
     [SerializeField] private TextMeshProUGUI moneyText;
 
     private PlaceableData placeable;
-
+    private Tooltip tooltip;
     //------------------------------------------------------------------------------------------------------------------------
     //                                                  Initialize()
     //------------------------------------------------------------------------------------------------------------------------
     public void Initialize(PlaceableData placeable)
     {
+        //setup tooltip   
+        tooltip = GetComponent<Tooltip>();
+        if (tooltip != null)
+        {
+            string outputText="";
+            foreach (string textLine in placeable.GetSummarisedText())
+            {
+                outputText += "\u2022"+textLine+"\n";
+            }
+            tooltip.SetDisplayText(outputText);
+        }
+        else
+        {
+            Debug.LogWarning("No tooltip found, extra info will not be displayed");
+        }
         //stores the item
         this.placeable = placeable;
 
