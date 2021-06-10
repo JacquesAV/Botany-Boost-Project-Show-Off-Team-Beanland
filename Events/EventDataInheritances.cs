@@ -342,3 +342,35 @@ public class ActivateInteractionState : EventData
         interactionState = givenState;
     }
 }
+
+//Event that informs subscribers about day time being sped up
+public class SpeedUpDays : EventData
+{
+    public readonly int daySpeedIncrease;
+    public readonly int nightSpeedIncrease;
+
+    public SpeedUpDays(int givenDaySpeed, int givenNightSpeed) : base(EventType.DAYSPEEDUP)
+    {
+        daySpeedIncrease = givenDaySpeed;
+        nightSpeedIncrease = givenNightSpeed;
+    }
+}
+
+//Event that informs subscribers about scores being increased
+public class ScoreIncreasePerWeek : EventData
+{
+    public readonly float scoreIncreasePercentile;
+
+    public ScoreIncreasePerWeek(float givenPercentile) : base(EventType.WEEKLYSCOREINCREASE)
+    {
+        scoreIncreasePercentile = givenPercentile;
+    }
+}
+
+//Event that informs subscribers about game being over
+public class GameOver : EventData
+{
+    public GameOver() : base(EventType.GAMEOVER)
+    {
+    }
+}
