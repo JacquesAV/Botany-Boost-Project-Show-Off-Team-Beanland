@@ -60,8 +60,18 @@ public class TimeCycle : MonoBehaviour
             SpeedUpDays daySpeedUp = (SpeedUpDays)eventData;
 
             //reduce day time
-            dayLength -= dayLength* daySpeedUp.daySpeedIncreasePercentile;
-            nightLength -= nightLength* daySpeedUp.daySpeedIncreasePercentile;
+            float dayTimeDecrease = dayLength * daySpeedUp.daySpeedIncreasePercentile;
+            float nightTimeDecrease = nightLength * daySpeedUp.daySpeedIncreasePercentile;
+            dayLength -= dayTimeDecrease;
+            nightLength -= nightTimeDecrease;
+            if (Daytime)
+            {
+                timeRemaining -= dayTimeDecrease;
+            }
+            else
+            {
+                timeRemaining -= nightTimeDecrease;
+            }
             //threshold to prevent time getting too fast
             if (dayLength < dayThreshold)
             {
@@ -91,7 +101,7 @@ public class TimeCycle : MonoBehaviour
         }
     }
 
-        private void AlternateDaytime()
+    private void AlternateDaytime()
     {
         //removes time passed from time remaining
         timeRemaining -= Time.deltaTime;
@@ -139,6 +149,7 @@ public class TimeCycle : MonoBehaviour
     {
         //convers into a fraction that is between 1-0
         float timePassed=timeRemaining/dayOrNightLength;
+        
         //linear average blending
         return (1-timePassed)*orinalColor+timePassed*newColor;
     }
