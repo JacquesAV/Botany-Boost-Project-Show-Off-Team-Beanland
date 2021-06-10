@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class GameProgression : MonoBehaviour
 {
-    [Range(0, 5)] [SerializeField] private int daySpeedIncrease = 2;
-    [Range(0, 5)] [SerializeField] private int nightSpeedIncrease = 1;
-    [Range(0, 1)] [SerializeField] private float scoreIncreasePercentilePerWeek = 0.3f;
+    [Range(0, 1)] [SerializeField] private float daySpeedIncreasePercentilePerDay = 0.5f;
+    [Range(0, 1)] [SerializeField] private float scoreIncreasePercentilePerWeek = 0.35f;
 
     #region OnEvents
     private void OnEnable()
@@ -23,7 +22,7 @@ public class GameProgression : MonoBehaviour
 
     private void OnDayPassed(EventData eventData)
     {
-        EventManager.currentManager.AddEvent(new SpeedUpDays(daySpeedIncrease,nightSpeedIncrease));
+        EventManager.currentManager.AddEvent(new SpeedUpDays(daySpeedIncreasePercentilePerDay));
     }
 
     private void OnWeekPassed(EventData eventData)
