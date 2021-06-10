@@ -346,13 +346,11 @@ public class ActivateInteractionState : EventData
 //Event that informs subscribers about day time being sped up
 public class SpeedUpDays : EventData
 {
-    public readonly int daySpeedIncrease;
-    public readonly int nightSpeedIncrease;
+    public readonly float daySpeedIncreasePercentile;
 
-    public SpeedUpDays(int givenDaySpeed, int givenNightSpeed) : base(EventType.DAYSPEEDUP)
+    public SpeedUpDays(float givenDaySpeedPercentile) : base(EventType.DAYSPEEDUP)
     {
-        daySpeedIncrease = givenDaySpeed;
-        nightSpeedIncrease = givenNightSpeed;
+        daySpeedIncreasePercentile = givenDaySpeedPercentile;
     }
 }
 
