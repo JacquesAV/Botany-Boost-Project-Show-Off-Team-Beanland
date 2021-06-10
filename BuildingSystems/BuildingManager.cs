@@ -39,6 +39,7 @@ public class BuildingManager : MonoBehaviour
         EventManager.currentManager.Subscribe(EventType.CLICKEDPLACEABLEGUI, OnPlaceableUISelect);
         EventManager.currentManager.Subscribe(EventType.CURRENTHOVEREDTILE, OnCurrentHoveredSourceTile);
         EventManager.currentManager.Subscribe(EventType.ACTIVATEINTERACTIONSTATE, OnInteractionStateChange);
+        EventManager.currentManager.Subscribe(EventType.GAMEOVER, OnGameOver);
     }
 
     private void OnDisable()
@@ -47,6 +48,7 @@ public class BuildingManager : MonoBehaviour
         EventManager.currentManager.Unsubscribe(EventType.CLICKEDPLACEABLEGUI, OnPlaceableUISelect);
         EventManager.currentManager.Unsubscribe(EventType.CURRENTHOVEREDTILE, OnCurrentHoveredSourceTile);
         EventManager.currentManager.Unsubscribe(EventType.ACTIVATEINTERACTIONSTATE, OnInteractionStateChange);
+        EventManager.currentManager.Unsubscribe(EventType.GAMEOVER, OnGameOver);
     }
 
     public GridPlaneGenerator activeGridGenerator = null; //Reference to the active grid that the building manager will interact with
@@ -60,6 +62,8 @@ public class BuildingManager : MonoBehaviour
 
     private List<TileBuildingModel> selectedConnectedTiles = new List<TileBuildingModel>(); //Current list of connected tiles to the current source/hover tile
     private GameObject hoveredTile = null; //The tile currently being hovered over
+
+    private bool gameOver = false;
 
     private void Start()
     {
@@ -79,7 +83,8 @@ public class BuildingManager : MonoBehaviour
         EventManager.currentManager.AddEvent(new BuildingManagerEscapeKeyPressed(managerState));
 
         //Exit out of other modes
-        EnableInactiveMode();
+        EventManager.currentManager.AddEvent(new ActivateInteractionState(PlayerInteractionState.inactive));
+
     }
 
     #region Building state Mode Enablers/Disablers
@@ -359,7 +364,7 @@ public class BuildingManager : MonoBehaviour
             if (placeableGUISelect.placeable != null)
             {
                 selectedObjectPrefab = placeableGUISelect.placeable;
-                EnableBuildingMode();
+                EventManager.currentManager.AddEvent(new ActivateInteractionState(PlayerInteractionState.building));
             }
             else
             {
@@ -374,6 +379,10 @@ public class BuildingManager : MonoBehaviour
 
     private void OnInteractionStateChange(EventData eventData)
     {
+        if (gameOver)
+        {
+            return;
+        }
         if (eventData is ActivateInteractionState)
         {
             //Cast the event for ease of use
@@ -407,5 +416,14 @@ public class BuildingManager : MonoBehaviour
         {
             throw new System.Exception("Error: EventData class with EventType.ACTIVATEINTERACTIONSTATE was received but is not of class ActivateInteractionState.");
         }
+    }
+
+    private void OnGameOver(EventData eventData)
+    {
+        //turns off functionality after game is over
+        gameOver = true;
+
+        managerState = PlayerInteractionState.inactive;
+        EnableInactiveMode();
     }
 }
