@@ -5,7 +5,6 @@ using UnityEngine;
 public class IncreaseScoreMission : ScoreMission
 {
     [SerializeField] protected private int scoreIncreaseGoal = 0; //The goal for the score increase
-    private int startingScore = 0; //The starting score of the player in the mission
 
     //Reset the mission parameters
     public override void ResetMission()
@@ -28,6 +27,13 @@ public class IncreaseScoreMission : ScoreMission
         SetProgressText("Progress: " + currentScore + "/" + scoreIncreaseGoal);
     }
 
+    //Custom set progress fraction
+    public override void UpdateProgressFraction()
+    {
+        //Cast in order to allow for 0 division
+        progressFraction = (float)(double)currentScore / scoreIncreaseGoal;
+    }
+
     //Override method as different missions will have different conditions for mission completion
     protected private override void OnMissionConditon(EventData eventData)
     {
@@ -48,6 +54,7 @@ public class IncreaseScoreMission : ScoreMission
             {
                 InitializeMission(currentScoreData);
                 UpdateProgressText();
+                UpdateProgressFraction();
                 return;
             }
 
@@ -80,6 +87,7 @@ public class IncreaseScoreMission : ScoreMission
 
             //Update the progress text
             UpdateProgressText();
+            UpdateProgressFraction();
 
             //Inform subscribers (Ideally mission manager) of changes
             EventManager.currentManager.AddEvent(new MissionUpdated());
@@ -90,20 +98,11 @@ public class IncreaseScoreMission : ScoreMission
         }
     }
 
-    private void InitializeMission(int givenStartingScore)
+    public override void InitializeMission(int givenStartingScore)
     {
-        //Set the starting score
-        startingScore = givenStartingScore;
+        base.InitializeMission(givenStartingScore);
 
-        //Reset the current score increase
+        //Reset the current score
         currentScore = 0;
-
-        //Mark the mission as initialized
-        missionHasInitialized = true;
-    }
-
-    private void InitializeMission(TotalScoresUpdated scoreData)
-    {
-        InitializeMission(GetFilteredScore(scoreData));
     }
 }

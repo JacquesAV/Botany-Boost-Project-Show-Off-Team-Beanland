@@ -11,12 +11,12 @@ public class MissionLog : MonoBehaviour
     private TextMeshProUGUI moneyRewardText = null, descriptionText = null, progressText = null;
 
     [SerializeField]
-    //Checkbox that gets image changed
-    private GameObject checkboxObject=null;
+    //Progress bar using a slider
+    private SliderProgressBar progressSlider = null;
 
     [SerializeField]
-    //Image for the checkbox to toggle
-    private Sprite uncheckedBox = null, checkedBox = null;
+    //Colors based on the bar completion relationship and state
+    private Color completionColor, inverseCompletionColor;
 
     //Initialize the log
     public void InitializeLogVisual(Mission mission)
@@ -25,16 +25,31 @@ public class MissionLog : MonoBehaviour
         moneyRewardText.SetText(mission.GetMissionReward().ToString());
         descriptionText.SetText(mission.GetMissionDescription().ToString());
         progressText.SetText(mission.GetProgressText());
-        checkboxObject.GetComponent<Image>().sprite = uncheckedBox;
 
-        //Update the checkbox
-        if (mission.GetIsMissionComplete())
+        //Change the progress bar and order of colors based on the completion relationship
+        progressSlider.SetTargetProgress(mission.GetProgressFraction());
+        if (mission.GetIsInverseProgress())
         {
-            checkboxObject.GetComponent<Image>().sprite = checkedBox;
+            //Update the colors
+            progressSlider.SetBackgroundColor(completionColor);
+            progressSlider.SetBarColor(inverseCompletionColor);
         }
         else
         {
-            checkboxObject.GetComponent<Image>().sprite = uncheckedBox;
+            //Update the colors
+            progressSlider.SetBarColor(completionColor);
+        }
+
+        //Check if the mission is complete
+        if (mission.GetIsMissionComplete())
+        {
+            //Set to strikethrough font style
+            descriptionText.fontStyle = FontStyles.Strikethrough;
+        }
+        else
+        {
+            //Set to normal font style
+            descriptionText.fontStyle = FontStyles.Normal;
         }
     }
 }

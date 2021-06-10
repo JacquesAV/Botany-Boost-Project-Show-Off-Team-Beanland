@@ -18,6 +18,7 @@ public abstract class ScoreMission : Mission
 {
     [SerializeField] protected private ScoreType targettedScore; //The score type that is permitted/tracked for the mission
     protected private int currentScore = 0; //The current score of the mission
+    protected private int startingScore = 0; //The starting score of the player in the mission
     protected private bool missionHasInitialized = false; //Important bool so that the first incoming scores are considered as the mission starting point
 
     protected private void OnEnable()
@@ -59,5 +60,17 @@ public abstract class ScoreMission : Mission
             default:
                 return 0;
         }
+    }
+    public virtual void InitializeMission(int givenStartingScore)
+    {
+        //Set the starting score
+        startingScore = givenStartingScore;
+
+        //Mark the mission as initialized
+        missionHasInitialized = true;
+    }
+    public virtual void InitializeMission(TotalScoresUpdated scoreData)
+    {
+        InitializeMission(GetFilteredScore(scoreData));
     }
 }

@@ -28,6 +28,9 @@ public class MissionView : MonoBehaviour
             //Cast the event data into a usable list of object references
             List<GameObject> missionObjects = ((CurrentActiveMissions)eventData).activeMissions;
 
+            //Check if missions match current set, continue if they are not
+            if (CouldUpdateMissionLogs(missionObjects)) { return; }
+
             //Instantiate mission logs with the data
             InstantiateMissionLogs(missionObjects);
         }
@@ -35,6 +38,43 @@ public class MissionView : MonoBehaviour
         {
             throw new System.Exception("Error: EventData class with EventType.CURRENTACTIVEMISSIONS was received but is not of class CurrentActiveMissions.");
         }
+    }
+
+    //Update the previous mission logs (if applicable)
+    private bool CouldUpdateMissionLogs(List<GameObject> missionObjects)
+    {
+        //Return if no active logs exist
+        if (missionsAndLogs.Count == 0) { return false; }
+
+        //Iterate over each
+        foreach(KeyValuePair<Mission, GameObject> missionPair in missionsAndLogs)
+        {
+            //Temporary bool for if a mission matched
+            bool foundMatchingMission = false;
+
+            //Iterate over all missions
+            foreach(GameObject missionObject in missionObjects)
+            {
+                //Temporary variable
+                Mission mission = missionObject.GetComponent<Mission>();
+
+                //If the mission matches, update it
+                if (mission == missionPair.Key)
+                {
+                    //Update the visual
+                    missionPair.Value.GetComponent<MissionLog>().InitializeLogVisual(mission);
+                    foundMatchingMission = true;
+                }
+            }
+            //If one discrepency exists (no found matches), return stating they are not the same missions
+            if (!foundMatchingMission)
+            {
+                return false;
+            }
+        }
+
+        //Return true that matches were found
+        return true;
     }
 
     //Create mission logs with new missions

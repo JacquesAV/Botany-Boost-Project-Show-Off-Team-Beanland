@@ -10,17 +10,31 @@ public class EliminateScoreMission : ScoreMission
         //Base reset
         base.ResetMission();
 
+        //Set to inverse progress relationship
+        isInverseProgressRelationship = true;
+
         //Reset current progress
         currentScore = 0;
+        missionHasInitialized = false;
 
         //Update the progress text
         UpdateProgressText();
+
+        //Update the progress fraction
+        UpdateProgressFraction();
     }
 
     //Custom set progress text format
     public override void UpdateProgressText()
     {
         SetProgressText("Remaining: " + currentScore);
+    }
+
+    //Custom set progress fraction
+    public override void UpdateProgressFraction()
+    {
+        //Cast in order to allow for 0 division
+        progressFraction = (float)(double) currentScore / startingScore;
     }
 
     //Override method as different missions will have different conditions for mission completion
@@ -38,6 +52,12 @@ public class EliminateScoreMission : ScoreMission
             //Get the intended current score
             currentScore = GetFilteredScore(scoreData);
 
+            //If the mission has not initialized with the correct values yet
+            if (!missionHasInitialized)
+            {
+                InitializeMission(currentScore);
+            }
+
             //Check if completion condition is met
             if (currentScore == 0)
             {
@@ -52,8 +72,16 @@ public class EliminateScoreMission : ScoreMission
                 }
             }
 
+            //Check if score went back above 0
+            if(isEndOfWeekReward && isMissionComplete && currentScore > 0)
+            {
+                //Set the mission as complete
+                SetMissionComplete(false);
+            }
+
             //Update the progress text
             UpdateProgressText();
+            UpdateProgressFraction();
 
             //Inform subscribers (Ideally mission manager) of changes
             EventManager.currentManager.AddEvent(new MissionUpdated());

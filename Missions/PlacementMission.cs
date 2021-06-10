@@ -41,6 +41,13 @@ public class PlacementMission : Mission
         SetProgressText("Progress: " + currentPlacements + "/" + placementGoal);
     }
 
+    //Custom set progress fraction
+    public override void UpdateProgressFraction()
+    {
+        //Cast in order to allow for 0 division
+        progressFraction = (float)(double)currentPlacements / placementGoal;
+    }
+
     //Override method as different missions will have different conditions for mission completion
     protected private override void OnMissionConditon(EventData eventData) 
     {
@@ -87,6 +94,7 @@ public class PlacementMission : Mission
 
                             //Update the progress text
                             UpdateProgressText();
+                            UpdateProgressFraction();
 
                             //Inform subscribers (Ideally mission manager) of changes
                             EventManager.currentManager.AddEvent(new MissionUpdated());
@@ -131,6 +139,7 @@ public class PlacementMission : Mission
 
                             //Update the progress text
                             UpdateProgressText();
+                            UpdateProgressFraction();
 
                             //Inform subscribers (Ideally mission manager) of changes
                             EventManager.currentManager.AddEvent(new MissionUpdated());

@@ -17,6 +17,8 @@ public abstract class Mission : MonoBehaviour
     protected private int appearsFromWeek = 1; //Designates during what week a mission is able to appear at
     protected private bool isMissionComplete = false; //Bool that states wether a mission has been completed or not
     protected private string progressText; //String that states the progress of the current mission
+    protected private float progressFraction; //Fraction of the mission that is complete 0-1
+    protected private bool isInverseProgressRelationship = false; //Represents if the mission has "inverse" progress for the bar
 
     //Reset the mission parameters
     public virtual void ResetMission()
@@ -49,10 +51,22 @@ public abstract class Mission : MonoBehaviour
         return progressText;
     }
 
+    //Gets the progress fractional value
+    public float GetProgressFraction()
+    {
+        return progressFraction;
+    }
+
     //Gets the week that the mission appears in
     public int GetAppearsFromWeek()
     {
         return appearsFromWeek;
+    }
+
+    //Gers if the relationship of the progress is inverse
+    public bool GetIsInverseProgress()
+    {
+        return isInverseProgressRelationship;
     }
     #endregion
 
@@ -68,8 +82,11 @@ public abstract class Mission : MonoBehaviour
         progressText = givenText;
     }
 
-    //Virtual format update for progress text as missions vary
+    //Abstract format update for progress text as missions vary
     public abstract void UpdateProgressText();
+
+    //Abstract format for the progress fraction to be calculated
+    public abstract void UpdateProgressFraction();
 
     //Abstract method as different missions will have different conditions for mission completion
     protected private abstract void OnMissionConditon(EventData eventData);
