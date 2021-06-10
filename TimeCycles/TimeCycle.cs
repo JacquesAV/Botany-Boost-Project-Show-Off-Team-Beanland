@@ -17,6 +17,22 @@ public class TimeCycle : MonoBehaviour
     private int currentDayInTheWeek=1;//The day of the week
     private int currentWeek = 1;//The current week *shrugs*
 
+    private int dayThreshold=4;
+    private int nightThreshold=2;
+
+    private bool gameOver = false;
+
+    private void OnEnable()
+    {
+        EventManager.currentManager.Subscribe(EventType.DAYSPEEDUP, OnDaySpeedUp);
+        EventManager.currentManager.Subscribe(EventType.DAYSPEEDUP, OnDaySpeedUp);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.currentManager.Unsubscribe(EventType.DAYSPEEDUP, OnDaySpeedUp);
+    }
+
     private void Start()
     {
         if (sceneLight==null)
@@ -28,11 +44,45 @@ public class TimeCycle : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        AlternateDaytime();
-        ChangeColorGradientBasedOnTime();
+        if (!gameOver)
+        {
+            AlternateDaytime();
+            ChangeColorGradientBasedOnTime();
+        }
     }
 
-    private void AlternateDaytime()
+    private void OnDaySpeedUp(EventData eventData)
+    {
+        if (eventData is SpeedUpDays)
+        {
+            //Cast the event so it can be used
+            SpeedUpDays daySpeedUp = (SpeedUpDays)eventData;
+
+            //reduce day time
+            dayLength -= daySpeedUp.daySpeedIncrease;
+            nightLength -= daySpeedUp.nightSpeedIncrease;
+            if (dayLength < dayThreshold)
+            {
+                dayLength = dayThreshold;
+            }
+            if (nightLength < nightThreshold)
+            {
+                nightLength = nightThreshold;
+            }
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.MISSIONCOMPLETED was received but is not of class MissionCompleted.");
+        }
+    }
+
+    private void OnGameOver(EventData eventData)
+    {
+        //game is over
+        gameOver = true;
+    }
+
+        private void AlternateDaytime()
     {
         //removes time passed from time remaining
         timeRemaining -= Time.deltaTime;
