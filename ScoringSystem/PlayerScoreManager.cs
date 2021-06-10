@@ -6,9 +6,11 @@ public class PlayerScoreManager : MonoBehaviour
 {
     //Variables that are tracked in order to calculate score
     [SerializeField] private int totalMoney = 50; //Total money the user has to spend
+    [Range(0, 1000)] [SerializeField] private int weeklyMoneyGain = 100; 
     [SerializeField] private int curingCost = 50; //Cost per cure attempt
     [SerializeField] private int gassingCost = 50; //Cost per gas attempt
     [SerializeField] [Range(0.1f,1f)] private float refundRation = 0.5f; //Selling ratio/refund
+    [SerializeField] private int scoreThreshold=100;//Threshold for losing game
     [SerializeField] private int beeThreshold = 50, butterflyThreshold = 50, beetleThreshold = 50; //Thresholds for bees/butterflies/beetles to appear at
     private bool reachedBeeThreshold = false, reachedButterflyThreshold = false, reachedBeetleThreshold = false;
     private int totalBiodiversity = 0; //Total biodiversity, based on plants and insect attractiveness
@@ -35,6 +37,7 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Subscribe(EventType.PLANTCUREGASREQUEST, OnCureGasRequest); //Process a cure/gas request
         EventManager.currentManager.Subscribe(EventType.MISSIONCOMPLETED, OnMissionComplete); //Increase money count based on reward
         EventManager.currentManager.Subscribe(EventType.REQUESTSCOREDATA, OnScoreRequest); //Process when a request for the scores
+        EventManager.currentManager.Subscribe(EventType.WEEKLYSCOREINCREASE, OnWeekScoreIncrease); //Process when week finishes
     }
     private void OnDisable()
     {
@@ -49,6 +52,7 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Unsubscribe(EventType.PLANTCUREGASREQUEST, OnCureGasRequest);
         EventManager.currentManager.Unsubscribe(EventType.MISSIONCOMPLETED, OnMissionComplete);
         EventManager.currentManager.Unsubscribe(EventType.REQUESTSCOREDATA, OnScoreRequest);
+        EventManager.currentManager.Unsubscribe(EventType.WEEKLYSCOREINCREASE, OnWeekScoreIncrease);
     }
 
     private void Awake()
@@ -210,6 +214,25 @@ public class PlayerScoreManager : MonoBehaviour
             throw new System.Exception("Error: EventData class with EventType.REQUESTSCOREDATA was received but is not of class RequestScoreData.");
         }
     }
+    private void OnWeekScoreIncrease(EventData eventData)
+    {
+        CheckGameOver();
+        AddMoney(weeklyMoneyGain);
+        UpdateTotalScores();
+        if (eventData is ScoreIncreasePerWeek)
+        {
+            //Cast the event so it can be used
+            ScoreIncreasePerWeek scoreIncrease = (ScoreIncreasePerWeek)eventData;
+
+            //increases score threshold
+            scoreThreshold += (int)(scoreThreshold * scoreIncrease.scoreIncreasePercentile);
+            Debug.Log("Score threshold is now at: " + scoreThreshold);
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.MISSIONCOMPLETED was received but is not of class MissionCompleted.");
+        }
+    }
     #endregion
 
     #region Event Data Handlers
@@ -368,6 +391,16 @@ public class PlayerScoreManager : MonoBehaviour
         }
     }
 
+    private void CheckGameOver()
+    {
+        //If total scores are below threshold, they lose
+        if (totalBiodiversity < scoreThreshold||totalCarbonIntake<scoreThreshold||totalAppeal<scoreThreshold)
+        {
+            EventManager.currentManager.AddEvent(new GameOver());
+            Debug.Log("Game Over");
+        }
+    }
+
     #region Score Changing Related Methods
     //Adds money to the total money
     private void AddMoney(int money)
@@ -444,5 +477,9 @@ public class PlayerScoreManager : MonoBehaviour
         //Call AddBiodiversity but with negative values to subtract
         AddBiodiversity(-givenObjectBiodiversity, givenInsect, -givenInsectScore);
     }
+    #endregion
+
+    #region GameProgression
+
     #endregion
 }
