@@ -25,12 +25,13 @@ public class TimeCycle : MonoBehaviour
     private void OnEnable()
     {
         EventManager.currentManager.Subscribe(EventType.DAYSPEEDUP, OnDaySpeedUp);
-        EventManager.currentManager.Subscribe(EventType.DAYSPEEDUP, OnDaySpeedUp);
+        EventManager.currentManager.Subscribe(EventType.GAMEOVER, OnGameOver);
     }
 
     private void OnDisable()
     {
         EventManager.currentManager.Unsubscribe(EventType.DAYSPEEDUP, OnDaySpeedUp);
+        EventManager.currentManager.Unsubscribe(EventType.GAMEOVER, OnGameOver);
     }
 
     private void Start()
@@ -59,8 +60,9 @@ public class TimeCycle : MonoBehaviour
             SpeedUpDays daySpeedUp = (SpeedUpDays)eventData;
 
             //reduce day time
-            dayLength -= daySpeedUp.daySpeedIncrease;
-            nightLength -= daySpeedUp.nightSpeedIncrease;
+            dayLength -= dayLength* daySpeedUp.daySpeedIncreasePercentile;
+            nightLength -= nightLength* daySpeedUp.daySpeedIncreasePercentile;
+            //threshold to prevent time getting too fast
             if (dayLength < dayThreshold)
             {
                 dayLength = dayThreshold;
@@ -72,14 +74,21 @@ public class TimeCycle : MonoBehaviour
         }
         else
         {
-            throw new System.Exception("Error: EventData class with EventType.MISSIONCOMPLETED was received but is not of class MissionCompleted.");
+            throw new System.Exception("Error: EventData class with EventType.DAYSPEEDUP was received but is not of class SpeedUpDays.");
         }
     }
 
     private void OnGameOver(EventData eventData)
     {
-        //game is over
-        gameOver = true;
+        if (eventData is GameOver)
+        {
+            //game is over
+            gameOver = true;
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.GAMEOVER was received but is not of class GameOver.");
+        }
     }
 
         private void AlternateDaytime()
