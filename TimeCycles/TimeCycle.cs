@@ -18,7 +18,11 @@ public class TimeCycle : MonoBehaviour
     private int currentWeek = 1;//The current week *shrugs*
 
     private int dayThreshold=4;
+    private bool dayThresholdReached = false;
+
     private int nightThreshold=2;
+    private bool nightThresholdReached = false;
+
 
     private bool gameOver = false;
 
@@ -62,13 +66,14 @@ public class TimeCycle : MonoBehaviour
             //reduce day time
             float dayTimeDecrease = dayLength * daySpeedUp.daySpeedIncreasePercentile;
             float nightTimeDecrease = nightLength * daySpeedUp.daySpeedIncreasePercentile;
+
             dayLength -= dayTimeDecrease;
             nightLength -= nightTimeDecrease;
-            if (Daytime)
+            if (Daytime&&!dayThresholdReached)
             {
                 timeRemaining -= dayTimeDecrease;
             }
-            else
+            else if (!nightThresholdReached)
             {
                 timeRemaining -= nightTimeDecrease;
             }
@@ -76,10 +81,12 @@ public class TimeCycle : MonoBehaviour
             if (dayLength < dayThreshold)
             {
                 dayLength = dayThreshold;
+                dayThresholdReached = true;
             }
             if (nightLength < nightThreshold)
             {
                 nightLength = nightThreshold;
+                nightThresholdReached = true;
             }
         }
         else
