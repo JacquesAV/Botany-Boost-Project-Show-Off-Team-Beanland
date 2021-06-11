@@ -42,8 +42,7 @@ public class GridProjectorController : MonoBehaviour
         if (projector == null) { throw new MissingComponentException(); }
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         UpdateProjectorSize();
         UpdateProjector();
@@ -97,7 +96,6 @@ public class GridProjectorController : MonoBehaviour
         //Modify size and tiling
         projector.size = new Vector3(dimensions.x, dimensions.y, projectorDepth);
         projector.uvScale = dimensions;
-        Debug.Log(dimensions);
 
         //Calculate new position
         Vector3 newPosition = new Vector3(hoveredTile.transform.position.x, projector.transform.position.y, hoveredTile.transform.position.z);
