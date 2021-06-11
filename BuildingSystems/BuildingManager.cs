@@ -56,6 +56,7 @@ public class BuildingManager : MonoBehaviour
 
     private GameObject selectedObjectPreview; //Active preview of the selected object
     private Vector3 flatObjectOffset = new Vector3(0.5f, 0, 0.5f); //Offset for the preview and placed object without considering the grid height
+    private Vector2 defaultTileDimensions = new Vector2(1,1);
 
     public PlayerInteractionState managerState = PlayerInteractionState.inactive; //State of the manager (for swapping users interactive capabilities)
     private PlaceableOrientation currentOrientation = PlaceableOrientation.Forward; //Current rotation/orientation of the structure being placed
@@ -84,7 +85,6 @@ public class BuildingManager : MonoBehaviour
 
         //Exit out of other modes
         EventManager.currentManager.AddEvent(new ActivateInteractionState(PlayerInteractionState.inactive));
-
     }
 
     #region Building state Mode Enablers/Disablers
@@ -121,6 +121,9 @@ public class BuildingManager : MonoBehaviour
         DebugManager.DebugLog("Building manager set to destroy mode!");
 
         DisableBuildPreview();
+
+        //Fire off event with current orientations
+        EventManager.currentManager.AddEvent(new CurrentObjectOffsetUpdated(new Vector3(defaultTileDimensions.x / 2, 0, defaultTileDimensions.y / 2), defaultTileDimensions));
     }
 
     public void EnableInactiveMode()
@@ -133,6 +136,9 @@ public class BuildingManager : MonoBehaviour
 
         //Disable the build preview of the object
         DisableBuildPreview();
+
+        //Fire off event with current orientations
+        EventManager.currentManager.AddEvent(new CurrentObjectOffsetUpdated(new Vector3(defaultTileDimensions.x / 2, 0, defaultTileDimensions.y / 2), defaultTileDimensions));
     }
 
     public void EnableCuringMode()
@@ -145,6 +151,9 @@ public class BuildingManager : MonoBehaviour
 
         //Disable the build preview of the object
         DisableBuildPreview();
+
+        //Fire off event with current orientations
+        EventManager.currentManager.AddEvent(new CurrentObjectOffsetUpdated(new Vector3(defaultTileDimensions.x / 2, 0, defaultTileDimensions.y / 2), defaultTileDimensions));
     }
 
     public void EnableGassingMode()
@@ -157,6 +166,9 @@ public class BuildingManager : MonoBehaviour
 
         //Disable the build preview of the object
         DisableBuildPreview();
+
+        //Fire off event with current orientations
+        EventManager.currentManager.AddEvent(new CurrentObjectOffsetUpdated(new Vector3(defaultTileDimensions.x / 2, 0, defaultTileDimensions.y / 2), defaultTileDimensions));
     }
 
     private void EnableBuildPreview()
