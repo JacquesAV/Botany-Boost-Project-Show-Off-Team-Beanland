@@ -372,3 +372,16 @@ public class GameOver : EventData
     {
     }
 }
+
+//Event that informs subscribers about game being over
+public class CurrentObjectOffsetUpdated : EventData
+{
+    public readonly Vector3 offset;
+    public readonly Vector2 dimension;
+
+    public CurrentObjectOffsetUpdated(Vector3 givenOffset, Vector2 givenDimension) : base(EventType.CURRENTOBJECTOFFSETUPDATED)
+    {
+        offset = givenOffset;
+        dimension = givenDimension;
+    }
+}
