@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class BuildingPreview : MonoBehaviour
 {
@@ -11,6 +9,9 @@ public class BuildingPreview : MonoBehaviour
     private List<TileBuildingModel> connectedTiles = new List<TileBuildingModel>(); //List of tiles that connect to the source tile
     private PlaceableOrientation currentOrientation = PlaceableOrientation.Forward;
     private bool isUprightObject = false;
+    private MeshRenderer meshRender;
+    private Color origionalColor;
+    private float redTimeout = 0; //Time the object must still remain red
 
     private void OnEnable()
     {
@@ -22,6 +23,18 @@ public class BuildingPreview : MonoBehaviour
     {
         //Unsubscribes the method and event type to the current manager
         EventManager.currentManager.Unsubscribe(EventType.CURRENTHOVEREDTILE, OnCurrentHoveredTile);
+    }
+
+    private void Start()
+    {
+        //Get starting components
+        meshRender = gameObject.GetComponent<MeshRenderer>();
+        origionalColor = meshRender.material.color;
+    }
+
+    private void FixedUpdate()
+    {
+        FlashRed();
     }
 
     //Recieved current hovered tile through an event and update acordingly
@@ -148,5 +161,32 @@ public class BuildingPreview : MonoBehaviour
     {
         //Update the upright state
         isUprightObject = givenBool;
+    }
+
+    public void ResetFlashCounter(float givenTime)
+    {
+        //Flash the object red for a duration of time
+        redTimeout = givenTime;
+    }
+
+    public void FlashRed()
+    {
+        //If time remains on flashing red, continue
+        if (redTimeout <=0 ) { return; };
+
+        //Reduce the timer
+        redTimeout -= Time.deltaTime;
+
+        //Flash the object red until the timer runs out
+        meshRender.material.color = Color.red;
+
+        //Reset colors if timer hits or goes below 0
+        if (redTimeout <= 0) { ResetColor(); };
+    }
+
+    public void ResetColor()
+    {
+        //Reset back to the normal coloration
+        meshRender.material.color = origionalColor;
     }
 }

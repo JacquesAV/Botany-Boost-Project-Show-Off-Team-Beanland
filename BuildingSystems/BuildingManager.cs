@@ -62,7 +62,6 @@ public class BuildingManager : MonoBehaviour
 
     private List<TileBuildingModel> selectedConnectedTiles = new List<TileBuildingModel>(); //Current list of connected tiles to the current source/hover tile
     private GameObject hoveredTile = null; //The tile currently being hovered over
-
     private bool gameOver = false;
 
     private void Start()
@@ -74,6 +73,7 @@ public class BuildingManager : MonoBehaviour
     private void Update()
     {
         if (managerState == PlayerInteractionState.building) {BuildModeRotate(); } //Looks out for key commands to rotate objects
+        if (managerState == PlayerInteractionState.building) { HighlightOverlap(); } //Highlights overlapping tiles and the preview red
         if (Input.GetKeyDown(KeyCode.Escape)) { OnEscapeKey(); } //Looks out for the escape key
     }
 
@@ -300,6 +300,9 @@ public class BuildingManager : MonoBehaviour
         //Update the intended flat offset for the preview and built object
         flatObjectOffset = new Vector3(offsetOrientated.x/2, 0, offsetOrientated.y/2);
 
+        //Fire off event with current orientations
+        EventManager.currentManager.AddEvent(new CurrentObjectOffsetUpdated(flatObjectOffset, dimensionOrientated));
+
         //Update the intended orientation for the built object
         selectedObjectPrefab.SetOrientatedDimensions(dimensionOrientated);
 
@@ -341,6 +344,7 @@ public class BuildingManager : MonoBehaviour
     {
         return selectedConnectedTiles;
     }
+
     public bool ConnectingTilesListWasPopulated()
     {
         //Checks that connecting tiles are neither empty nor null
@@ -351,6 +355,22 @@ public class BuildingManager : MonoBehaviour
         }
         //Return valid
         return true;
+    }
+
+    public void HighlightOverlap()
+    {
+        //Continue if tiles list was populated and object preview was not null
+        if (!ConnectingTilesListWasPopulated() || selectedObjectPreview == null) { return; }
+
+        //Highlight Building Preview if tile is occupied
+        foreach(TileBuildingModel tile in selectedConnectedTiles)
+        {
+            //If already occupied, flash red
+            if (tile.savedPlaceableData != null || tile.objectView != null)
+            {
+                selectedObjectPreview.GetComponent<BuildingPreview>().ResetFlashCounter(0.05f);
+            }
+        }
     }
 
     private void OnPlaceableUISelect(EventData eventData)
