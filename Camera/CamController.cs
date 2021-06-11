@@ -38,6 +38,7 @@ public class CamController : MonoBehaviour
     private float upDownModifier=1.6f;//up and down on camera is slower so it needs it own multiplier
 
     private int scrollsSpeedWheelModifier=4;
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -54,52 +55,80 @@ public class CamController : MonoBehaviour
         CameraRotate();
     }
     private void CameraMovement()
-    { 
+    {
+        #region mouseMovement
         if (!movementLocked)
         {
-            Vector3 previousPos = cameraHolder.transform.position;
-            //Move up
-            if (Input.mousePosition.y >= Screen.height * topNRightBarrier || Input.GetKey(KeyCode.W))
+            //Move up with mouse
+            if (Input.mousePosition.y >= Screen.height * topNRightBarrier)
             {
                 //cameraHolder.transform.Translate(Vector3.up * Time.deltaTime * scrollSpeed, Space.World);
-                cameraHolder.transform.Translate(Vector3.Scale(transform.forward, new Vector3(1, 0, 1)) * Time.deltaTime * scrollSpeed* upDownModifier, Space.World);
+                cameraHolder.transform.Translate(Vector3.Scale(transform.forward, new Vector3(1, 0, 1)) * SimulatedDeltaTime.deltaTime * scrollSpeed * upDownModifier, Space.World);
             }
-            //Move down
-            if (Input.mousePosition.y <= Screen.height * botNLeftBarrier || Input.GetKey(KeyCode.S))
+            //Move down up with mouse
+            if (Input.mousePosition.y <= Screen.height * botNLeftBarrier)
             {
                 //cameraHolder.transform.Translate(Vector3.down * Time.deltaTime * scrollSpeed, Space.World);
-                cameraHolder.transform.Translate(-Vector3.Scale(transform.forward, new Vector3(1, 0, 1)) * Time.deltaTime * scrollSpeed* upDownModifier, Space.World);
-                
+                cameraHolder.transform.Translate(-Vector3.Scale(transform.forward, new Vector3(1, 0, 1)) * SimulatedDeltaTime.deltaTime * scrollSpeed * upDownModifier, Space.World);
+
             }
-            //Move left
-            if (Input.mousePosition.x <= Screen.width * botNLeftBarrier || Input.GetKey(KeyCode.A))
+            //Move left up with mouse
+            if (Input.mousePosition.x <= Screen.width * botNLeftBarrier)
             {
-                cameraHolder.transform.Translate(-Camera.main.transform.right * Time.deltaTime * scrollSpeed, Space.World);
+                cameraHolder.transform.Translate(-Camera.main.transform.right * SimulatedDeltaTime.deltaTime * scrollSpeed, Space.World);
             }
-            //Move right
-            if (Input.mousePosition.x >= Screen.width * topNRightBarrier || Input.GetKey(KeyCode.D))
+            //Move right up with mouse
+            if (Input.mousePosition.x >= Screen.width * topNRightBarrier)
             {
-                cameraHolder.transform.Translate(Camera.main.transform.right * Time.deltaTime * scrollSpeed, Space.World);
+                cameraHolder.transform.Translate(Camera.main.transform.right * SimulatedDeltaTime.deltaTime * scrollSpeed, Space.World);
             }
-            //CONSTRAINTS
-            //x-axis
-            if (cameraHolder.transform.position.x>xMaxConstraint)
-            {
-                cameraHolder.transform.position=new Vector3(xMaxConstraint, cameraHolder.transform.position.y, cameraHolder.transform.position.z);
-            }
-            if (cameraHolder.transform.position.x < xMinConstraint)
-            {
-                cameraHolder.transform.position = new Vector3(xMinConstraint, cameraHolder.transform.position.y, cameraHolder.transform.position.z);
-            }
-            //z-axis
-            if (cameraHolder.transform.position.z > zMaxConstraint)
-            {
-                cameraHolder.transform.position = new Vector3(cameraHolder.transform.position.x, cameraHolder.transform.position.y, zMaxConstraint);
-            }
-            if (cameraHolder.transform.position.z < zMinConstraint)
-            {
-                cameraHolder.transform.position = new Vector3(cameraHolder.transform.position.x, cameraHolder.transform.position.y, zMinConstraint);
-            }
+            
+        }
+        #endregion
+      
+        #region keyMovement
+        //Move up with keys
+        if (Input.GetKey(KeyCode.W))
+        {
+            //cameraHolder.transform.Translate(Vector3.up * Time.deltaTime * scrollSpeed, Space.World);
+            cameraHolder.transform.Translate(Vector3.Scale(transform.forward, new Vector3(1, 0, 1)) * SimulatedDeltaTime.deltaTime * scrollSpeed * upDownModifier, Space.World);
+        }
+        //Move down with keys
+        if (Input.GetKey(KeyCode.S))
+        {
+            //cameraHolder.transform.Translate(Vector3.down * Time.deltaTime * scrollSpeed, Space.World);
+            cameraHolder.transform.Translate(-Vector3.Scale(transform.forward, new Vector3(1, 0, 1)) * SimulatedDeltaTime.deltaTime * scrollSpeed * upDownModifier, Space.World);
+
+        }
+        //Move left with keys
+        if (Input.GetKey(KeyCode.A))
+        {
+            cameraHolder.transform.Translate(-Camera.main.transform.right * SimulatedDeltaTime.deltaTime * scrollSpeed, Space.World);
+        }
+        //Move right with keys
+        if (Input.GetKey(KeyCode.D))
+        {
+            cameraHolder.transform.Translate(Camera.main.transform.right * SimulatedDeltaTime.deltaTime * scrollSpeed, Space.World);
+        }
+        #endregion
+        //CONSTRAINTS
+        //x-axis
+        if (cameraHolder.transform.position.x > xMaxConstraint)
+        {
+            cameraHolder.transform.position = new Vector3(xMaxConstraint, cameraHolder.transform.position.y, cameraHolder.transform.position.z);
+        }
+        if (cameraHolder.transform.position.x < xMinConstraint)
+        {
+            cameraHolder.transform.position = new Vector3(xMinConstraint, cameraHolder.transform.position.y, cameraHolder.transform.position.z);
+        }
+        //z-axis
+        if (cameraHolder.transform.position.z > zMaxConstraint)
+        {
+            cameraHolder.transform.position = new Vector3(cameraHolder.transform.position.x, cameraHolder.transform.position.y, zMaxConstraint);
+        }
+        if (cameraHolder.transform.position.z < zMinConstraint)
+        {
+            cameraHolder.transform.position = new Vector3(cameraHolder.transform.position.x, cameraHolder.transform.position.y, zMinConstraint);
         }
     }
 
