@@ -78,7 +78,7 @@ public class TimeCycle : MonoBehaviour
             {
                 nightLength = nightThreshold;
             }
-            Debug.Log("day length is: " + dayLength + "and time Reaming of day is: " + timeRemaining);
+            //Debug.Log("day length is: " + dayLength + "and time Reaming of day is: " + timeRemaining);
         }
         else
         {
