@@ -18,11 +18,8 @@ public class TimeCycle : MonoBehaviour
     private int currentWeek = 1;//The current week *shrugs*
 
     private int dayThreshold=4;
-    private bool dayThresholdReached = false;
 
     private int nightThreshold=2;
-    private bool nightThresholdReached = false;
-
 
     private bool gameOver = false;
 
@@ -69,25 +66,19 @@ public class TimeCycle : MonoBehaviour
 
             dayLength -= dayTimeDecrease;
             nightLength -= nightTimeDecrease;
-            if (Daytime&&!dayThresholdReached)
-            {
-                timeRemaining -= dayTimeDecrease;
-            }
-            else if (!nightThresholdReached)
-            {
-                timeRemaining -= nightTimeDecrease;
-            }
+
+            timeRemaining = dayLength;
+
             //threshold to prevent time getting too fast
             if (dayLength < dayThreshold)
             {
                 dayLength = dayThreshold;
-                dayThresholdReached = true;
             }
             if (nightLength < nightThreshold)
             {
                 nightLength = nightThreshold;
-                nightThresholdReached = true;
             }
+            Debug.Log("day length is: " + dayLength + "and time Reaming of day is: " + timeRemaining);
         }
         else
         {
@@ -157,6 +148,12 @@ public class TimeCycle : MonoBehaviour
         //convers into a fraction that is between 1-0
         float timePassed=timeRemaining/dayOrNightLength;
         
+        //with the time decreasing it causes an issue where the value can be more than 1, this is a simple workaround.
+        if (timePassed > 1)
+        {
+            timePassed = 1;
+        }
+
         //linear average blending
         return (1-timePassed)*orinalColor+timePassed*newColor;
     }
