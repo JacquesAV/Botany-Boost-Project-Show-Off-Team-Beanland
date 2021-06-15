@@ -28,7 +28,7 @@ public class DayWeekDisplay : MonoBehaviour
     }
     private void OnWeekPassed(EventData eventData)
     {
-        currentDay = 1;
+        currentDay = 0;
         currentWeek++;
         UpdateTimeStamp();
     }
