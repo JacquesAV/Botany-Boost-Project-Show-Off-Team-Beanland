@@ -10,6 +10,7 @@ public class TileBuildingModel : MonoBehaviour
     public GameObject objectView = null; //Prefab of the selected object
     private GridTile gridTile = null; //The gridTile connected to the object
     private PlantEffects plantEffects = null; //The effects based functionality of a plant, infection and invaders
+    private ObjectViewHighlight objectViewHighlight = null; //Separate script that allows for highlighting
 
     private List<TileBuildingModel> connectedTiles = new List<TileBuildingModel>(); //The gridTile connected to the object
 
@@ -131,6 +132,11 @@ public class TileBuildingModel : MonoBehaviour
         //Add the data script to the object view
         objectView.AddComponent<PlaceableData>().Initialize(savedPlaceableData);
 
+        //Add a highlight script to the object view
+        objectViewHighlight = objectView.AddComponent<ObjectViewHighlight>();
+
+        Debug.Log(objectViewHighlight);
+
         //Add PlantEffect script to placeables that are plants
         string placeableType = savedPlaceableData.GetPlaceableType().ToString();
         if (placeableType != "Flooring" && placeableType != "Ornament")
@@ -216,7 +222,7 @@ public class TileBuildingModel : MonoBehaviour
         connectedTiles = BuildingManager.currentManager.GetSelectedConnectingTiles();
 
         //Update neighbour information
-        foreach (TileBuildingModel tile in connectedTiles.ToList())
+        foreach (TileBuildingModel tile in connectedTiles)
         {
             //Set the object view to the source view
             tile.objectView = objectView;
@@ -226,6 +232,9 @@ public class TileBuildingModel : MonoBehaviour
 
             //Set the active plant effects
             tile.plantEffects = plantEffects;
+
+            //Set the active object view highlight
+            tile.objectViewHighlight = objectViewHighlight;
 
             //Update the references connected tiles on each other tile
             tile.connectedTiles = connectedTiles;
@@ -395,5 +404,29 @@ public class TileBuildingModel : MonoBehaviour
 
         //Return
         return averageNormal;
+    }
+
+    public TileBuildingModel GetFirstConnectedTile()
+    {
+        //Return first tile
+        return connectedTiles[0];
+    }
+
+    public void SetRedHighlight()
+    {
+        //Error handling
+        if (objectViewHighlight == null) { Debug.LogWarning("No object view highlight attached to tile model!"); return; }
+
+        //Flash the object red until the timer runs out
+        objectViewHighlight.SetRedHighlight();
+    }
+
+    public void ResetHighlight()
+    {
+        //Error handling
+        if (objectViewHighlight == null) { Debug.LogWarning("No object view highlight attached to tile model!"); return; }
+
+        //Reset back to the normal coloration
+        objectViewHighlight.ResetHighlight();
     }
 }

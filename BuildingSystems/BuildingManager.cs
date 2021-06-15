@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public enum PlayerInteractionState
 {
@@ -62,6 +63,7 @@ public class BuildingManager : MonoBehaviour
     private PlaceableOrientation currentOrientation = PlaceableOrientation.Forward; //Current rotation/orientation of the structure being placed
 
     private List<TileBuildingModel> selectedConnectedTiles = new List<TileBuildingModel>(); //Current list of connected tiles to the current source/hover tile
+    private List<TileBuildingModel> previousOverlappingTiles = new List<TileBuildingModel>(); //Previous list of overlapping tiles
     private GameObject hoveredTile = null; //The tile currently being hovered over
     private bool gameOver = false;
 
@@ -74,8 +76,12 @@ public class BuildingManager : MonoBehaviour
     private void Update()
     {
         if (managerState == PlayerInteractionState.building) {BuildModeRotate(); } //Looks out for key commands to rotate objects
-        if (managerState == PlayerInteractionState.building) { HighlightOverlap(); } //Highlights overlapping tiles and the preview red
         if (Input.GetKeyDown(KeyCode.Escape)) { OnEscapeKey(); } //Looks out for the escape key
+    }
+
+    private void LateUpdate()
+    {
+        if (managerState == PlayerInteractionState.building) { HighlightOverlap(); } //Highlights overlapping objects and the preview red
     }
 
     private void OnEscapeKey()
@@ -181,6 +187,7 @@ public class BuildingManager : MonoBehaviour
 
         //Create a build preview object
         selectedObjectPreview = Instantiate(selectedObjectPrefab.GetPrefab());
+        selectedObjectPreview.AddComponent<ObjectViewHighlight>();
         selectedObjectPreview.AddComponent<BuildingPreview>();
 
         //Rename the object for the unity editor
@@ -374,14 +381,59 @@ public class BuildingManager : MonoBehaviour
         //Continue if tiles list was populated and object preview was not null
         if (!ConnectingTilesListWasPopulated() || selectedObjectPreview == null) { return; }
 
+        //Temporary boolean and building model reference
+        bool foundOverlap = false;
+        List<TileBuildingModel> overlappingTileModels = new List<TileBuildingModel>();
+
         //Highlight Building Preview if tile is occupied
-        foreach(TileBuildingModel tile in selectedConnectedTiles)
+        foreach (TileBuildingModel tile in selectedConnectedTiles)
         {
-            //If already occupied, flash red
-            if (tile.savedPlaceableData != null || tile.objectView != null)
+            //If already occupied, save the occupied tile
+            if (tile.savedPlaceableData && tile.objectView)
             {
-                selectedObjectPreview.GetComponent<BuildingPreview>().ResetFlashCounter(0.05f);
+                foundOverlap = true;
+                overlappingTileModels.Add(tile);
+
+                //Check if in the list of previously overlapping objects, if yes then remove from that list
+                if (previousOverlappingTiles.Contains(tile))
+                {
+                    previousOverlappingTiles.Remove(tile);
+                }
             }
+            //tile.ChangeMaterialColor(tile.occupiedColor);
+        }
+
+        //Unhighlight old tiles
+        foreach (TileBuildingModel tile in previousOverlappingTiles)
+        {
+            //Error handling, meant to fail silently as previous overlapping tiles may have been recently been cleared of their model
+            if(tile == null) { return; }
+
+            //Reset the color
+            tile.ResetHighlight();
+            //tile.ChangeMaterialColor(tile.hoveredColor);
+        }
+
+        //Set the new list of overlapping tiles before filtering
+        previousOverlappingTiles = overlappingTileModels;
+
+        //Filter through the overlapping tiles for repeating object views and set the highlight red
+        foreach (TileBuildingModel tile in overlappingTileModels.Distinct(new TileObjectViewComparer()).ToList())
+        {
+            //Toggle red
+            tile.SetRedHighlight();
+        }
+
+        //If overlapping tiles were found, highlight the preview red
+        if (foundOverlap)
+        {
+            //Set the highlight to red
+            selectedObjectPreview.GetComponent<BuildingPreview>().SetRedHighlight();
+        }
+        else
+        {
+            //Reset the color
+            selectedObjectPreview.GetComponent<BuildingPreview>().ResetHighlight();
         }
     }
 
