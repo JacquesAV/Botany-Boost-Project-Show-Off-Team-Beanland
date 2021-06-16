@@ -385,3 +385,16 @@ public class CurrentObjectOffsetUpdated : EventData
         dimension = givenDimension;
     }
 }
+
+//Event that informs subscribers about game being over
+public class LowestLeaderboardScore : EventData
+{
+    public readonly int score;
+    public readonly int leaderboardSize;
+
+    public LowestLeaderboardScore(int givenScore,int leaderboardSize) : base(EventType.LowestLeaderboardScore)
+    {
+        score = givenScore;
+        this.leaderboardSize = leaderboardSize;
+    }
+}
