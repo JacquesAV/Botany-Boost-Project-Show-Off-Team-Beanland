@@ -24,7 +24,7 @@ public class IncreaseScoreMission : ScoreMission
     //Custom set progress text format
     public override void UpdateProgressText()
     {
-        SetProgressText("Progress: " + currentScore + "/" + scoreIncreaseGoal);
+        SetProgressText(currentScore + "/" + scoreIncreaseGoal);
     }
 
     //Custom set progress fraction

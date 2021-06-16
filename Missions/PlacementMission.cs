@@ -38,7 +38,7 @@ public class PlacementMission : Mission
     //Custom set progress text format
     public override void UpdateProgressText()
     {
-        SetProgressText("Progress: " + currentPlacements + "/" + placementGoal);
+        SetProgressText(currentPlacements + "/" + placementGoal);
     }
 
     //Custom set progress fraction

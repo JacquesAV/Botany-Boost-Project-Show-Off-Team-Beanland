@@ -27,7 +27,7 @@ public class EliminateScoreMission : ScoreMission
     //Custom set progress text format
     public override void UpdateProgressText()
     {
-        SetProgressText("Remaining: " + currentScore);
+        SetProgressText(currentScore.ToString());
     }
 
     //Custom set progress fraction
