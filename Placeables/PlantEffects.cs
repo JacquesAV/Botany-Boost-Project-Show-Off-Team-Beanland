@@ -7,6 +7,7 @@ public class PlantEffects : MonoBehaviour
 {
     private PlaceableData placeableData;//the data of the object that it is attached to
     private readonly int radius = 2;//the radius of the spread
+    
     private float baseDiseaseChance = 0.25f;//the base chance of getting disease
     private float diseaseSoftCap = 0.1f;//the soft cap of a disease
     private bool isSick = false;//if the plant got a disease
@@ -16,6 +17,9 @@ public class PlantEffects : MonoBehaviour
     private bool hasInvaders = false;//if the plant has an invaded
 
     private int lifespanInDays;//the time that the plant lives
+
+    private bool doesGenerateMoney;//whether a plant can give money every day
+    private int moneyPerDay;//how much money the plant gives per day
 
     public TileBuildingModel tileModel = null;
 
@@ -35,11 +39,16 @@ public class PlantEffects : MonoBehaviour
         baseInvaderSpawnChance = placeableData.GetBaseDiseaseChance();
         invaderSoftCap = placeableData.GetInvaderSoftCap();
 
+        doesGenerateMoney = placeableData.GetYieldsProduce();
+        moneyPerDay = placeableData.GetProduceYield();
+
         //Setup fx
         SetupHealthFX();
         SetupBugFX();
     }
 
+
+    #region OnEvents
     private void OnEnable()
     {
         EventManager.currentManager.Subscribe(EventType.DAYPASSED, OnDayPassed);
@@ -49,7 +58,7 @@ public class PlantEffects : MonoBehaviour
     {
         EventManager.currentManager.Unsubscribe(EventType.DAYPASSED, OnDayPassed);
     }
-    #region OnEvents
+
     private void OnDayPassed(EventData eventData)
     {
         //when day passes
@@ -58,6 +67,7 @@ public class PlantEffects : MonoBehaviour
             CalculateDiseaseChance();
             CalculateInvasiveSpeciesSpawnChance();
             CheckIfPlantDied();
+            EarnDailyMoney();
         }
         else
         {
@@ -208,6 +218,14 @@ public class PlantEffects : MonoBehaviour
         {
             //if it is sick then the plant will have 1 less day to live
             lifespanInDays--;
+        }
+    }
+
+    private void EarnDailyMoney()
+    {
+        if (doesGenerateMoney)
+        {
+            EventManager.currentManager.AddEvent(new MissionCompleted(moneyPerDay));
         }
     }
 

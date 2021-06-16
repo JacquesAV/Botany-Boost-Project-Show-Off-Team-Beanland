@@ -22,6 +22,7 @@ public class PlaceableData : MonoBehaviour
     [SerializeField] private string plantInfoText;//the text shown on the extra info section
     [SerializeField] private string[] plantSummarisedText;//The summary of text shown when hovering
     [SerializeField] private bool yieldsProduce;//if the object produces food
+    [SerializeField] private int produceYield;//how much it produces
     [SerializeField] private bool attractsBirds;//if the object attracts birds
 
     [Header("Spread Effects")]
@@ -53,6 +54,7 @@ public class PlaceableData : MonoBehaviour
         insectAttractiveness = baseData.insectAttractiveness;
         plantInfoText = baseData.plantInfoText;
         yieldsProduce = baseData.yieldsProduce;
+        produceYield = baseData.produceYield;
         attractsBirds = baseData.attractsBirds;
 
         lifespanInDays = baseData.lifespanInDays;
@@ -176,6 +178,11 @@ public class PlaceableData : MonoBehaviour
     public float GetDiseaseSoftCap()
     {
         return diseaseChanceSoftCap;
+    }
+
+    public int GetProduceYield()
+    {
+        return produceYield;
     }
 
     #endregion
