@@ -26,15 +26,19 @@ public class GameOverDisplay : MonoBehaviour
 
 
     private bool brokeRecord = false;
-
+    private int tenthPlaceScore;
+    private int totalScore;
+    #region OnEvents
     private void OnEnable()
     {
         EventManager.currentManager.Subscribe(EventType.GAMEOVER, OnGameOver);
+        EventManager.currentManager.Subscribe(EventType.LowestLeaderboardScore, OnLowestLeaderboardScore);
     }
 
     private void OnDisable()
     {
         EventManager.currentManager.Unsubscribe(EventType.GAMEOVER, OnGameOver);
+        EventManager.currentManager.Unsubscribe(EventType.LowestLeaderboardScore, OnLowestLeaderboardScore);
     }
 
     private void OnGameOver(EventData eventData)
@@ -75,6 +79,22 @@ public class GameOverDisplay : MonoBehaviour
         }
     }
 
+    private void OnLowestLeaderboardScore(EventData eventData)
+    {
+        if (eventData is LowestLeaderboardScore leaderboardScore)
+        {
+            //Get 10th score
+            tenthPlaceScore = leaderboardScore.score;
+
+            //check if the lowest high score was broken
+            brokeRecord = CheckIfEligibleForLeaderboard(leaderboardScore.leaderboardSize);
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.LowestLeaderboardScore was received but is not of class LowestLeaderboardScore.");
+        }
+    }
+    #endregion
     private void CalculateScores(int bio, int carb, int appeal, int money, int inva, int infec)
     {
         //Display base scores
@@ -140,7 +160,7 @@ public class GameOverDisplay : MonoBehaviour
         }
         #endregion
         //calculate total score
-        int totalScore = bio + carb + appeal + money - (inva * 10) - (infec * 10);
+        totalScore = bio + carb + appeal + money - (inva * 10) - (infec * 10);
 
         //display on text
         #region total score text updates
@@ -175,16 +195,17 @@ public class GameOverDisplay : MonoBehaviour
         }
         #endregion
 
-        //check if its a top 10 score
-        brokeRecord = CheckIfEligibleForLeaderboard(totalScore);
+        //get lowest high score
+        PlayfabManager.singleton.GetLowestLeaderboardScore();
     }
-
-    private bool CheckIfEligibleForLeaderboard(int totalScore)
+    //PlayfabManager.singleton.SendLeaderboard(totalScore);
+    private bool CheckIfEligibleForLeaderboard(int leaderboardSize)
     {
         //fetch the leaderboard scores and check if its better than the 10th place
-        int tenthPlaceScore = 1000;
-        if (totalScore > tenthPlaceScore)
+        Debug.Log("Checking if score of: " + totalScore + "is higher than: " + tenthPlaceScore+"with a leaderboard size of: " + leaderboardSize);
+        if (totalScore > tenthPlaceScore|| leaderboardSize<10)
         {
+            Debug.Log("was eligable for leaderboard");
             return true;
         }
         return false;
@@ -200,5 +221,10 @@ public class GameOverDisplay : MonoBehaviour
         {
             resolutionScreen.SetActive(true);
         }
+    }
+
+    public int GetScore()
+    {
+        return totalScore;
     }
 }
