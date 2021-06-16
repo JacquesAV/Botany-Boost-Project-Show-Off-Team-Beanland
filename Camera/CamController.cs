@@ -167,12 +167,12 @@ public class CamController : MonoBehaviour
         //Rotate Left
         if (Input.GetKey(rotateLeft))
         {
-            cameraHolder.transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+            cameraHolder.transform.Rotate(Vector3.up * rotationSpeed * SimulatedDeltaTime.deltaTime);
         }
         //Rotate Right
         if (Input.GetKey(rotateRight))
         {
-            cameraHolder.transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime);
+            cameraHolder.transform.Rotate(Vector3.up * -rotationSpeed * SimulatedDeltaTime.deltaTime);
         }
     }
 
