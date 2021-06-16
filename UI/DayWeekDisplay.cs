@@ -7,8 +7,8 @@ using UnityEngine.Localization.Components;
 public class DayWeekDisplay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI text;//Text for display
-    public int currentDay = 1;
-    public int currentWeek = 1;
+    private int currentDay = 1;
+    private int currentWeek = 1;
 
     private void OnEnable()
     {
@@ -33,6 +33,16 @@ public class DayWeekDisplay : MonoBehaviour
         currentDay = 0;
         currentWeek++;
         UpdateLocalizedString();
+    }
+
+    public int GetDay()
+    {
+        return currentDay;
+    }
+
+    public int GetWeek()
+    {
+        return currentWeek;
     }
 
     private void UpdateLocalizedString()
