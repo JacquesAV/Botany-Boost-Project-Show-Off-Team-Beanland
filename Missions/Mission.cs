@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 
 [System.Serializable]
 public abstract class Mission : MonoBehaviour
 {
     [Header("Mission Details and Requirements")]
-    [SerializeField]
     protected private string missionDescription = "Mission Description"; //The message that should explain the mission
     [SerializeField]
     protected private int missionReward = 0; //The amount of money to be earned after completing a mission
@@ -107,5 +107,23 @@ public abstract class Mission : MonoBehaviour
     {
         //Fire off an event with the reward
         EventManager.currentManager.AddEvent(new MissionCompleted(missionReward));
+    }
+
+    //Update description based on language
+    public void UpdateDescriptionLanguage(LocalizeStringEvent localizeStringEvent)
+    {
+        //Error handling
+        if (localizeStringEvent != null)
+        {
+            //Update the description
+            missionDescription = localizeStringEvent.StringReference.GetLocalizedString();
+
+            //Inform subscribers (Ideally mission manager) of changes
+            EventManager.currentManager.AddEvent(new MissionUpdated());
+        }
+        else
+        {
+            Debug.LogWarning("No localized string event attached correctly, are you sure you set it up?");
+        }
     }
 }
