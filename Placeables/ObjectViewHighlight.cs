@@ -11,13 +11,24 @@ public class ObjectViewHighlight : MonoBehaviour
     {
         //Get starting components
         meshRender = gameObject.GetComponent<MeshRenderer>();
-        origionalMeshColor = meshRender.material.color;
+        if (meshRender != null)
+        {
+            origionalMeshColor = meshRender.material.color;
+        }
+        else
+        {
+            Debug.LogWarning("There was no mesh renderer found on the object, please make sure one is attached to the model.");
+        }
     }
 
     public void SetRedHighlight()
     {
         //Error handling
-        if (meshRender == null) { throw new MissingComponentException(); }
+        if (meshRender == null) 
+        {
+            Debug.LogWarning("There was no mesh renderer found on the object, please make sure one is attached to the model.");
+            return;
+        }
 
         //Flash the object red until the timer runs out
         meshRender.material.color = Color.red;
@@ -26,8 +37,11 @@ public class ObjectViewHighlight : MonoBehaviour
     public void ResetHighlight()
     {
         //Error handling
-        if (meshRender == null) { throw new MissingComponentException(); }
-
+        if (meshRender == null) 
+        {
+            Debug.LogWarning("There was no mesh renderer found on the object, please make sure one is attached to the model.");
+            return;
+        }
         //Reset back to the normal coloration
         meshRender.material.color = origionalMeshColor;
     }
