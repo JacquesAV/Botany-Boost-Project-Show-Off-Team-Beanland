@@ -21,10 +21,48 @@ public class Controller : MonoBehaviour, IPointerClickHandler
         if (placeableContainer != null)
         {
             EventManager.currentManager.AddEvent(new PlaceableSelectedOnGUI(placeableContainer.Placeable));
-            //DebugManager.DebugLog("Clicked placeable");
         }
+        
+    }
+    private void Update()
+    {
+        HandleKeyInputs();
+    }
+
+    private void HandleKeyInputs()
+    {
+
+        //Tools
+        SellTool();
+        CureTool();
+        GassTool();
+    }
+
+    #region Tools
+    private void SellTool()
+    {
+        if (Input.GetKeyDown(KeyCode.Y))
         {
-            //DebugManager.DebugLog("Clicked not placeable");
+            EventManager.currentManager.AddEvent(new ActivateInteractionState(PlayerInteractionState.destroying));
         }
     }
+
+    private void CureTool()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            EventManager.currentManager.AddEvent(new ActivateInteractionState(PlayerInteractionState.curing));
+        }
+    }
+
+    private void GassTool()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            EventManager.currentManager.AddEvent(new ActivateInteractionState(PlayerInteractionState.gassing));
+        }
+    }
+    #endregion
+
+
 }
