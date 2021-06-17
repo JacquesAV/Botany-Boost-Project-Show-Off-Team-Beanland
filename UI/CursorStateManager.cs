@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CursorStateManager : MonoBehaviour
@@ -7,7 +5,7 @@ public class CursorStateManager : MonoBehaviour
     //Visuals of the intended cursor state
     public Texture2D buildingCursor, destroyingCursor, curingCursor, gassingCursor, inactiveCursor;
     private bool isDisabled = false;
-    public PlayerInteractionState currentInteractionState;
+    public PlayerInteractionState currentInteractionState = PlayerInteractionState.inactive;
 
     private void OnEnable()
     {
@@ -21,6 +19,11 @@ public class CursorStateManager : MonoBehaviour
         //Unsubscribes the method and event type to the current manager
         EventManager.currentManager.Unsubscribe(EventType.ACTIVATEINTERACTIONSTATE, OnInteractionStateChange);
         EventManager.currentManager.Unsubscribe(EventType.GAMEOVER, OnGameOver);
+    }
+
+    private void Awake()
+    {
+        UpdateMouseCursor();
     }
 
     //Manually change the cursor without consideration of the currently set state
