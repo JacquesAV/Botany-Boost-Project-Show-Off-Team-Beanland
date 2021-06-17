@@ -8,11 +8,8 @@ public class TimeCycle : MonoBehaviour
     [SerializeField] private float dayLength = 15;//how long day time is
     [SerializeField] private float nightLength = 5;//how long night time is
 
-    [SerializeField] private Color dayColor = new Color(1, 1, 1);//the global lights color during day
-    [SerializeField] private Color nightColor = new Color(0.2196078f, 0.08627451f, 0.08627451f);//the global lights color during night
-
-    [SerializeField] private HDAdditionalLightData sceneLight;//The scene light
-    public bool Daytime { get; private set; }//whether it is daytime or nightime
+    [SerializeField] private GameObject lightHolder;
+    private bool isDaytime = false;//whether it is daytime or nightime
     private float timeRemaining;//amount of time of the current part of day that is left
     private int currentDayInTheWeek=1;//The day of the week
     private int currentWeek = 1;//The current week *shrugs*
@@ -23,6 +20,7 @@ public class TimeCycle : MonoBehaviour
 
     private bool gameOver = false;
 
+    #region OnEvents
     private void OnEnable()
     {
         EventManager.currentManager.Subscribe(EventType.DAYSPEEDUP, OnDaySpeedUp);
@@ -35,28 +33,11 @@ public class TimeCycle : MonoBehaviour
         EventManager.currentManager.Unsubscribe(EventType.GAMEOVER, OnGameOver);
     }
 
-    private void Start()
-    {
-        if (sceneLight==null)
-        {
-            DebugManager.DebugLog("No Light Source was added");
-        }
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (!gameOver)
-        {
-            AlternateDaytime();
-            ChangeColorGradientBasedOnTime();
-        }
-    }
-
     private void OnDaySpeedUp(EventData eventData)
     {
         if (eventData is SpeedUpDays)
         {
+            Debug.Log("speeding up");
             //Cast the event so it can be used
             SpeedUpDays daySpeedUp = (SpeedUpDays)eventData;
 
@@ -67,7 +48,15 @@ public class TimeCycle : MonoBehaviour
             dayLength -= dayTimeDecrease;
             nightLength -= nightTimeDecrease;
 
-            timeRemaining = dayLength;
+            if (isDaytime)
+            {
+                timeRemaining = dayLength;
+            }
+            else
+            {
+                timeRemaining = nightLength;
+            }
+
 
             //threshold to prevent time getting too fast
             if (dayLength < dayThreshold)
@@ -98,6 +87,23 @@ public class TimeCycle : MonoBehaviour
             throw new System.Exception("Error: EventData class with EventType.GAMEOVER was received but is not of class GameOver.");
         }
     }
+    #endregion
+    private void Start()
+    {
+        if (lightHolder == null)
+        {
+            DebugManager.DebugLog("No Light holder was added");
+        }
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (!gameOver)
+        {
+            AlternateDaytime();
+            ChangeLightBasedOnTime();
+        }
+    }
 
     private void AlternateDaytime()
     {
@@ -107,9 +113,9 @@ public class TimeCycle : MonoBehaviour
         if (timeRemaining <= 0)
         {
             //swaps daytime
-            Daytime = !Daytime;
+            isDaytime = !isDaytime;
             //If it is day
-            if (Daytime)
+            if (isDaytime)
             {
                 DebugManager.DebugLog("Day has started");
                 //set the time remaining to the day length
@@ -129,24 +135,28 @@ public class TimeCycle : MonoBehaviour
         }
     }
     //Blends color based on the current time of day
-    private void ChangeColorGradientBasedOnTime()
+    private void ChangeLightBasedOnTime()
     {
         //If it is day
-        if (Daytime)
+        if (isDaytime)
         {
-            sceneLight.color=BlendColorValue(nightColor, dayColor,dayLength);
+            RotateSun(0, dayLength);
         }
         //Else nightime
         else
         {
-            sceneLight.color=BlendColorValue(dayColor, nightColor, nightLength);
+            RotateSun(180, nightLength);
         }
     }
-    //Blends the colors together for clean transition of the color
-    private Color BlendColorValue(Color orinalColor, Color newColor,float dayOrNightLength)
+
+    //Rotates the directional lights to create an effect of time passing
+    private void RotateSun(int rotatonIncrease, float dayOrNightLength)
     {
         //convers into a fraction that is between 1-0
-        float timePassed=timeRemaining/dayOrNightLength;
+        float timePassed = timeRemaining / dayOrNightLength;
+
+        //debug to check if something is wrong with time passing
+        //Debug.Log("timepassed: " + timePassed + "=timeRemaining: " + timeRemaining + "/dayOrNightLength: " + dayOrNightLength);
         
         //with the time decreasing it causes an issue where the value can be more than 1, this is a simple workaround.
         if (timePassed > 1)
@@ -154,8 +164,15 @@ public class TimeCycle : MonoBehaviour
             timePassed = 1;
         }
 
-        //linear average blending
-        return (1-timePassed)*orinalColor+timePassed*newColor;
+        float sunRotation = Mathf.Lerp(0+rotatonIncrease, 180 + rotatonIncrease, timePassed);
+        if (lightHolder != null)
+        {
+            lightHolder.transform.rotation = Quaternion.Euler(sunRotation, -150.0f, 0);
+        }
+        else
+        {
+            Debug.LogWarning("No light holder in time cycle was selected, please do so.");
+        }
     }
 
     private void AlternateWeek()
