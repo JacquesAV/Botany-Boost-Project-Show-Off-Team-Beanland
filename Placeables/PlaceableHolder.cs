@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 public class PlaceableHolder : MonoBehaviour
 {
@@ -11,7 +13,11 @@ public class PlaceableHolder : MonoBehaviour
 
     void Awake()
     {
+        //Filter out each placeable
         FilterPlaceables();
+
+        //Subscribes to the selected locale changing
+        LocalizationSettings.SelectedLocaleChanged += UpdatePlaceableLanguage;
     }
 
     //Filters all the placeables into repsective type list
@@ -19,11 +25,16 @@ public class PlaceableHolder : MonoBehaviour
     {
         //retrieve placeables from resource folder
         placeables = Resources.LoadAll("Prefabs", typeof(GameObject)).Cast<GameObject>().ToList();
+
         //check through placeable data for different types of placeables.
         foreach (GameObject placeable in placeables)
         {
             if (placeable.TryGetComponent(out PlaceableData temp))
             {
+                //Initialize starting text based on language settings
+                temp.UpdateLanguageBasedInformation();
+
+                //Separate based on the placeable type
                 switch (temp.GetPlaceableType())
                 {
                     case PlaceableType.Flower:
@@ -52,6 +63,24 @@ public class PlaceableHolder : MonoBehaviour
             }
         }
     }
+
+    //Update each placeable data to have the correct locale text with a given locale
+    private void UpdatePlaceableLanguage(Locale locale)
+    {
+        //Iterate over all and update their language based text
+        foreach (GameObject placeable in placeables)
+        {
+            if (placeable.TryGetComponent(out PlaceableData temp))
+            {
+                temp.UpdateLanguageBasedInformation(locale);
+            }
+            else
+            {
+                throw new System.Exception("GameObject: " + placeable.name + " does not have placeable data");
+            }
+        }
+    }
+
 
     #region Getters
     public List<GameObject> GetFlowers()

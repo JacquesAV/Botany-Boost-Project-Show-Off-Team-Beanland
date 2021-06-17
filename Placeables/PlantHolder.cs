@@ -17,7 +17,7 @@ public class PlantHolder : MonoBehaviour
     {
         //loads all of the different effects of the plants.
         beetleFX = Resources.Load<GameObject>("Effects/BeetleEffect");
-        beeFX = Resources.Load<GameObject>("Effects/BeetleEffect");
+        beeFX = Resources.Load<GameObject>("Effects/BeeEffect");
         butteflyFX = Resources.Load<GameObject>("Effects/ButterflyEffect");
         diseaseFX = Resources.Load<GameObject>("Effects/DiseaseEffect");
         invaderFX = Resources.Load<GameObject>("Effects/InvaderEffect");

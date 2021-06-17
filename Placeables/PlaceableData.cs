@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 public class PlaceableData : MonoBehaviour
 {
@@ -13,14 +15,25 @@ public class PlaceableData : MonoBehaviour
     private Vector2 orientatedPlaceableDimensions = Vector2.one; //Current dimensions based on the orientation
     [SerializeField] private Vector2 placeableDimensions = Vector2.one;
     [SerializeField] private int cost = 0;//how much it costs to place
-    [SerializeField] private string placeableName;//the name of the plant
+
+    private string placeableName = null;//the name of the plant
+    [SerializeField] private string placeableNameEnglish;
+    [SerializeField] private string placeableNameDutch;
+
     [SerializeField] private int biodiversity;//the biodiversity the plant provides
     [SerializeField] private int carbonIntake;//the carbon intake the plant provides
     [SerializeField] private int appeal;//how appealing the plant is
     [SerializeField] private InsectType insectType;
     [SerializeField] private int insectAttractiveness;//how many insects attracted
-    [SerializeField] private string plantInfoText;//the text shown on the extra info section
-    [SerializeField] private string[] plantSummarisedText;//The summary of text shown when hovering
+
+    private string plantInfoText = null;//the text shown on the extra info section
+    [SerializeField] private string plantInfoTextEnglish;//the text shown on the extra info section
+    [SerializeField] private string plantInfoTextDutch;//the text shown on the extra info section
+
+    private string[] plantSummarisedText = null;//The summary of text shown when hovering
+    [SerializeField] private string[] plantSummarisedTextEnglish;
+    [SerializeField] private string[] plantSummarisedTextDutch;
+
     [SerializeField] private bool yieldsProduce;//if the object produces food
     [SerializeField] private int produceYield;//how much it produces
     [SerializeField] private bool attractsBirds;//if the object attracts birds
@@ -34,7 +47,6 @@ public class PlaceableData : MonoBehaviour
     [Range(0.1f, 0.75f)] [SerializeField] private float baseDiseaseChance = 0.25f;//The base chance of being infected
     [Range(0f, 1f)] [SerializeField] private float diseaseChanceSoftCap = 0.1f;//The cap to how high a disease spread chance can go
 
-
     public PlaceableData Initialize(PlaceableData baseData)
     {
         //Set information based on pre-created placeable data script
@@ -46,13 +58,21 @@ public class PlaceableData : MonoBehaviour
         placeableOrientation = baseData.placeableOrientation;
         placeableDimensions = baseData.placeableDimensions;
         cost = baseData.cost;
-        placeableName = baseData.placeableName;
+
+        //Set descriptive text
+        placeableNameEnglish = baseData.placeableNameEnglish;
+        placeableNameDutch = baseData.placeableNameDutch;
+        plantInfoTextEnglish = baseData.plantInfoTextEnglish;
+        plantInfoTextDutch = baseData.plantInfoTextDutch;
+        plantSummarisedTextEnglish = baseData.plantSummarisedTextEnglish;
+        plantSummarisedTextDutch = baseData.plantSummarisedTextDutch;
+        UpdateLanguageBasedInformation(); //Update the base writing using the current language settings
+
         biodiversity = baseData.biodiversity;
         carbonIntake = baseData.carbonIntake;
         appeal = baseData.appeal;
         insectType = baseData.insectType;
         insectAttractiveness = baseData.insectAttractiveness;
-        plantInfoText = baseData.plantInfoText;
         yieldsProduce = baseData.yieldsProduce;
         produceYield = baseData.produceYield;
         attractsBirds = baseData.attractsBirds;
@@ -62,6 +82,34 @@ public class PlaceableData : MonoBehaviour
         baseDiseaseChance = baseData.baseDiseaseChance;
         diseaseChanceSoftCap = baseData.diseaseChanceSoftCap;
         return this;
+    }
+
+    //Update based on the current locale
+    public void UpdateLanguageBasedInformation()
+    {
+        UpdateLanguageBasedInformation(LocalizationSettings.SelectedLocale);
+    }
+
+    //Update based on a given locale
+    public void UpdateLanguageBasedInformation(Locale locale)
+    {
+        //Distinguish between the current localization settings
+        switch (locale.ToString())
+        {
+            case "English (en)":
+                //Update to english based information
+                placeableName = placeableNameEnglish;
+                plantInfoText = plantInfoTextEnglish;
+                plantSummarisedText = plantSummarisedTextEnglish;
+                break;
+
+            case "Dutch (nl)":
+                //Update to dutch based information
+                placeableName = placeableNameDutch;
+                plantInfoText = plantInfoTextDutch;
+                plantSummarisedText = plantSummarisedTextDutch;
+                break;
+        }
     }
 
     #region Getters
