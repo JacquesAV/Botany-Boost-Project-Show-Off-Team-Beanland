@@ -34,27 +34,27 @@ public class CursorStateManager : MonoBehaviour
         {
             case PlayerInteractionState.building:
                 //Set cursor icon
-                Cursor.SetCursor(buildingCursor, new Vector2(0, 0), CursorMode.ForceSoftware);
+                Cursor.SetCursor(buildingCursor, new Vector2(0, 0), CursorMode.Auto);
                 break;
 
             case PlayerInteractionState.destroying:
                 //Set cursor icon
-                Cursor.SetCursor(destroyingCursor, new Vector2(0, 0), CursorMode.ForceSoftware);
+                Cursor.SetCursor(destroyingCursor, new Vector2(0, 0), CursorMode.Auto);
                 break;
 
             case PlayerInteractionState.curing:
                 //Set cursor icon
-                Cursor.SetCursor(curingCursor, new Vector2(0, 0), CursorMode.ForceSoftware);
+                Cursor.SetCursor(curingCursor, new Vector2(0, 0), CursorMode.Auto);
                 break;
 
             case PlayerInteractionState.gassing:
                 //Set cursor icon
-                Cursor.SetCursor(gassingCursor, new Vector2(0, 0), CursorMode.ForceSoftware);
+                Cursor.SetCursor(gassingCursor, new Vector2(0, 0), CursorMode.Auto);
                 break;
 
             case PlayerInteractionState.inactive:
                 //Set cursor icon
-                Cursor.SetCursor(inactiveCursor, new Vector2(0, 0), CursorMode.ForceSoftware);
+                Cursor.SetCursor(inactiveCursor, new Vector2(0, 0), CursorMode.Auto);
                 break;
         }
     }
