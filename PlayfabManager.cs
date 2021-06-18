@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
+using UnityEngine.UI;
 
 public class PlayfabManager : MonoBehaviour
 {
-
     public static PlayfabManager singleton;
+
+    public GameObject rowPrefab;
+    public Transform rowsParent;
 
     private void Awake()
     {
@@ -25,6 +28,7 @@ public class PlayfabManager : MonoBehaviour
     {
         Login();
     }
+
     #region OnEvents
     private void OnSuccess(LoginResult result)
     {
@@ -44,8 +48,22 @@ public class PlayfabManager : MonoBehaviour
 
     private void OnLeaderboardGet(GetLeaderboardResult result)
     {
+        //Iterate over old rows and destroy them
+        foreach(Transform item in rowsParent)
+        {
+            Destroy(item.gameObject);
+        }
+
+        //Create new row items
         foreach (var item in result.Leaderboard)
         {
+            //Create a gameobject
+            GameObject rowObject = Instantiate(rowPrefab, rowsParent);
+
+            //Get the text component and update it
+            rowObject.GetComponent<LeaderboardRowItem>().SetAllText(item.Position.ToString(), item.DisplayName, item.StatValue.ToString());
+
+            //Debug the leaderboard result
             Debug.Log(item.Position + " " + item.DisplayName + " " + item.StatValue);
         }
     }
@@ -94,7 +112,6 @@ public class PlayfabManager : MonoBehaviour
         };
         //updates the leaderboard, if it fails, will send out error
         PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboardUpdate, OnError);
-
     }
 
     public void GetLeaderboard()
@@ -106,8 +123,9 @@ public class PlayfabManager : MonoBehaviour
             StartPosition = 0,
             MaxResultsCount = 10
         };
+
         //gets the leaderboard, if it fails, will send out error
-        PlayFabClientAPI.GetLeaderboard( request,OnLeaderboardGet, OnError);
+        PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
     }
 
     public void GetLowestLeaderboardScore()
