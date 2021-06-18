@@ -36,6 +36,7 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Subscribe(EventType.PLANTCURED, OnPlantCured); //Decrease sick plant count
         EventManager.currentManager.Subscribe(EventType.PLANTCUREGASREQUEST, OnCureGasRequest); //Process a cure/gas request
         EventManager.currentManager.Subscribe(EventType.MISSIONCOMPLETED, OnMissionComplete); //Increase money count based on reward
+        EventManager.currentManager.Subscribe(EventType.MoneyEarned, OnMoneyEarned); //Increase money count based on given
         EventManager.currentManager.Subscribe(EventType.REQUESTSCOREDATA, OnScoreRequest); //Process when a request for the scores
         EventManager.currentManager.Subscribe(EventType.WEEKLYSCOREINCREASE, OnWeekScoreIncrease); //Process when week finishes
     }
@@ -51,6 +52,7 @@ public class PlayerScoreManager : MonoBehaviour
         EventManager.currentManager.Unsubscribe(EventType.PLANTCURED, OnPlantCured);
         EventManager.currentManager.Unsubscribe(EventType.PLANTCUREGASREQUEST, OnCureGasRequest);
         EventManager.currentManager.Unsubscribe(EventType.MISSIONCOMPLETED, OnMissionComplete);
+        EventManager.currentManager.Unsubscribe(EventType.MoneyEarned, OnMoneyEarned);
         EventManager.currentManager.Unsubscribe(EventType.REQUESTSCOREDATA, OnScoreRequest);
         EventManager.currentManager.Unsubscribe(EventType.WEEKLYSCOREINCREASE, OnWeekScoreIncrease);
     }
@@ -200,6 +202,24 @@ public class PlayerScoreManager : MonoBehaviour
         else
         {
             throw new System.Exception("Error: EventData class with EventType.MISSIONCOMPLETED was received but is not of class MissionCompleted.");
+        }
+    }
+    private void OnMoneyEarned(EventData eventData)
+    {
+        if (eventData is MoneyEarned)
+        {
+            //Cast the event so it can be used
+            MoneyEarned moneyData = (MoneyEarned)eventData;
+
+            //Add to user money
+            AddMoney(moneyData.moneyEarned);
+
+            //Request a score update
+            UpdateTotalScores();
+        }
+        else
+        {
+            throw new System.Exception("Error: EventData class with EventType.MoneyEarned was received but is not of class MoneyEarned.");
         }
     }
     private void OnScoreRequest(EventData eventData)
