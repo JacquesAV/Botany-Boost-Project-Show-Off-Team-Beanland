@@ -209,9 +209,11 @@ public class CurrentHoveredTile : EventData
 public class CurrentActiveMissions : EventData
 {
     public readonly List<GameObject> activeMissions;
-    public CurrentActiveMissions(List<GameObject> givenActiveMissions) : base(EventType.CURRENTACTIVEMISSIONS)
+    public readonly bool isUpdate;
+    public CurrentActiveMissions(List<GameObject> givenActiveMissions, bool givenIsUpdate) : base(EventType.CURRENTACTIVEMISSIONS)
     {
         activeMissions = givenActiveMissions;
+        isUpdate = givenIsUpdate;
     }
 }
 
