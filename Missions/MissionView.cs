@@ -27,9 +27,10 @@ public class MissionView : MonoBehaviour
         {
             //Cast the event data into a usable list of object references
             List<GameObject> missionObjects = ((CurrentActiveMissions)eventData).activeMissions;
+            bool isAnUpdate = ((CurrentActiveMissions)eventData).isUpdate;
 
-            //Check if missions match current set, continue if they are not
-            if (CouldUpdateMissionLogs(missionObjects)) { return; }
+            //Check if missions match current set if marked as an update, continue if they are not
+            if (CouldUpdateMissionLogs(missionObjects) && isAnUpdate) { return; }
 
             //Instantiate mission logs with the data
             InstantiateMissionLogs(missionObjects);

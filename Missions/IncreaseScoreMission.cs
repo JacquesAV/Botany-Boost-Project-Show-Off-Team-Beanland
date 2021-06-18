@@ -9,16 +9,13 @@ public class IncreaseScoreMission : ScoreMission
     //Reset the mission parameters
     public override void ResetMission()
     {
-        //Base reset
-        base.ResetMission();
-
         //Reset current progress
         currentScore = 0;
         startingScore = 0;
         missionHasInitialized = false;
 
-        //Update the progress text
-        UpdateProgressText();
+        //Base reset
+        base.ResetMission();
     }
 
     //Custom set progress text format
@@ -76,6 +73,11 @@ public class IncreaseScoreMission : ScoreMission
 
                 //Prevent the counter from going over the goal
                 currentScore = scoreIncreaseGoal;
+            }
+            else
+            {
+                //Set the mission as incomplete
+                SetMissionComplete(false);
             }
 
             //Check if mission went below 0 on score increase

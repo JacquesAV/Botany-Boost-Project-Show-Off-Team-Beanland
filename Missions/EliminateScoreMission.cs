@@ -7,9 +7,6 @@ public class EliminateScoreMission : ScoreMission
     //Reset the mission parameters
     public override void ResetMission()
     {
-        //Base reset
-        base.ResetMission();
-
         //Set to inverse progress relationship
         isInverseProgressRelationship = true;
 
@@ -17,11 +14,8 @@ public class EliminateScoreMission : ScoreMission
         currentScore = 0;
         missionHasInitialized = false;
 
-        //Update the progress text
-        UpdateProgressText();
-
-        //Update the progress fraction
-        UpdateProgressFraction();
+        //Base reset
+        base.ResetMission();
     }
 
     //Custom set progress text format
@@ -52,8 +46,8 @@ public class EliminateScoreMission : ScoreMission
             //Get the intended current score
             currentScore = GetFilteredScore(scoreData);
 
-            //If the mission has not initialized with the correct values yet
-            if (!missionHasInitialized)
+            //If the mission has not initialized with the correct values yet or if the score went above the starting score
+            if (!missionHasInitialized || currentScore > startingScore)
             {
                 InitializeMission(currentScore);
             }

@@ -54,7 +54,7 @@ public class MissionManager : MonoBehaviour
         if (eventData is MissionUpdated)
         {
             //Fire off event of current active missions with updated information
-            EventManager.currentManager.AddEvent(new CurrentActiveMissions(activeMissions));
+            EventManager.currentManager.AddEvent(new CurrentActiveMissions(activeMissions,true));
         }
         else
         {
@@ -154,7 +154,7 @@ public class MissionManager : MonoBehaviour
         Debug.Log("Number of missions remaining in the pool: " + availableMissionsPool.Count);
 
         //Fire off event with the new active missions
-        EventManager.currentManager.AddEvent(new CurrentActiveMissions(activeMissions));
+        EventManager.currentManager.AddEvent(new CurrentActiveMissions(activeMissions,false));
     }
 
     //For when the missions should be reset

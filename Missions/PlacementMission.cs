@@ -25,14 +25,11 @@ public class PlacementMission : Mission
     //Reset the mission parameters
     public override void ResetMission()
     {
-        //base reset
-        base.ResetMission();
-
         //Reset current progress
         currentPlacements = 0;
 
-        //Update the progress text
-        UpdateProgressText();
+        //base reset
+        base.ResetMission();
     }
 
     //Custom set progress text format

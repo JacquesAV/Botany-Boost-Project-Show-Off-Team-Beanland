@@ -24,6 +24,12 @@ public abstract class Mission : MonoBehaviour
     public virtual void ResetMission()
     {
         isMissionComplete = false;
+
+        //Update the progress text
+        UpdateProgressText();
+
+        //Update the progress fraction
+        UpdateProgressFraction();
     }
 
     #region Getters
