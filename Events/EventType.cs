@@ -38,5 +38,6 @@ public enum EventType
     WEEKLYSCOREINCREASE,
     GAMEOVER,
     CURRENTOBJECTOFFSETUPDATED,
-    LowestLeaderboardScore
+    LowestLeaderboardScore,
+    MoneyEarned
 }

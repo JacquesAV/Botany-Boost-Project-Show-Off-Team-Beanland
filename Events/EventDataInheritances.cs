@@ -398,3 +398,13 @@ public class LowestLeaderboardScore : EventData
         this.leaderboardSize = leaderboardSize;
     }
 }
+
+//Event that informs subscribers of a money being added
+public class MoneyEarned : EventData
+{
+    public readonly int moneyEarned;
+    public MoneyEarned(int givenMoney) : base(EventType.MoneyEarned)
+    {
+        moneyEarned = givenMoney;
+    }
+}
