@@ -210,6 +210,9 @@ public class BuildingManager : MonoBehaviour
 
         //Set back to null
         selectedObjectPreview = null;
+
+        //Unhighlight old tiles if applicable
+        UnhighlightOldOverlap();
     }
     #endregion
 
@@ -378,8 +381,8 @@ public class BuildingManager : MonoBehaviour
 
     public void HighlightOverlap()
     {
-        //Continue if tiles list was populated and object preview was not null
-        if (!ConnectingTilesListWasPopulated() || selectedObjectPreview == null) { return; }
+        //Continue if tiles list was populated
+        if (!ConnectingTilesListWasPopulated()) { return; }
 
         //Temporary boolean and building model reference
         bool foundOverlap = false;
@@ -404,15 +407,7 @@ public class BuildingManager : MonoBehaviour
         }
 
         //Unhighlight old tiles
-        foreach (TileBuildingModel tile in previousOverlappingTiles)
-        {
-            //Error handling, meant to fail silently as previous overlapping tiles may have been recently been cleared of their model
-            if(tile == null) { return; }
-
-            //Reset the color
-            tile.ResetHighlight();
-            //tile.ChangeMaterialColor(tile.hoveredColor);
-        }
+        UnhighlightOldOverlap();
 
         //Set the new list of overlapping tiles before filtering
         previousOverlappingTiles = overlappingTileModels;
@@ -425,15 +420,32 @@ public class BuildingManager : MonoBehaviour
         }
 
         //If overlapping tiles were found, highlight the preview red
-        if (foundOverlap)
+        if(selectedObjectPreview.TryGetComponent(out BuildingPreview preview) && selectedObjectPreview!=null)
         {
-            //Set the highlight to red
-            selectedObjectPreview.GetComponent<BuildingPreview>().SetRedHighlight();
+            if (foundOverlap)
+            {
+                //Set the highlight to red
+                preview.SetRedHighlight();
+            }
+            else
+            {
+                //Reset the color
+                preview.ResetHighlight();
+            }
         }
-        else
+    }
+
+    private void UnhighlightOldOverlap()
+    {
+        //Unhighlight old tiles
+        foreach (TileBuildingModel tile in previousOverlappingTiles)
         {
+            //Error handling, meant to fail silently as previous overlapping tiles may have been recently been cleared of their model
+            if (tile == null) { return; }
+
             //Reset the color
-            selectedObjectPreview.GetComponent<BuildingPreview>().ResetHighlight();
+            tile.ResetHighlight();
+            //tile.ChangeMaterialColor(tile.hoveredColor);
         }
     }
 
