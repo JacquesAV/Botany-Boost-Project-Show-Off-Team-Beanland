@@ -400,4 +400,30 @@ public class PlantEffects : MonoBehaviour
     {
         return hasInvaders;
     }
+
+    public void SetIsSick(bool isSick)
+    {
+        this.isSick = isSick;
+
+        
+        //Enable disease particle
+        if (diseaseFX != null&& isSick)
+        {
+            Debug.Log("plant sickened");
+            EventManager.currentManager.AddEvent(new PlantInfected());
+            diseaseFX.SetActive(true);
+        }
+    }
+
+    public void SetIsInvaded(bool hasInvaders)
+    {
+        this.hasInvaders = hasInvaders;
+
+        EventManager.currentManager.AddEvent(new PlantInvaded());
+        //Enable disease particle
+        if (invaderFX != null && hasInvaders)
+        {
+            invaderFX.SetActive(true);
+        }
+    }
 }
