@@ -140,7 +140,7 @@ public class DebugManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            EventManager.currentManager.AddEvent(new MissionCompleted(1000));
+            EventManager.currentManager.AddEvent(new MoneyEarned(1000));
         }
     }
 }
