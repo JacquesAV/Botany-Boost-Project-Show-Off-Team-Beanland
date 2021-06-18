@@ -225,7 +225,7 @@ public class PlantEffects : MonoBehaviour
     {
         if (doesGenerateMoney)
         {
-            EventManager.currentManager.AddEvent(new MissionCompleted(moneyPerDay));
+            EventManager.currentManager.AddEvent(new MoneyEarned(moneyPerDay));
         }
     }
 
