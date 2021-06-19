@@ -48,8 +48,11 @@ public class PlayfabManager : MonoBehaviour
 
     private void OnLeaderboardGet(GetLeaderboardResult result)
     {
+        //Error handling
+        if (rowPrefab == null || rowsParent == null) { return; }
+
         //Iterate over old rows and destroy them
-        foreach(Transform item in rowsParent)
+        foreach (Transform item in rowsParent)
         {
             Destroy(item.gameObject);
         }
@@ -57,9 +60,6 @@ public class PlayfabManager : MonoBehaviour
         //Create new row items
         foreach (var item in result.Leaderboard)
         {
-            //Error handling
-            if (rowPrefab == null || rowsParent == null) { return; }
-
             //Create a gameobject
             GameObject rowObject = Instantiate(rowPrefab, rowsParent);
 
