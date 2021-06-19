@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Tables;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -12,6 +14,9 @@ public class TutorialManager : MonoBehaviour
     private int prevIndexVal = -1;
 
     private float _waitTime = 7f;
+
+    //Localized string table
+    public LocalizedStringTable tutorialStringTable = new LocalizedStringTable { TableReference = "Tutorial Text" };
 
     [SerializeField] string completionScene = "Start Scene";
 
@@ -68,7 +73,6 @@ public class TutorialManager : MonoBehaviour
             }
             );
         }
-
     }
 
     void Update()
@@ -104,6 +108,7 @@ public class TutorialManager : MonoBehaviour
         //used to keep track of what the current part of the tutorial is
         if (tutorials.Count > tutorialIndex)
             tutText.SetText(tutorials[tutorialIndex]);
+
         switch (tutorialIndex)
         {
             case 0://Hello Botanist, welcome to Botany Boost! You have been hired by the City Council to 
@@ -249,45 +254,38 @@ public class TutorialManager : MonoBehaviour
             _waitTime -= Time.deltaTime;
         }
     }
-    public void PlungerHit(float speed, float treshold, int eventChance, bool plungerStrength)
-    {
-        if (tutorialIndex == 7) 
-        {
-            //_hitPlunger = true;
-        }
-    }
-    public void SkillCheckStart()
-    {
-        if (tutorialIndex == 8)
-        {
-            //_skillCheckStart = true;
-            //tutText.SetText("Make sure they don’t come loose by pressing Spacebar when the plunger is in the colored area!");
-        }
-    }
-    public void SkillCheckSucceed()
-    {
-        if (tutorialIndex == 9)
-        {
-            //_skillCheckCompleted = true;
-            //tutText.SetText("Arr matey you did great. I think you can do it on your own now! TED needs a break.");
-        }
-    }
-    void OnEnable()
-    {
-        //EventManager.onStartSkillCheckEvent += PlungerHit;
-        //EventManager.onTutorialSkillCheckStart += SkillCheckStart;
-        //EventManager.onSuccessfulSkillCheck += SkillCheckSucceed;
-    }
-    void OnDisable()
-    {
-        //EventManager.onStartSkillCheckEvent -= PlungerHit;
-        //EventManager.onTutorialSkillCheckStart -= SkillCheckStart;
-        //EventManager.onSuccessfulSkillCheck -= SkillCheckSucceed;
-    }
 
     private void OnTutPass(EventData eventData)
     {
         tutorialIndex++;
     }
-    
+
+    void OnEnable()
+    {
+        tutorialStringTable.TableChanged += LoadStrings;
+    }
+
+    void OnDisable()
+    {
+        tutorialStringTable.TableChanged -= LoadStrings;
+    }
+
+    private void LoadStrings(StringTable stringTable)
+    {
+        //Update string array to have the correct translation text
+        foreach (string tutorialText in tutorials.ToArray())
+        {
+            int index = tutorials.IndexOf(tutorialText);
+            tutorials[index] = GetLocalizedString(stringTable, "Tutorial Index " + index);
+        }
+    }
+
+    static string GetLocalizedString(StringTable table, string entryName)
+    {
+        //Get the entry from the table
+        var entry = table.GetEntry(entryName);
+
+        //Return the string
+        return entry.GetLocalizedString().ToString();
+    }
 }
