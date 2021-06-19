@@ -61,10 +61,10 @@ public class PlayfabManager : MonoBehaviour
             GameObject rowObject = Instantiate(rowPrefab, rowsParent);
 
             //Get the text component and update it
-            rowObject.GetComponent<LeaderboardRowItem>().SetAllText(item.Position.ToString(), item.DisplayName, item.StatValue.ToString());
+            rowObject.GetComponent<LeaderboardRowItem>().SetAllText((item.Position + 1).ToString(), item.DisplayName, item.StatValue.ToString());
 
             //Debug the leaderboard result
-            Debug.Log(item.Position + " " + item.DisplayName + " " + item.StatValue);
+            Debug.Log((item.Position + 1) + " " + item.DisplayName + " " + item.StatValue);
         }
     }
 
