@@ -382,7 +382,12 @@ public class BuildingManager : MonoBehaviour
     public void HighlightOverlap()
     {
         //Continue if tiles list was populated
-        if (!ConnectingTilesListWasPopulated()) { return; }
+        if (!ConnectingTilesListWasPopulated())
+        {
+            //If invalid, highlight the preview object
+            HighlightPreviewObject(true); 
+            return; 
+        }
 
         //Temporary boolean and building model reference
         bool foundOverlap = false;
@@ -420,9 +425,15 @@ public class BuildingManager : MonoBehaviour
         }
 
         //If overlapping tiles were found, highlight the preview red
-        if(selectedObjectPreview.TryGetComponent(out BuildingPreview preview) && selectedObjectPreview!=null)
+        HighlightPreviewObject(foundOverlap);
+    }
+
+    private void HighlightPreviewObject(bool shouldHighlight)
+    {
+        //If should highlight due to overlapping tiles, highlight the preview red
+        if (selectedObjectPreview != null && selectedObjectPreview.TryGetComponent(out BuildingPreview preview))
         {
-            if (foundOverlap)
+            if (shouldHighlight)
             {
                 //Set the highlight to red
                 preview.SetRedHighlight();
