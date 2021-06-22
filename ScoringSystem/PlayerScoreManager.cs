@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerScoreManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class PlayerScoreManager : MonoBehaviour
     private int totalInfections = 0; //Level of disease, calculated from the number of negatively affected plants
     private int totalScore = 0; //Total combination of all scores
 
+    private int currentWeek = 1;
     private void OnEnable()
     {
         //Subscribes the method and event type to the current manager
@@ -236,16 +238,24 @@ public class PlayerScoreManager : MonoBehaviour
     }
     private void OnWeekScoreIncrease(EventData eventData)
     {
-        CheckGameOver();
-        AddMoney(weeklyMoneyGain);
-        UpdateTotalScores();
+
         if (eventData is ScoreIncreasePerWeek)
         {
+            CheckGameOver();
+            AddMoney(weeklyMoneyGain);
+            UpdateTotalScores();
+            currentWeek++;
             //Cast the event so it can be used
             ScoreIncreasePerWeek scoreIncrease = (ScoreIncreasePerWeek)eventData;
 
             //increases score threshold
-            scoreThreshold += (int)(scoreThreshold * scoreIncrease.scoreIncreasePercentile);
+            float powerVal = 1 + 1 / (float)currentWeek*scoreIncrease.scalar;
+
+            powerVal = Mathf.Pow(powerVal, currentWeek)-1;
+
+            powerVal= (powerVal )* scoreIncrease.modifier;
+
+            scoreThreshold = (int)powerVal;
             Debug.Log("Score threshold is now at: " + scoreThreshold);
         }
         else
