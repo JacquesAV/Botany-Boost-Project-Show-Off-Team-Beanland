@@ -411,3 +411,45 @@ public class MoneyEarned : EventData
         moneyEarned = givenMoney;
     }
 }
+
+#region Quotas
+//Event that informs subscribers of a quota
+public class BiodiversityQuota : EventData
+{
+    public readonly bool biodiversityMet;
+    public BiodiversityQuota(bool biodiversityMet) : base(EventType.QuotaResponse)
+    {
+        this.biodiversityMet = biodiversityMet;
+    }
+}
+
+//Event that informs subscribers of a quota
+public class CarbonIntakeQuota : EventData
+{
+    public readonly bool carbonMet;
+    public CarbonIntakeQuota(bool carbonMet) : base(EventType.QuotaResponse)
+    {
+        this.carbonMet = carbonMet;
+    }
+}
+
+//Event that informs subscribers of a quota
+public class AppealQuota : EventData
+{
+    public readonly bool appealMet;
+    public AppealQuota(bool appealMet) : base(EventType.QuotaResponse)
+    {
+        this.appealMet = appealMet;
+    }
+}
+#endregion
+
+//Event that informs subscribers of a quota being made
+public class QuotaUpdated : EventData
+{
+    public readonly int weeklyQuotaScore;
+    public QuotaUpdated(int weeklyQuotaScore) : base(EventType.QuotaIncreased)
+    {
+        this.weeklyQuotaScore = weeklyQuotaScore;
+    }
+}

@@ -39,5 +39,7 @@ public enum EventType
     GAMEOVER,
     CURRENTOBJECTOFFSETUPDATED,
     LowestLeaderboardScore,
-    MoneyEarned
+    MoneyEarned,
+    QuotaResponse,
+    QuotaIncreased,
 }
