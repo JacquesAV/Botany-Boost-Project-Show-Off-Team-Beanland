@@ -11,7 +11,7 @@ public class PlayerScoreManager : MonoBehaviour
     [SerializeField] private int curingCost = 50; //Cost per cure attempt
     [SerializeField] private int gassingCost = 50; //Cost per gas attempt
     [SerializeField] [Range(0.1f,1f)] private float refundRation = 0.5f; //Selling ratio/refund
-    [SerializeField] private int scoreThreshold=100;//Threshold for losing game
+    [SerializeField] private int scoreThreshold=120;//Threshold for losing game
     [SerializeField] private int beeThreshold = 50, butterflyThreshold = 50, beetleThreshold = 50; //Thresholds for bees/butterflies/beetles to appear at
     private bool reachedBeeThreshold = false, reachedButterflyThreshold = false, reachedBeetleThreshold = false;
     private int totalBiodiversity = 0; //Total biodiversity, based on plants and insect attractiveness
@@ -76,6 +76,8 @@ public class PlayerScoreManager : MonoBehaviour
             //Handle the incoming data
             HandleIncomingBoughtScores(objectScores);
             CheckIfInsectReachedThresholds();
+
+            CheckIfQuotaMet();
         }
         else
         {
@@ -84,14 +86,14 @@ public class PlayerScoreManager : MonoBehaviour
     }
     private void OnObjectSoldScores(EventData eventData)
     {
-        if (eventData is ObjectSoldScores)
+        //Cast the event so it can be used
+        if (eventData is ObjectSoldScores objectScores)
         {
-            //Cast the event so it can be used
-            ObjectSoldScores objectScores = (ObjectSoldScores)eventData;
-
             //Handle the incoming data
             HandleIncomingSoldScores(objectScores);
             CheckIfInsectLostThresholds();
+
+            CheckIfQuotaMet();
         }
         else
         {
@@ -257,6 +259,8 @@ public class PlayerScoreManager : MonoBehaviour
 
             scoreThreshold = (int)powerVal;
             Debug.Log("Score threshold is now at: " + scoreThreshold);
+
+            EventManager.currentManager.AddEvent(new QuotaUpdated(scoreThreshold));
         }
         else
         {
@@ -418,6 +422,36 @@ public class PlayerScoreManager : MonoBehaviour
             reachedButterflyThreshold = false;
             //Send out event that threshold was reach
             EventManager.currentManager.AddEvent(new ButterflyThresholdLost());
+        }
+    }
+    private void CheckIfQuotaMet()
+    {
+        //biodiversity
+        if (totalBiodiversity < scoreThreshold)
+        {
+            EventManager.currentManager.AddEvent(new BiodiversityQuota(true));
+        }
+        else
+        {
+            EventManager.currentManager.AddEvent(new BiodiversityQuota(false));
+        }
+        //carbon
+        if (totalCarbonIntake < scoreThreshold)
+        {
+            EventManager.currentManager.AddEvent(new CarbonIntakeQuota(true));
+        }
+        else
+        {
+            EventManager.currentManager.AddEvent(new CarbonIntakeQuota(false));
+        }
+        //appeal
+        if (totalAppeal < scoreThreshold)
+        {
+            EventManager.currentManager.AddEvent(new AppealQuota(true));
+        }
+        else
+        {
+            EventManager.currentManager.AddEvent(new AppealQuota(false));
         }
     }
 
