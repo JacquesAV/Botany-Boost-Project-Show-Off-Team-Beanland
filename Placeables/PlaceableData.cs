@@ -41,10 +41,10 @@ public class PlaceableData : MonoBehaviour
     [Header("Spread Effects")]
     [SerializeField] private int lifespanInDays = 5;//how long the plant can live when diseased or fighting invasive species
 
-    [Range(0.05f, 0.25f)] [SerializeField] private float invaderSpawnChance = 0.25f;//the chance of invasive species spawning
+    [Range(0f, 1f)] [SerializeField] private float invaderSpawnChance = 0.25f;//the chance of invasive species spawning
     [Range(0f, 1f)] [SerializeField] private float invaderChanceSoftCap = 0.1f; //The cap to how high a invader spread chance can go
 
-    [Range(0.1f, 0.75f)] [SerializeField] private float baseDiseaseChance = 0.25f;//The base chance of being infected
+    [Range(0f, 1f)] [SerializeField] private float baseDiseaseChance = 0.25f;//The base chance of being infected
     [Range(0f, 1f)] [SerializeField] private float diseaseChanceSoftCap = 0.1f;//The cap to how high a disease spread chance can go
 
     public PlaceableData Initialize(PlaceableData baseData)
