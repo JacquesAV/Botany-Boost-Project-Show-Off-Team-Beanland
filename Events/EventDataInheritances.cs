@@ -359,11 +359,12 @@ public class SpeedUpDays : EventData
 //Event that informs subscribers about scores being increased
 public class ScoreIncreasePerWeek : EventData
 {
-    public readonly float scoreIncreasePercentile;
-
-    public ScoreIncreasePerWeek(float givenPercentile) : base(EventType.WEEKLYSCOREINCREASE)
+    public readonly int modifier;
+    public readonly int scalar;
+    public ScoreIncreasePerWeek(int modifier, int scalar) : base(EventType.WEEKLYSCOREINCREASE)
     {
-        scoreIncreasePercentile = givenPercentile;
+        this.modifier = modifier;
+        this.scalar = scalar;
     }
 }
 
