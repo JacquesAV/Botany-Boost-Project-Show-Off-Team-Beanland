@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -26,10 +26,12 @@ public class TutorialManager : MonoBehaviour
 
     [Header("book display")]
     [SerializeField] private List<GameObject> bookDisplays = null;
+    [SerializeField] private GameObject bookArrow;
     [SerializeField] private Button treeButton;
 
     [Header("Speed up")]
     [SerializeField] private List<Button> speedButtons=null;
+    [SerializeField] private GameObject speedArrow;
     [SerializeField] private GameObject speedUpDisplay;
 
     private PlantEffects plant;
@@ -38,6 +40,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject toolkit;
 
     [SerializeField] private GameObject missionTab;
+    [SerializeField] private GameObject missionArrow;
 
     [Header("Score Display")]
     [SerializeField] private List<GameObject> scores=null;
@@ -90,7 +93,7 @@ public class TutorialManager : MonoBehaviour
         CurrentTutorial();
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            //tutorialIndex++;
+            tutorialIndex++;
         }
     }
 
@@ -150,6 +153,15 @@ public class TutorialManager : MonoBehaviour
                     {
                         Debug.LogWarning("Tutorial warning: No display for the book was selected");
                     }
+
+                    if (bookArrow != null)
+                    {
+                        bookArrow.SetActive(true);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Tutorial warning: No display for the book arrow was selected");
+                    }
                 }
                 break;
             case 6://Select a tree from the book, it has a price at the bottom and when planted you 
@@ -158,6 +170,14 @@ public class TutorialManager : MonoBehaviour
                 {
                     EventManager.currentManager.Subscribe(EventType.CLICKEDPLACEABLEGUI, OnTutPass);
                     subscribedToPlaceableGUI = true;
+                    if (bookArrow != null)
+                    {
+                        bookArrow.SetActive(false);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Tutorial warning: No display for the book arrow was selected");
+                    }
                 }
                 break;
             case 7://Place the plant anywhere in your park, you can try to rotate the item using < or >. 
@@ -179,11 +199,11 @@ public class TutorialManager : MonoBehaviour
                     EventManager.currentManager.Unsubscribe(EventType.OBJECTBOUGHTSCORES, OnTutPass);
                     unsubscribedFromObjectBougth = true;
                 }
-                NextTutTimer(4);
+                NextTutTimer(7);
                 break;
             case 9://You can hover over plants in your book to get extra information, you can also get 
                 //interesting facts about the plant at the bottom right when selecting it.
-                NextTutTimer(8);
+                NextTutTimer(12);
                 break;
             case 10://Take a look at these weekly missions and try to complete one to get extra money.
                 if (!weekPassed)
@@ -191,6 +211,16 @@ public class TutorialManager : MonoBehaviour
                     //EventManager.currentManager.AddEvent(new WeekHasPassed());
                     weekPassed = true;
                     EventManager.currentManager.Subscribe(EventType.MISSIONCOMPLETED, OnTutPass);
+
+                    //Display arrow that points to the mission
+                    if (missionArrow != null)
+                    {
+                        missionArrow.SetActive(true);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Tutorial warning: No image for the mission arrow was selected");
+                    }
                 }
                 missionTab.SetActive(true);
                 break;
@@ -200,6 +230,26 @@ public class TutorialManager : MonoBehaviour
                 {
                     EventManager.currentManager.Unsubscribe(EventType.MISSIONCOMPLETED, OnTutPass);
                     unsubMission = true;
+
+                    //Hide arrow that points to the mission
+                    if (missionArrow != null)
+                    {
+                        missionArrow.SetActive(true);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Tutorial warning: No image for the mission arrow was selected");
+                    }
+
+                    //Display arrow that points to speed
+                    if (speedArrow != null)
+                    {
+                        speedArrow.SetActive(true);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Tutorial warning: No image for the speed arrow was selected");
+                    }
                 }
                 break;
             case 12://Do you see the green particles? It means the plants are sick. 
@@ -211,6 +261,16 @@ public class TutorialManager : MonoBehaviour
                     plant.SetIsSick(true);
                     toolkit.SetActive(true);
                     plantInfected = true;
+
+                    //Hide arrow that points to speed
+                    if (speedArrow != null)
+                    {
+                        speedArrow.SetActive(false);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Tutorial warning: No image for the speed arrow was selected");
+                    }
                 }
                 break;
             case 13://Do you see the red particles? It means the plants have attracted invasive species. 
