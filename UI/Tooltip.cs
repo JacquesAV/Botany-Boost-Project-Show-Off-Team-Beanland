@@ -28,7 +28,7 @@ public class Tooltip : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
                 isTextActive = true;
                 //when hovering over the object, place the text below the mouse
                 Vector3 mousePos = Input.mousePosition;
-                tooltip = Instantiate(tooltipObject, new Vector3(mousePos.x, mousePos.y - 2, mousePos.z), tooltipObject.transform.rotation, instantiateLocation);
+                tooltip = Instantiate(tooltipObject, new Vector3(mousePos.x, mousePos.y + Screen.height* 0.025f, mousePos.z), tooltipObject.transform.rotation, instantiateLocation);
 
                 backgroundRectTransform = tooltip.transform.Find("Background").GetComponent<RectTransform>();
                 descriptionText = tooltip.transform.Find("Text").GetComponent<TextMeshProUGUI>();
@@ -62,7 +62,7 @@ public class Tooltip : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
             if (isTextActive)
             {
                 Vector3 mousePos = Input.mousePosition;
-                tooltip.transform.position = new Vector3(mousePos.x, mousePos.y - 2, mousePos.z);
+                tooltip.transform.position = new Vector3(mousePos.x, mousePos.y + Screen.height * 0.025f, mousePos.z);
             }
         }
         else
