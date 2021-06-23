@@ -10,7 +10,7 @@ public class SettingsMenu : MonoBehaviour
 {
     public AudioMixer audioMixer; //The audio mixer for all sounds in the game
     public TMP_Dropdown resolutionDropdowns = null;
-    public TMP_Dropdown displayDropdown = null;
+    public TMP_Dropdown displayDropdownEnglish, displayDropdownDutch = null;
     public Resolution[] resolutions;
     public Toggle englishToggle = null;
     public Toggle dutchToggle = null;
@@ -53,7 +53,9 @@ public class SettingsMenu : MonoBehaviour
         //Set the display
         int intValue = GetDisplay();
         SetDisplay(intValue);
-        if (displayDropdown != null) { displayDropdown.value = intValue; }
+        if (displayDropdownEnglish != null) { displayDropdownEnglish.value = intValue; }
+        if (displayDropdownDutch != null) { displayDropdownDutch.value = intValue; }
+        ToggleDisplayDropdown();
         #endregion
 
         //Set the resolution if saved, else should start up as default
@@ -180,6 +182,29 @@ public class SettingsMenu : MonoBehaviour
     {
         return PlayerPrefs.GetInt("DisplayMode", 1); //Default fullscreen window
     }
+    //Toggle the dropdown between english and dutch
+    private void ToggleDisplayDropdown()
+    {
+        //Error handling
+        if (displayDropdownEnglish == null || displayDropdownDutch == null) { Debug.LogWarning("Missing Display Dropdowns!"); return; }
+
+        //If english dropdown
+        if (GetLanguage() == "English (en)")
+        {
+            //Update the objects
+            displayDropdownEnglish.gameObject.SetActive(true);
+            displayDropdownDutch.gameObject.SetActive(false);
+            displayDropdownEnglish.value = GetDisplay(); 
+        }
+        //If dutch dropdown
+        if (GetLanguage() == "Dutch (nl)")
+        {
+            //Update the objects
+            displayDropdownDutch.gameObject.SetActive(true);
+            displayDropdownEnglish.gameObject.SetActive(false);
+            displayDropdownDutch.value = GetDisplay();
+        }
+    }
     public void SetResolution(int givenResolutionIndex)
     {
         //Temporary reference
@@ -291,6 +316,9 @@ public class SettingsMenu : MonoBehaviour
         }
         //Debug the change
         Debug.Log("Language changed to (end of setter)" + LocalizationSettings.SelectedLocale);
+
+        //Update the display visuals
+        ToggleDisplayDropdown();
     }
 
     private string GetLanguage()
