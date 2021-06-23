@@ -3,11 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class LoadGivenScene : MonoBehaviour
 {
-    public string sceneName;
-
     //Load scene 
-    public void LoadScene()
+    public virtual void LoadScene(string givenSceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        //Load the scene
+        SceneManager.LoadScene(givenSceneName);
     }
 }

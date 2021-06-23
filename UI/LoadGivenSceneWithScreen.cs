@@ -51,17 +51,17 @@ public class LoadGivenSceneWithScreen : LoadGivenScene
     }
 
     //Loads a scene while the current one "pauses"
-    override public void LoadScene()
+    override public void LoadScene(string givenSceneName)
     {
         //If valid UI exists, being the courotine
         if(HasValidLoadingUI())
         {
-            StartCoroutine(LoadAsynchronously(sceneName));
+            StartCoroutine(LoadAsynchronously(givenSceneName));
         }
         //Else change the screen without this UI
         else
         {
-            base.LoadScene();
+            base.LoadScene(givenSceneName);
         }
     }
 
