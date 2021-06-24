@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-Assets-Shared
+  m_EditorClassIdentifier: 
+  m_GroupName: Localization-Assets-Shared
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c5da5af963908c647a254b5c4e8213ad
+  m_SerializeEntries:
+  - m_GUID: f822ade5cf6060645b40b44ca3236fee
+    m_Address: Assets/Localizations/Tables/UI Text Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 2f26f17bde75b5d4aa280a0c10065ac8
+    m_Address: Assets/Localizations/Tables/Mission Table Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 3aceb891a7c2d2148acc4870057f48e5
+    m_Address: Assets/Localizations/Tables/PlacementMissions Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: feb0e9564020e3d4fb836fad048735d5
+    m_Address: Assets/Localizations/Tables/EliminateScore Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: bdc160710702c38498bcc3e792a2c18b
+    m_Address: Assets/Localizations/Tables/IncreaseScore Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 5e62013db7b5cfb498f85d2179b10a3b
+    m_Address: Assets/Localizations/Tables/ExtraInfoScreen Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: d2d87a1e83906bf4f904c2fff6d3f9ca
+    m_Address: Assets/Localizations/Tables/ResolutionPanel Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 8488917e68da83c4e976af0b955323a9
+    m_Address: Assets/Localizations/Tables/LeaderboardPanel Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 08f6a25067eae6e4d94793f3334f8f8f
+    m_Address: Assets/Localizations/Tables/Confirmation Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: e94f83c6c6c9ba14b8dc187412f4890e
+    m_Address: Assets/Localizations/Tables/StaticUIInfo Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: e56e2c56a0fda3d40abf0bf691b7b166
+    m_Address: Assets/Localizations/Tables/ImageAssetNonStatic Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 7831669ab80490e48acd70c2ee40f9c1
+    m_Address: Assets/Localizations/Tables/Tutorial Text Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 3921e211e45543a4d99f0dc39f1c8f47
+    m_Address: Assets/Localizations/Tables/Main Menu Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 6c914d324979fbb41ac4b079cf93513b
+    m_Address: Assets/Localizations/Tables/MainLeaderBoard Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: dcebbdb05746b0d43b0a218f78707847
+    m_Address: Assets/Localizations/Tables/SettingsMenu Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: a2645ea90eff61541b2f7129543ff3e1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 3c224f95ea0bee64cbe8c6a2728d02f4, type: 2}
+    - {fileID: 11400000, guid: c8673486961983344b7633f62983b799, type: 2}

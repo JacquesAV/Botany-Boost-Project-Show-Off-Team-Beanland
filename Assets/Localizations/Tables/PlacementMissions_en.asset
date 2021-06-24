@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: PlacementMissions_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 3aceb891a7c2d2148acc4870057f48e5, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1223044734976
+    m_Localized: Birds might come through the park and might need a place to rest,
+      have 2 ornamtens that will allow them to do so.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1243269668864
+    m_Localized: Increase the variety of nature in the park by placing 6 trees.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17797654880256
+    m_Localized: "It\u2019s bird migration season and they might stop by to eat.
+      Add a tree that produces food for birds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17830261399552
+    m_Localized: Butterflies are always beautiful, creating more appeal for the park.
+      Place 6 plants that will attract them to the park.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17855469166592
+    m_Localized: "Participate in the local farmers market by planting 3 trees that
+      produce fruit.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17773298556928
+    m_Localized: Bees are having a hard time, help them out by placing 5 plants they
+      like.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17881280913408
+    m_Localized: The park needs to be appealing to visitors, do so by adding at least
+      2 ornaments.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1

@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: SettingsMenu_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: dcebbdb05746b0d43b0a218f78707847, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 799025766400
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1034930200576
+    m_Localized: Video
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063422107648
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1112021508096
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1476925956096
+    m_Localized: Display
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1647260835840
+    m_Localized: Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1668911833088
+    m_Localized: Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1697043030016
+    m_Localized: Windowed Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1767641554944
+    m_Localized: Graphics quality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1834314211328
+    m_Localized: Low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1852228083712
+    m_Localized: Medium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1869848354816
+    m_Localized: High
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1885778321408
+    m_Localized: Shadows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1915633377280
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1947870797824
+    m_Localized: Master Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2096374325248
+    m_Localized: Ambience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098077212672
+    m_Localized: SFX Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2163923591168
+    m_Localized: Voice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2182575661056
+    m_Localized: Interface
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207322054656
+    m_Localized: Music Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1137431607738368
+    m_Localized: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1220234718715904
+    m_Localized: Main Menu
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1

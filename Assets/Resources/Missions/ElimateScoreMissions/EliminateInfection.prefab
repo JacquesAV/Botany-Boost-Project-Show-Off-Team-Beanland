@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5294772703848382339
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -6305728990499055903, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 394342539264
+      objectReference: {fileID: 0}
+    - target: {fileID: -6305728990499055903, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:feb0e9564020e3d4fb836fad048735d5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863736179568735628, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: missionReward
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863736179568735628, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: targettedScore
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863736179568735628, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: appearsFromWeek
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863736179568735628, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: isEndOfWeekReward
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863736179568735628, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: preemptiveMessage
+      value: You've earned a bonus for keeping your invaders at 0!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863736179568735628, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: missionDescription
+      value: Make sure the garden is completely free from invasive species that will
+        harm the plants of the park.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943207823205046626, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_Name
+      value: EliminateInfection
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092416062244542946, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092416062244542946, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092416062244542946, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092416062244542946, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092416062244542946, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092416062244542946, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092416062244542946, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092416062244542946, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092416062244542946, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092416062244542946, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092416062244542946, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a75666dc4583bcc46a5a9e2fe72fc47e, type: 3}

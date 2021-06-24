@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: SettingsMenu Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: SettingsMenu
+  m_TableCollectionNameGuidString: dcebbdb05746b0d43b0a218f78707847
+  m_Entries:
+  - m_Id: 799025766400
+    m_Key: SettingsTxt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1034930200576
+    m_Key: VideoButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063422107648
+    m_Key: AudioButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1112021508096
+    m_Key: CloseButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1476925956096
+    m_Key: Display
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1647260835840
+    m_Key: Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1668911833088
+    m_Key: Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1697043030016
+    m_Key: WindowedFullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1767641554944
+    m_Key: GraphicsQuality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1834314211328
+    m_Key: Low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1852228083712
+    m_Key: Medium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1869848354816
+    m_Key: High
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1885778321408
+    m_Key: Shadows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1915633377280
+    m_Key: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1947870797824
+    m_Key: MasterVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2096374325248
+    m_Key: Ambience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098077212672
+    m_Key: SFXVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2163923591168
+    m_Key: Voice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2182575661056
+    m_Key: Interface
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207322054656
+    m_Key: MusicVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1137431607738368
+    m_Key: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1220234718715904
+    m_Key: Main Menu
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1624197663049

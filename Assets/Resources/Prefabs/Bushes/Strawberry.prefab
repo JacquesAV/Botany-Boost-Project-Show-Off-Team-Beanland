@@ -1,0 +1,210 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7858315325705367668
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5337760814113603264, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_Name
+      value: Strawberry
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: cost
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: appeal
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 9175088745039355167, guid: 5d876e008831d9d48b6da40e354bb40b, type: 3}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: insectType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: biodiversity
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: carbonIntake
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: displayImage
+      value: 
+      objectReference: {fileID: 21300000, guid: b8da44967122fe64f91afe75c70fbf09, type: 3}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: produceYield
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableName
+      value: Strawberry
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoText
+      value: Strawberries need full sun to produce maximum fruit. Strawberries are
+        self-fertile, but require bees for pollination.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: yieldsProduce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: attractiveScore
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: baseDiseaseChance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: invaderSpawnChance
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableNameDutch
+      value: Aardbei
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoTextDutch
+      value: Aardbeien hebben volle zon nodig om maximaal fruit te produceren. Ze
+        zijn zelfvruchtbaar, maar hebben bijen nodig voor bestuiven.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: diseaseChanceSoftCap
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: insectAttractiveness
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: invaderChanceSoftCap
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableNameEnglish
+      value: Strawberry
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoTextEnglish
+      value: Strawberries need full sun to produce maximum fruit. Strawberries are
+        self-fertile, but require bees for pollination.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: diseaseSpreadModifier
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableDimensions.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableDimensions.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[0]
+      value: Attracts bees
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[1]
+      value: "Produces fruit that gives 1\u20AC/day"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[2]
+      value: Attracts birds
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.data[0]
+      value: Trekt bijen en vogels aan
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.data[1]
+      value: "Produceert fruit dat 1 \u20AC/dag geeft"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.data[2]
+      value: vvooooorrrbeeellddd
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.data[0]
+      value: Attracts bees and birds
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.data[1]
+      value: "Produces fruit that gives 1\u20AC/day"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.data[2]
+      value: exampleeeee
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}

@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: PlacementMissions_nl
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: nl
+  m_SharedData: {fileID: 11400000, guid: 3aceb891a7c2d2148acc4870057f48e5, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1223044734976
+    m_Localized: Vogels kunnen door het park komen en hebben misschien een plek nodig
+      om uit te rusten, plaats 2 decoraties waarop ze dit kunnen doen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1243269668864
+    m_Localized: Vergroot de variatie van de natuur in het park door 6 bomen te planten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17797654880256
+    m_Localized: Het is vogeltrekseizoen en ze kunnen langskomen om iets te eten.
+      Plaats een boom die voedsel voor vogels produceert.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17830261399552
+    m_Localized: Vlinders zijn altijd mooi, hierdoor vergroot de charme van het park.
+      Plaats 6 planted die vlinders aantrekken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17855469166592
+    m_Localized: Neem deel aan de lokale mark door 3 bomen te planten die fruit produceren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17773298556928
+    m_Localized: Bijen hebben het moeilijk, help ze door 5 planten te plaatsen die
+      ze leuk vinden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17881280913408
+    m_Localized: Het park moet aantrekkelijk zijn voor bezoekers, doe dit door minimaal
+      2 extra decoraties te plaatsen.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1

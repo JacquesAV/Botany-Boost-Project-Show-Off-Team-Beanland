@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Tutorial Text_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 7831669ab80490e48acd70c2ee40f9c1, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 6235848704
+    m_Localized: "Hello Botanist, welcome to Botany Boost! You have been hired by
+      the City Council to manage the local park, let\u2019s take you around."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8618213376
+    m_Localized: Use your WASD keys to move around the park.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10832805888
+    m_Localized: You can also move your mouse to the corners of the screen to explore
+      the park.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13210976256
+    m_Localized: To rotate your view, you can hold Q or E.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126763368448
+    m_Localized: To zoom in and out, press + - or scroll up and down using your mouse.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130924118016
+    m_Localized: Click the tree bookmark on the botany book to open it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132702502912
+    m_Localized: Select a tree from the book, it has a price at the bottom and when
+      planted you gain the respective amount of the 3 stats to the side.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1889914552320
+    m_Localized: Place the plant anywhere in your park, you can try to rotate the
+      item using < or >. If you are satisfied with the orientation, click on where
+      you want to place the item in the park.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1890816327680
+    m_Localized: See how those scores add up?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1891491610624
+    m_Localized: You can hover over plants in your book to get extra information,
+      you can also get interesting facts about the plant at the bottom right when
+      selecting it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1892124950528
+    m_Localized: Take a look at these optional weekly missions and try to complete
+      one to get extra money.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2645493252096
+    m_Localized: You can change the speed of time with these buttons.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2882651783168
+    m_Localized: Do you see the green particles? It means the plant is sick. You
+      can cure it using your cure from the toolkit!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2884199481344
+    m_Localized: Do you see the red particles? It means the plant has attracted invasive
+      species. You will need to get rid of them with your spray in the toolkit!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3058837716992
+    m_Localized: "Play as long as you can by passing the increasing weekly quota
+      (biodiversity, appeal, carbon intake). The longer you play, the higher score
+      you\u2019ll achieve."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4824283185152
+    m_Localized: This is the end of the tutorial, good luck!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1443896847736832
+    m_Localized: The quota is a minimum score that you need to reach for your Biodiversity,
+      Appeal and Carbon scores before the week ends.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1

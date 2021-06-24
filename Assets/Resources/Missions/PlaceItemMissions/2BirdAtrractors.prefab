@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7210923750062096589
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -6973502810124757354, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1223044734976
+      objectReference: {fileID: 0}
+    - target: {fileID: -6973502810124757354, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:3aceb891a7c2d2148acc4870057f48e5
+      objectReference: {fileID: 0}
+    - target: {fileID: 81290905392890962, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: missionReward
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 81290905392890962, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: placementGoal
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 81290905392890962, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: mustAttractBirds
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 81290905392890962, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: mustBeObjectType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 81290905392890962, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: mustYieldProduce
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 81290905392890962, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: isEndOfWeekReward
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 81290905392890962, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: missionDescription
+      value: Birds might come through the park and might need a place to rest, have
+        2 places for them to do so.
+      objectReference: {fileID: 0}
+    - target: {fileID: 81290905392890962, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: mustAttractInsectType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683415549971109647, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683415549971109647, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683415549971109647, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683415549971109647, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683415549971109647, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683415549971109647, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683415549971109647, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683415549971109647, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683415549971109647, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683415549971109647, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683415549971109647, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7201966936047120309, guid: 955c5832dc2d26c4b977be1538673362, type: 3}
+      propertyPath: m_Name
+      value: 2BirdAtrractors
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 955c5832dc2d26c4b977be1538673362, type: 3}

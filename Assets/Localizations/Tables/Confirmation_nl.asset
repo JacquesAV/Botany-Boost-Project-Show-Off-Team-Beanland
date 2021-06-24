@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Confirmation_nl
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: nl
+  m_SharedData: {fileID: 11400000, guid: 08f6a25067eae6e4d94793f3334f8f8f, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 43010859008
+    m_Localized: Je hebt de Top 10 behaald
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383663841280
+    m_Localized: Weet je zeker dat je je score niet op het scorebord wil hebben?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 835256164352
+    m_Localized: Ja, ga verder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 990793539584
+    m_Localized: Nee, ga terug
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006045794304
+    m_Localized: Stuur in
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1

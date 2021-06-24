@@ -1,0 +1,174 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7858315325705367668
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5337760814113603264, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_Name
+      value: P-Roses
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: cost
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: appeal
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 2804026468112169683, guid: 0851539c6f9b81b45bf2b24e25be43ae, type: 3}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: insectType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: biodiversity
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: carbonIntake
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: displayImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 2718f0377484aea4ca3677553b03e57f, type: 3}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableName
+      value: Roses
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoText
+      value: Not only do they look very pretty and are seen as a romantic flower,
+        but they also attract lots of pollinators like bees.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: attractiveScore
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: isUprightObject
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: baseDiseaseChance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: invaderSpawnChance
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableNameDutch
+      value: Klimroos
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoTextDutch
+      value: Niet alleen zijn ze heel mooi en worden gezien als een romantische bloem,
+        maar ze trekken ook veel bestuivers zoals bijen aan.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: diseaseChanceSoftCap
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: insectAttractiveness
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: invaderChanceSoftCap
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableNameEnglish
+      value: Climbing Roses
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoTextEnglish
+      value: Not only do they look very pretty and are seen as a romantic flower,
+        but they also attract lots of pollinators like bees.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: diseaseSpreadModifier
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableDimensions.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableDimensions.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[0]
+      value: Attracts bees
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.data[0]
+      value: Trekt bijen aan
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.data[0]
+      value: Attracts bees
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}

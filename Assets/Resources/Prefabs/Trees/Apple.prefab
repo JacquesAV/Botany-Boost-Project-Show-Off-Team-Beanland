@@ -1,0 +1,223 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7858315325705367668
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5337760814113603264, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_Name
+      value: Apple
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: cost
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: appeal
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 1278801410307890882, guid: b369ab231bb58b6439f27527c1ce53b1, type: 3}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: insectType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: biodiversity
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: carbonIntake
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: displayImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 1c33aae0657c5c04fbe10d177bb9a40d, type: 3}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: produceYield
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: attractsBirds
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableName
+      value: Apple
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoText
+      value: Apple trees attract bees and increase biodiversity. Beware of cankers
+        that may develop due to bacteria, which increases your invasiveness score.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: yieldsProduce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: attractiveScore
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: isUprightObject
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: baseDiseaseChance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: invaderSpawnChance
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableNameDutch
+      value: Appelboom
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoTextDutch
+      value: "Appelbomen trekken bijen aan en verhogen biodiversiteit. Pas op voor
+        cankers die zich kunnen ontwikkelen als gevolg van bacteri\xEBn, wat invasieve
+        soorten kan aantrekken."
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: diseaseChanceSoftCap
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: insectAttractiveness
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: invaderChanceSoftCap
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableNameEnglish
+      value: Apple tree
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoTextEnglish
+      value: Apple trees attract bees and increase biodiversity. Beware of cankers
+        that may develop due to bacteria, which increases your invasiveness score.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: diseaseSpreadModifier
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableDimensions.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableDimensions.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[0]
+      value: Attracts bees
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[1]
+      value: "Produces fruit that gives 10\u20AC/day"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[2]
+      value: Beware invasive species
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.data[0]
+      value: Trekt bijen aan
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.data[1]
+      value: "Produceert fruit dat 3\u20AC/dag geeft"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.data[2]
+      value: Vatbaar voor invasieve soorten
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.data[0]
+      value: Attracts bees
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.data[1]
+      value: "Produces fruit that gives 3\u20AC/day"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.data[2]
+      value: Beware invasive species
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}

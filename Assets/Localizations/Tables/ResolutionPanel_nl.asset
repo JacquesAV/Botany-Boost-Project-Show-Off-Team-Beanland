@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: ResolutionPanel_nl
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: nl
+  m_SharedData: {fileID: 11400000, guid: d2d87a1e83906bf4f904c2fff6d3f9ca, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 8265244672
+    m_Localized: Biodiversiteit is een belangrijk onderdeel van ons leven, maar velen
+      van ons weten er weinig over. Door het spelen van Botany Boost heb je ervaren
+      hoe je voor een park kan zorgen en heb je gezien wat voor effecten je acties
+      met zich meebrengen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728884420608
+    m_Localized: Merk je dat wanneer je het park aanpast, er een rimpeleffect onstaat?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572052770816
+    m_Localized: Nu weten we dat onze acties op veel manieren invloed kunnen hebben
+      op ons milieu. We kunnen beginnen met het vergroten van de biodiversiteit om
+      ons heen door bewust voor onze eigen tuinen te zorgen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2187541716992
+    m_Localized: Opnieuw Spelen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3116554887168
+    m_Localized: Hoofdmenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3224755347456
+    m_Localized: Scorebord
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1

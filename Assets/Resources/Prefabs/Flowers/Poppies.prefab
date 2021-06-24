@@ -1,0 +1,177 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7858315325705367668
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5337760814113603264, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_Name
+      value: Poppies
+      objectReference: {fileID: 0}
+    - target: {fileID: 5337760814113603264, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: cost
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: appeal
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 3023981922665313017, guid: 92f1acdcf20bfda45b79bcbf053acf30, type: 3}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: insectType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: biodiversity
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: carbonIntake
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: displayImage
+      value: 
+      objectReference: {fileID: 21300000, guid: d1da63993e713fd4ba115110e6353e10, type: 3}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableName
+      value: Poppies
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoText
+      value: The common Poppy is now in decline due to intensive agricultural practices.
+        Poppy seeds can be eaten and are a source of fibre, containing magnesium
+        and calcium, good for bone health.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: attractiveScore
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: baseDiseaseChance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: invaderSpawnChance
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableNameDutch
+      value: Klaproos
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoTextDutch
+      value: De gewone klaproos is nu in verval als gevolg van intensieve landbouwpraktijken.
+        Het zaad van de klaproos, maanzaad, is een bron van vezels en is goed voor
+        je gezondheid en botten.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: diseaseChanceSoftCap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: insectAttractiveness
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: invaderChanceSoftCap
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableNameEnglish
+      value: Poppies
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoTextEnglish
+      value: The common Poppy is now in decline due to intensive agricultural practices.
+        Poppy seeds can be eaten and are a source of fibre, containing magnesium
+        and calcium, good for bone health.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: diseaseSpreadModifier
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableDimensions.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableDimensions.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[0]
+      value: Attracts bees
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.data[0]
+      value: Trekt bijen aan
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.data[0]
+      value: Attracts bees
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}

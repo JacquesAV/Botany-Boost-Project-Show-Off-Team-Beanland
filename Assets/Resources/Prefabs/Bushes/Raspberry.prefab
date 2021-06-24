@@ -1,0 +1,207 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7858315325705367668
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421146397576519681, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5337760814113603264, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: m_Name
+      value: Raspberry
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: cost
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: appeal
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 6226492541432769154, guid: caa2120438aa10d469e149867c9d3e79, type: 3}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: insectType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: biodiversity
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: carbonIntake
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: displayImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 2b8c11764a68b30439c6971544569ceb, type: 3}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: produceYield
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableName
+      value: Raspberry
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoText
+      value: Choose an area that has both full sun and good air circulation. Trim
+        your raspberry bushes regularly to promote healthy growth & more fruit output.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: yieldsProduce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: attractiveScore
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: baseDiseaseChance
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: invaderSpawnChance
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableNameDutch
+      value: Framboos
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoTextDutch
+      value: Kies een gebied met zowel volle zon als een goede luchtcirculatie. Trim
+        frambozenstruiken regelmatig om een gezonde groei en meer fruitproductie
+        te bevorderen.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: diseaseChanceSoftCap
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: insectAttractiveness
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableNameEnglish
+      value: Raspberry
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantInfoTextEnglish
+      value: Choose an area that has both full sun and good air circulation. Trim
+        your raspberry bushes regularly to promote healthy growth & more fruit output.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: diseaseSpreadModifier
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableDimensions.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: placeableDimensions.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[0]
+      value: Attracts birds
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[1]
+      value: "Produces fruit that gives 1\u20AC/day"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedText.Array.data[2]
+      value: Catches disease easily
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.data[0]
+      value: Trekt vogels aan
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.data[1]
+      value: "Produceert fruit dat 1 \u20AC/dag geeft"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextDutch.Array.data[2]
+      value: Vatbaar voor ziekten
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.data[0]
+      value: Attracts birds
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.data[1]
+      value: "Produces fruit that gives 1\u20AC/day"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404242474220341414, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}
+      propertyPath: plantSummarisedTextEnglish.Array.data[2]
+      value: Catches disease easily
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c0311ef5eff064409ee4b0bb540b35b, type: 3}

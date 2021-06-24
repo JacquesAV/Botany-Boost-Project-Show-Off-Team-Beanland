@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Tutorial Text_nl
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: nl
+  m_SharedData: {fileID: 11400000, guid: 7831669ab80490e48acd70c2ee40f9c1, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 6235848704
+    m_Localized: Hallo Botanist, welkom bij Botany Boost! Je bent ingehuurd door
+      de gemeenteraad om het lokale park te beheren, laten we een kijkje nemen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8618213376
+    m_Localized: Gebruik de WASD toetsen om het park rond te gaan.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10832805888
+    m_Localized: Je kan ook je muis naar de hoeken van het scherm verplaatsen om
+      het hele park te verkennen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13210976256
+    m_Localized: Om de camera te draaien, gebruik je Q of E.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126763368448
+    m_Localized: Om in- en uit te zoomen, druk op + of -, of gebruik het scrollwiel
+      op je muis.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 130924118016
+    m_Localized: Klik op de boom bladwijzer op het plantkunde boek te openen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 132702502912
+    m_Localized: Kies een boom uit het boek, de prijs is zichtbaar onder de foto.
+      Als je het plaatst krijg je de respectieve hoeveelheid van de 3 scores aan
+      de zijkant.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1889914552320
+    m_Localized: "Plaats de plant ergens in het park, je kan hem roteren met behulp
+      van < of >. Als je blij bent met de ori\xEBntatie, klik op de plek waar je
+      de bloem wil hebben."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1890816327680
+    m_Localized: Zie hoe je scores omhoog gingen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1891491610624
+    m_Localized: Je kunt over planten in het boek zweven om extra info te krijgen,
+      ook kan je interessante feiten over de plant rechtsonderin krijgen bij het
+      selecteren van de plant.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1892124950528
+    m_Localized: Kijk hier voor optionele wekelijkse missies en probeer er een te
+      voltooien om extra geld te krijgen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2645493252096
+    m_Localized: Je kan de snelheid van de tijd veranderen met deze knoppen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2882651783168
+    m_Localized: Zie deze groene deeltjes? Dat betekent dat de plant ziek is. Je
+      kan het genezen met het medicijn in de gereedschapskist.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2884199481344
+    m_Localized: Zie deze rode deeltjes? Dit betekent dat de plant invasieve soorten
+      heeft aangetrokken. Je kan deze weghalen met de spray in de gereedschapskist.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3058837716992
+    m_Localized: Speel zo lang mogelijk door het verhogende wekelijkse quotum (biodiversiteit,
+      aantrekkingskracht, CO2 opname) te halen. Hoe langer je speelt, hoe hoger je
+      eindscore zal zijn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4824283185152
+    m_Localized: Je hebt het einde van de tutorial bereikt, succes!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1443896847736832
+    m_Localized: Het quotum is een minimale score die je moet bereiken voor de Biodiversiteit,
+      Charme, en CO2 Opname voor het einde van de week.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1
